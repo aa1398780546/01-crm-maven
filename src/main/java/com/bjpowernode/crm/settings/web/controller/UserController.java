@@ -37,6 +37,7 @@ public class UserController extends HttpServlet {
 
         } else if ("".equals(path)) {
 
+
         }
 
     }
@@ -58,6 +59,8 @@ public class UserController extends HttpServlet {
         //loginAct = MD5Util.getMD5(loginAct);
         loginPwd = MD5Util.getMD5(loginPwd);
 
+        //普通实现类形态，不走事务，登录不走事务，但是在将来的业务里用可能需要扩充日志相关操作，接触到添加修改还是要走事务。
+//        UserService us = new UserServiceImpl();
         //创建Service层对象UserServiceImpl
         //在未来业务层开发，统一使用代理类形态的接口对象
         UserService us = (UserService) ServiceFactory.getService(new UserServiceImpl());

@@ -64,11 +64,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 							{"success":true/false,"msg":"哪儿错了"}
 					 */
 					//如果登录成功
-					alert(data);
 					if (data.success){
-						//window.location.href("workbench/index.html");
+						//window.location.href("workbench/index.jsp");
 						//alert("登陆成功");
-						window.location.href = "workbench/index.html";
+						window.location.href = "workbench/index.jsp";
 					}else {
 						//登录失败有四种情况，账号密码错误，时间失效，锁定状态，ip不正确。
 						$("#msg").html(data.msg);
@@ -87,7 +86,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		<img src="image/bg1.png" style="width: 100%; height: 90%; position: relative; top: 50px;">
 	</div>
 	<div id="top" style="height: 50px; background-color: #3C3C3C; width: 100%;">
-		<div style="position: absolute; top: 5px; left: 0px; font-size: 25px; font-weight: 400; color: white; font-family: 'times new roman'">物流管理系统的设计与实现 &nbsp;<span style="font-size: 20px;">@李富林&nbsp;岭南师范学院</span></div>
+		<div style="position: absolute; top: 5px; right: 0px; font-size: 25px; font-weight: 400; color: white; font-family: 'times new roman'">物流管理系统的设计与实现 &nbsp;<span style="font-size: 20px;">指导老师：卢利琼</span></div>
 	</div>
 	
 	<div style="position: absolute; top: 120px; right: 35%;width:450px;height:400px;border:1px solid #D5D5D5">
@@ -95,7 +94,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<div class="page-header">
 				<h3 align="center">物流管理系统</h3>
 			</div>
-			<form action="workbench/index.html" class="form-horizontal" role="form">
+			<form action="workbench/index.jsp" class="form-horizontal" role="form">
 				<div class="form-group form-group-lg">
 					<div style="width: 350px;">
 						<%--自动获取用户名的焦点--%>
