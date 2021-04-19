@@ -6,8 +6,4 @@
 <!--namespace 写定义的接口名称-->
 <mapper namespace="com.bjpowernode.crm.workbench.dao.ActivityDao">
 
-    <select id="" resultType="">
-
-    </select>
-
 </mapper>

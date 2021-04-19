@@ -7,6 +7,7 @@ import com.bjpowernode.crm.settings.service.UserService;
 import com.bjpowernode.crm.utils.DateTimeUtil;
 import com.bjpowernode.crm.utils.SqlSessionUtil;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,11 +34,9 @@ public class UserServiceImpl implements UserService {
 
         //调用 UserDao的login方法，将map作为参数传入,返回一个User对象。
         User user = userDao.login(map);
-        System.out.println("====================================");
         System.out.println("UserServiceImpl = user的值为：" + user);
 
         if (user==null){
-            System.out.println("Test。。。。。。。。。。。。。。");
             throw new LoginException("账号密码错误");
         }
 
@@ -63,5 +62,14 @@ public class UserServiceImpl implements UserService {
 
         return user;
 
+    }
+
+    @Override
+    public List<User> getUserList() {
+
+        //已经使用动态代理获取到了Dao
+        List<User> userList = userDao.getUserList();
+
+        return userList;
     }
 }

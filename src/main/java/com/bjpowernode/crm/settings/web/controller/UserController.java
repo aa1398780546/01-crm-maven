@@ -45,7 +45,6 @@ public class UserController extends HttpServlet {
     //这是根据登录页面进来的方法
     public void login(HttpServletRequest request,HttpServletResponse response){
 
-        System.out.println("==============================");
         System.out.println("进入到验证登录操作");
 
         //获取到前端传过来的参数
