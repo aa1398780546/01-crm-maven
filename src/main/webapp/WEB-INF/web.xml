@@ -4,17 +4,29 @@
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
-  
+
+<!--  为后台添加字符编码UTF-8过滤器-->
   <filter>
     <filter-name>EncodingFilter</filter-name>
     <filter-class>com.bjpowernode.crm.settings.web.filter.EncodingFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>EncodingFilter</filter-name>
-<!--    过滤器使用的范围：后台使用*.do，其它地方使用要加/，例如/*-->
     <url-pattern>*.do</url-pattern>
   </filter-mapping>
-  
+
+<!--  添加防止恶意登录的过滤器-->
+  <filter>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>com.bjpowernode.crm.settings.web.filter.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+    <url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
+
+<!--  用户注册-->
   <servlet>
     <servlet-name>UserController</servlet-name>
     <servlet-class>com.bjpowernode.crm.settings.web.controller.UserController</servlet-class>
@@ -24,6 +36,15 @@
     <url-pattern>/settings/user/login.do</url-pattern>
   </servlet-mapping>
   
+<!--  市场活动-->
+  <servlet>
+    <servlet-name>ActivityController</servlet-name>
+    <servlet-class>com.bjpowernode.crm.workbench.web.controller.ActivityController</servlet-class>
+  </servlet>
+ <servlet-mapping>
+   <servlet-name>ActivityController</servlet-name>
+   <url-pattern>/workbench/activity/xxx.do</url-pattern>
+ </servlet-mapping>
   
   
 </web-app>

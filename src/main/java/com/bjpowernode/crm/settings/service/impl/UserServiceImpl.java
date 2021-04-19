@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
             throw new LoginException("无效的IP地址");
         }
 
-    return user;
+        return user;
 
     }
 }

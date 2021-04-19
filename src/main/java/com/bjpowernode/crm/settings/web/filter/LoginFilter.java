@@ -16,7 +16,7 @@ public class LoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
 
-        System.out.println("进入到是否登陆过的过滤器");
+        System.out.println("检测是否恶意登录LoginFilter");
 
         //如何进行验证？
         //如果用户登陆过网页，那么Session中将会有一个user对象
@@ -28,25 +28,45 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
 
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        String path = request.getServletPath();
 
-        //如果user不为空，说明用户登陆过
-        if (user!=null){
+        //不应该被拦截的资源，自动放行请求
+        if ("/login.jsp".equals(path) || "/settings/user/login.do".equals(path)){
+
             chain.doFilter(req,resp);
-        //没有登陆过
+
         }else {
-            //重定向到登录页
+
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
+
+            //如果user不为空，说明用户登陆过
+            if (user!=null){
+                chain.doFilter(req,resp);
+                //没有登陆过
+            }else {
             /*
                1.重定向的地址怎么写？
                     在实际的开发中，对于路劲的使用，无论操作的是前端还是后端，应该一律使用绝对路径。
                     关于转发和重定向的路径写法如下：
+                       转发：
+                            使用的是一种特殊的使用方式，这种绝对路径前面不加/项目名，这种绝对路劲也称之为“内部路径”
+                            /login.jsp
+                       重定向：
+                            使用的是传统绝对路径的写法，前面必须以/项目名开头，后面跟具体的资源路径。
+                            /crm/login.jsp
 
                2.为什么使用重定向，使用请求转发不行吗？
-
+                    转发之后，路径会停留在老路径上，而不是跳转之后最新的资源路径
+                    我们应该在为用户跳转到登陆页面的同时，将浏览器的地址栏自动设置为当前登录页的路径。
              */
-            response.sendRedirect("login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+//            response.sendRedirect("/crm/login.jsp");
+//                response.sendRedirect("login.jsp");
+            }
+
         }
+
     }
 
 }

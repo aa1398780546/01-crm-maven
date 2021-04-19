@@ -15,6 +15,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 		$(function(){
 
+			//如果当前窗口不是顶层窗口，那么需要将当前窗口设置顶层窗口
+			if(window.top!=window){
+				window.top.location=window.location;
+			}
+
 			//页面加载完毕后，让用户的文本框自动活得焦点
 			$("#loginAct").focus();
 
