@@ -43,7 +43,7 @@
   </servlet>
  <servlet-mapping>
    <servlet-name>ActivityController</servlet-name>
-   <url-pattern>/workbench/activity/xxx.do</url-pattern>
+   <url-pattern>/workbench/activity/getUserList.do</url-pattern>
  </servlet-mapping>
   
   
