@@ -64,8 +64,11 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    //获取用户信息列表
     @Override
     public List<User> getUserList() {
+
+        System.out.println("进入到了UserServiceImpl-getUserLiset");
 
         //已经使用动态代理获取到了Dao
         List<User> userList = userDao.getUserList();

@@ -5,5 +5,28 @@
 
 <!--namespace 写定义的接口名称-->
 <mapper namespace="com.bjpowernode.crm.workbench.dao.ActivityDao">
-
+        <insert id="save">
+            insert into tbl_activity(
+                id,
+                owner,
+                name,
+                startDate,
+                endDate,
+                cost,
+                description,
+                createTime,
+                createBy
+            )
+            values (
+                    #{id},
+                    #{owner},
+                    #{name},
+                    #{startDate},
+                    #{endDate},
+                    #{cost},
+                    #{description},
+                    #{createTime},
+                    #{createBy}
+                   )
+        </insert>
 </mapper>
