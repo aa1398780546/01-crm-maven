@@ -36,7 +36,7 @@
     <url-pattern>/settings/user/login.do</url-pattern>
   </servlet-mapping>
   
-<!--  添加市场活动-->
+<!--  市场活动-->
   <servlet>
     <servlet-name>ActivityController</servlet-name>
     <servlet-class>com.bjpowernode.crm.workbench.web.controller.ActivityController</servlet-class>
@@ -46,6 +46,9 @@
    <url-pattern>/workbench/activity/getUserList.do</url-pattern>
    <url-pattern>/workbench/activity/save.do</url-pattern>
    <url-pattern>/workbench/activity/pageList.do</url-pattern>
+   <url-pattern>/workbench/activity/delete.do</url-pattern>
+   <url-pattern>/workbench/activity/getUserListAndActivity.do</url-pattern>
+   <url-pattern>/workbench/activity/update.do</url-pattern>
  </servlet-mapping>
   
   
