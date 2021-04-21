@@ -7,6 +7,7 @@ import com.bjpowernode.crm.utils.DateTimeUtil;
 import com.bjpowernode.crm.utils.PrintJson;
 import com.bjpowernode.crm.utils.ServiceFactory;
 import com.bjpowernode.crm.utils.UUIDUtil;
+import com.bjpowernode.crm.vo.PaginationVO;
 import com.bjpowernode.crm.workbench.damain.Activity;
 import com.bjpowernode.crm.workbench.service.ActivityService;
 import com.bjpowernode.crm.workbench.service.impl.ActivityServiceImpl;
@@ -17,7 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 林哥哥
@@ -46,18 +49,72 @@ public class ActivityController extends HttpServlet {
 
         System.out.println("进入到查询市场活动信息列表的操作（结合条件查询+分页查询）");
 
-        String pageNo = request.getParameter("pageNo");
-        String pageSize = request.getParameter("pageSize");
+         /*
+                计算出略过的记录数
+                为什么要记录这个 因为数据库的分页 select * form student limit 10,5
+                表示的意思是从略过第10个，从第11个开始数，数5个。
+         */
         String name = request.getParameter("name");
         String owner = request.getParameter("owner");
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
+        //页码,计算略过的记录数，但是数据库不需要这个
+        Integer pageNo = Integer.valueOf(request.getParameter("pageNo"));
+        //每页展现的记录数，计算略过的记录数，数据库需要这个
+        Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
+        //计算略过的记录数
+        int skipCount = (pageNo-1)*pageSize;
+//        System.out.println("pageNo:   " + pageNo);
+        System.out.println("SkipCount:   " + skipCount);
 
+        //分析一波，我们拿到了这么多参数，很明显不能直接把所有的参数一股脑的丢到需要调用的方法里面，
+        //那么在没有一个实体类相对应的情况下，要怎么才能将这些参数打包呢？
+        //使用VO？ 不行，VO是使用在给浏览器传值的，使用的地方不正确。
+        //调用map传参
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("name",name);
+        map.put("owner",owner);
+        map.put("startDate",startDate);
+        map.put("endDate",endDate);
+        map.put("skipCount",skipCount);
+        map.put("pageSize",pageSize);
+//         skipCount = (Integer) map.get("skipCount");
+//        System.out.println("map取下来的skipCount" + skipCount);
 
+        //使用动态代理的方法，创建ActivityService的实例对象。
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
 
+        //思考返回什么，前端需要什么，我们就去问业务曾拿什么。
+        /*
+               前端要：
+                    市场活动列表
+                    查询的总条数
 
+                    业务层拿到了以上两项信息之后，如果做返回
+                    map     使用率低用这个
+                    vo      使用率高用这个
 
+                假设使用map：
+                    map
+                    map.put("dataList":dataList)
+                    map.put("total":total)
+                    PrintJson map -> Json
+                    {"total":100,"dataList":[{市场活动1},{2},{3}]}
 
+                假设使用Vo：
+                    PaginationVO<T>
+                        private int total;
+                        private List<T> dataList;
+
+                    PaginationVO<Activity> vo = new PaginationVo<>;
+                    vo.setTotal(total);
+                    vo.setDataList(dataList);
+                    PrintJson vo -> json
+                    {"total":100,"dataList":[{市场活动1},{2},{3}]}
+
+         */
+        PaginationVO<Activity> vo = as.pageList(map);
+        PrintJson.printJsonObj(response,vo);
     }
 
     //打开创建市场活动的模态窗口，添加完信息后，点击保存按钮。
