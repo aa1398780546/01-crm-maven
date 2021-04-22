@@ -1,4 +1,4 @@
-package com.bjpowernode.crm.workbench.damain;
+package com.bjpowernode.crm.workbench.domain;
 
 /**
  * @author 林哥哥

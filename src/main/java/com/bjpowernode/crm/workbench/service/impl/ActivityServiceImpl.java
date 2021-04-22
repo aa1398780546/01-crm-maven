@@ -4,7 +4,8 @@ import com.bjpowernode.crm.settings.dao.UserDao;
 import com.bjpowernode.crm.settings.domain.User;
 import com.bjpowernode.crm.utils.SqlSessionUtil;
 import com.bjpowernode.crm.vo.PaginationVO;
-import com.bjpowernode.crm.workbench.damain.Activity;
+import com.bjpowernode.crm.workbench.domain.Activity;
+import com.bjpowernode.crm.workbench.domain.ActivityRemark;
 import com.bjpowernode.crm.workbench.dao.ActivityDao;
 import com.bjpowernode.crm.workbench.dao.ActivityRemarkDao;
 import com.bjpowernode.crm.workbench.service.ActivityService;
@@ -120,6 +121,60 @@ public class ActivityServiceImpl implements ActivityService {
 
             flag = false;
 
+        }
+
+        return flag;
+    }
+
+    @Override
+    public Activity detail(String id) {
+        Activity a = activityDao.detail(id);
+        return a;
+    }
+
+    @Override
+    public List<ActivityRemark> getRemarkListByAid(String activityId) {
+        List<ActivityRemark> arList = activityRemarkDao.getRemarkListByAid(activityId);
+        return arList;
+    }
+
+    @Override
+    public boolean deleteRemark(String id) {
+
+        boolean flag = true;
+
+        int count = activityRemarkDao.deleteById(id);
+
+        if(count!=1){
+            flag = false;
+        }
+
+        return flag;
+    }
+
+    @Override
+    public boolean saveRemark(ActivityRemark ar) {
+
+        boolean flag = true;
+
+        int count = activityRemarkDao.saveRemark(ar);
+
+        if(count!=1){
+            flag = false;
+        }
+
+        return flag;
+    }
+
+    @Override
+    public boolean updateRemark(ActivityRemark ar) {
+
+        boolean flag = true;
+
+        int count = activityRemarkDao.updateRemark(ar);
+
+        if(count!=1){
+            flag = false;
         }
 
         return flag;

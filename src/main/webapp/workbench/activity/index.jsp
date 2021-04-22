@@ -94,11 +94,12 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					// alert(data.success);	//undefined
 					if (data){
 						//添加市场活动成功，刷新市场活动信息列表(局部刷新)
-						alert("添加市场活动成功");
+						alert("添加物流管理成功");
+						//刷新市场活动列表
+						//回到首页，每页展示已经设置好的记录数
+						pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
 						//清空模态窗口中的数据
 						$("#activityAddForm")[0].reset();
-						//刷新市场活动列表
-						pageList(1,2);
 						//关闭市场活动的模态窗口
 						$("#createActivityModal").modal("hide");
 
@@ -110,7 +111,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 		})
 
-		//为点击创建后打开的模态窗口的-查询-按钮绑定事件，添加查询操作。
+		//为点击市场活动后的-查询-按钮绑定事件，添加查询操作。
 		$("#searchBtb").click(function (){
 			// 点击查询按钮的时候，我们应该将搜索框中的信息保存起来,保存到隐藏域中
 			$("#hidden-name").val($.trim($("#search-name").val()));
@@ -210,33 +211,23 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			var $xz = $("input[name=xz]:checked");
 
 			if($xz.length==0){
-
 				alert("请选择需要修改的记录");
-
 			}else if($xz.length>1){
-
 				alert("只能选择一条记录进行修改");
-
 				//肯定只选了一条
 			}else{
-
 				//获取到选中那条记录的id值
 				var id = $xz.val();
 
 				$.ajax({
-
 					url : "workbench/activity/getUserListAndActivity.do",
 					data : {
-
 						"id" : id
-
 					},
 					type : "get",
 					dataType : "json",
 					success : function (data) {
-
 						/*
-
 							data
 								用户列表 	User u		所有者需要用到
 								市场活动对象 通过id获取的 select * from tbl_activity where id = ?
@@ -275,7 +266,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 		})
 
-		//为更新按钮绑定事件，执行市场活动的修改操作
+		//为-修改-操作的-更新-按钮绑定事件，执行市场活动的修改操作
 		$("#updateBtn").click(function () {
 
 			$.ajax({
@@ -310,12 +301,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					}else{
 						alert("修改市场活动失败");
 					}
-
-
-
-
 				}
-
 			})
 
 		})
@@ -374,7 +360,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				$.each(data.dataList,function (i,n){
 					html += '<tr class="active">'
 					html += '	<td><input type="checkbox" name="xz" value="'+n.id+'"/></td>';
-					html += '	<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.jsp\';">'+n.name+'</a></td>';
+					html += '	<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.do?id='+n.id+'\';">'+n.name+'</a></td>';
 					html += '	<td>'+n.owner+'</td>';
 					html += '	<td>'+n.startDate+'</td>';
 					html += '	<td>'+n.endDate+'</td>';
@@ -431,7 +417,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel1">创建市场活动</h4>
+					<h4 class="modal-title" id="myModalLabel1">创建物流管理</h4>
 				</div>
 				<div class="modal-body">
 				
@@ -492,7 +478,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel2">修改市场活动</h4>
+					<h4 class="modal-title" id="myModalLabel2">修改物流管理</h4>
 				</div>
 				<div class="modal-body">
 				

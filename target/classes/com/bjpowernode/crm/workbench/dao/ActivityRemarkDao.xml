@@ -6,22 +6,11 @@
 <!--namespace 写定义的接口名称-->
 <mapper namespace="com.bjpowernode.crm.workbench.dao.ActivityRemarkDao">
 
-    <delete id="deleteByAids">
+    <delete id="deleteById">
 
-        delete
-
-        from tbl_activity_remark
-
-        where activityId in
-
-        <foreach collection="array" item="aid" open="(" close=")" separator=",">
-
-            #{aid}
-
-        </foreach>
+        delete from tbl_activity_remark where id=#{id}
 
     </delete>
-
     <select id="getCountByAids" resultType="int">
 
         select count(*)
@@ -38,5 +27,53 @@
 
 
     </select>
+    <select id="getRemarkListByAid" resultType="ActivityRemark">
+        select * from tbl_activity_remark where activityId=#{activityId}
+    </select>
+    <delete id="deleteByAids">
 
+        delete
+
+        from tbl_activity_remark
+
+        where activityId in
+
+        <foreach collection="array" item="aid" open="(" close=")" separator=",">
+
+            #{aid}
+
+        </foreach>
+
+    </delete>
+    <insert id="saveRemark">
+
+        insert into tbl_activity_remark(
+
+            id,
+            noteContent,
+            createTime,
+            createBy,
+            editFlag,
+            activityId
+
+
+        )
+
+        values(
+                  #{id},
+                  #{noteContent},
+                  #{createTime},
+                  #{createBy},
+                  #{editFlag},
+                  #{activityId}
+              )
+
+    </insert>
+    <update id="updateRemark">
+
+        update tbl_activity_remark set noteContent=#{noteContent},editBy=#{editBy},editTime=#{editTime},editFlag=#{editFlag}
+
+        where id=#{id}
+
+    </update>
 </mapper>

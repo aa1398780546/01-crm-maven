@@ -1,5 +1,9 @@
 package com.bjpowernode.crm.workbench.dao;
 
+import com.bjpowernode.crm.workbench.domain.ActivityRemark;
+
+import java.util.List;
+
 /**
  * @author 林哥哥
  */
@@ -9,4 +13,11 @@ public interface ActivityRemarkDao {
 
     int deleteByAids(String[] ids);
 
+    List<ActivityRemark> getRemarkListByAid(String activityId);
+
+    int deleteById(String id);
+
+    int saveRemark(ActivityRemark ar);
+
+    int updateRemark(ActivityRemark ar);
 }

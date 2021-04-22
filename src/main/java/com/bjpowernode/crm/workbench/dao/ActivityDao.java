@@ -1,6 +1,6 @@
 package com.bjpowernode.crm.workbench.dao;
 
-import com.bjpowernode.crm.workbench.damain.Activity;
+import com.bjpowernode.crm.workbench.domain.Activity;
 
 import java.util.List;
 import java.util.Map;
@@ -21,4 +21,6 @@ public interface ActivityDao {
     Activity getById(String id);
 
     int update(Activity a);
+
+    Activity detail(String id);
 }

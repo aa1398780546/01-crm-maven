@@ -15,7 +15,7 @@
 <!--    设置别名-->
     <typeAliases>
         <package name="com.bjpowernode.crm.settings.domain"/>
-        <package name="com.bjpowernode.crm.workbench.damain"/>
+        <package name="com.bjpowernode.crm.workbench.domain"/>
     </typeAliases>
 
     <environments default="mydev">
