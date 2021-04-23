@@ -146,7 +146,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						<span class="glyphicon glyphicon-user"></span> ${sessionScope.user.name} &nbsp&nbsp&nbsp&nbsp<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="/settings/index.html"><span class="glyphicon glyphicon-wrench"></span> 系统设置</a></li>
+						<li><a href="settings/index.html"><span class="glyphicon glyphicon-wrench"></span> 系统设置</a></li>
 						<li><a href="javascript:void(0)" data-toggle="modal" data-target="#myInformation"><span class="glyphicon glyphicon-file"></span> 我的资料</a></li>
 						<li><a href="javascript:void(0)" data-toggle="modal" data-target="#editPwdModal"><span class="glyphicon glyphicon-edit"></span> 修改密码</a></li>
 						<li><a href="javascript:void(0);" data-toggle="modal" data-target="#exitModal"><span class="glyphicon glyphicon-off"></span> 退出</a></li>

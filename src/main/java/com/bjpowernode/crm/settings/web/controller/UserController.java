@@ -51,6 +51,7 @@ public class UserController extends HttpServlet {
         String loginAct = request.getParameter("loginAct");
         String loginPwd = request.getParameter("loginPwd");
 
+
         //接收浏览器的ip地址
         String ip = request.getRemoteAddr();
 
@@ -62,7 +63,9 @@ public class UserController extends HttpServlet {
 //        UserService us = new UserServiceImpl();
         //创建Service层对象UserServiceImpl
         //在未来业务层开发，统一使用代理类形态的接口对象
-        UserService us = (UserService) ServiceFactory.getService(new UserServiceImpl());
+//        UserService us = (UserService) ServiceFactory.getService(new UserServiceImpl());
+        UserService us = new UserServiceImpl();
+
 
         try {
 
