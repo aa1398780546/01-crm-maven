@@ -31,7 +31,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				format: 'yyyy-mm-dd',
 				autoclose: true,
 				todayBtn: true,
-				pickerPosition: "bottom-left"
+				pickerPosition: "top-left"
 			});
 
 			$.ajax({
@@ -96,9 +96,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					if (data){
 						alert("线索添加成功！")
 						//清空模态窗口中的数据
-						$("#activityAddForm")[0].reset();
+						$("#clueAddForm")[0].reset();
 						//关闭市场活动的模态窗口
-						$("#createActivityModal").modal("hide");
+						$("#createClueModal").modal("hide");
 					}else {
 						alert("线索添加失败！")
 					}
@@ -125,7 +125,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<h4 class="modal-title" id="myModalLabel">创建线索</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal" role="form">
+					<form id="clueAddForm" class="form-horizontal" role="form">
 					
 						<div class="form-group">
 							<label for="create-clueOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>

@@ -66,6 +66,10 @@ public class ClueController extends HttpServlet {
         String contactSummary = request.getParameter("contactSummary");
         String nextContactTime = request.getParameter("nextContactTime");
         String address = request.getParameter("address");
+        //创建时间：当前系统时间
+        String createTime = DateTimeUtil.getSysTime();
+        //创建人：当前登录用户
+        String createBy = ((User)request.getSession().getAttribute("user")).getName();
 
         Clue c = new Clue();
         c.setId(id);
@@ -84,6 +88,8 @@ public class ClueController extends HttpServlet {
         c.setContactSummary(contactSummary);
         c.setNextContactTime(nextContactTime);
         c.setAddress(address);
+        c.setCreateTime(createTime);
+        c.setCreateBy(createBy);
 
         ClueService clueService = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
         Boolean flag = clueService.save(c);
