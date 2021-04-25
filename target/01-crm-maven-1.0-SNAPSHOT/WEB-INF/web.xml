@@ -74,6 +74,9 @@
         <url-pattern>/workbench/clue/pageList.do</url-pattern>
         <url-pattern>/workbench/clue/detail.do</url-pattern>
         <url-pattern>/workbench/clue/showActivityList.do</url-pattern>
+        <url-pattern>/workbench/clue/unbund.do</url-pattern>
+        <url-pattern>/workbench/clue/getActivityListByNameAndNotByClueId.do</url-pattern>
+        <url-pattern>/workbench/clue/relationActivityById.do</url-pattern>
     </servlet-mapping>
 
 </web-app>

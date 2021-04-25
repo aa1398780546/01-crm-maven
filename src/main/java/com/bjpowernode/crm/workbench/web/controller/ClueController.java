@@ -47,10 +47,69 @@ public class ClueController extends HttpServlet {
             pageList(request,response);
         }else if ("/workbench/clue/showActivityList.do".equals(path)) {
             showActivityList(request, response);
+        }else if ("/workbench/clue/unbund.do".equals(path)) {
+            unbund(request, response);
+        }else if ("/workbench/clue/getActivityListByNameAndNotByClueId.do".equals(path)) {
+            getActivityListByNameAndNotByClueId(request, response);
+        }else if ("/workbench/clue/relationActivityById.do".equals(path)) {
+            relationActivityById(request, response);
         }
     }
 
-    //获取Clue-detail.jsp市场活动列表
+    //为Clue-detail.jsp的关联市场活动进行关联
+    private void relationActivityById(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("执行市场活动的关联操作");
+
+        String cid = request.getParameter("cid");
+        String aids[] = request.getParameterValues("aid");
+
+        ClueService cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+
+        boolean flag = cs.relationActivityById(cid,aids);
+
+        PrintJson.printJsonFlag(response, flag);
+
+    }
+
+    //获取Clue-detail.jsp的关联市场活动需要的内容
+    private void getActivityListByNameAndNotByClueId(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("查询市场活动列表（根据名称模糊查+排除掉已经关联指定线索的列表）");
+
+        String aname = request.getParameter("aname");
+        String clueId = request.getParameter("clueId");
+
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("aname", aname);
+        map.put("clueId", clueId);
+
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+
+        List<Activity> aList = as.getActivityListByNameAndNotByClueId(map);
+
+        PrintJson.printJsonObj(response, aList);
+    }
+
+    //删除Clue-detail.jsp市场活动列表
+    private void unbund(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("进入到ClueController-unbund");
+
+        String id = request.getParameter("id");
+
+        System.out.println("id,,,,,,:"+id);
+
+        ClueService cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+
+        Boolean flag = cs.unbund(id);
+
+        PrintJson.printJsonObj(response,flag);
+
+
+    }
+
+    //获取Clue-detail.jsp所需要的市场活动列表
     private void showActivityList(HttpServletRequest request, HttpServletResponse response) {
 
         System.out.println("进入ClueController-showActivityList");
@@ -100,6 +159,7 @@ public class ClueController extends HttpServlet {
 
     }
 
+    //获取从Clue-index.jsp打开detail.jsp所需要的信息
     private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String id = request.getParameter("id");
@@ -118,6 +178,7 @@ public class ClueController extends HttpServlet {
 
     }
 
+    //保存Clue-index.jsp创建线索后的信息。
     private void save(HttpServletRequest request, HttpServletResponse response) {
 
         System.out.println("正在进入ClueController-save");
@@ -171,6 +232,7 @@ public class ClueController extends HttpServlet {
 
     }
 
+    //获取Clue-index.jsp的创建线索中所有者需要的用户信息。
     private void getUserList(HttpServletRequest request, HttpServletResponse response) {
 
         System.out.println("ClueController-getUserList正在执行");

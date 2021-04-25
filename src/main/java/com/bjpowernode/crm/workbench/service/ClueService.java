@@ -17,4 +17,7 @@ public interface ClueService {
 
     PaginationVO<Clue> pageList(Map<String, Object> map);
 
+    Boolean unbund(String id);
+
+    boolean relationActivityById(String cid, String[] aids);
 }

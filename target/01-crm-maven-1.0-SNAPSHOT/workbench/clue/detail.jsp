@@ -56,7 +56,107 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		// ====================================
 		// 以上均为动画效果，不要管即可
 
+		//打开详细信息页，自动展示市场活动列表
 		showActivityList();
+
+		//为关联市场活动模态窗口中的 搜索框 绑定事件，通过触发回车键，查询并展现所需市场活动列表
+		$("#aname").keydown(function (event){
+
+			//如果是回车键
+			if (event.keyCode==13){
+
+				// alert("keydown==13");
+				$.ajax({
+
+					url : "workbench/clue/getActivityListByNameAndNotByClueId.do",
+					data : {
+						"aname" : $.trim($("#aname").val()),
+						"clueId" : "${c.id}"
+					},
+					type : "get",
+					dataType : "json",
+					success : function (data) {
+						/*
+							data
+								[{市场活动1},{2},{3}]
+						 */
+						var html = "";
+
+						$.each(data,function (i,n) {
+							html += '<tr>';
+							html += '<td><input type="checkbox" name="xz" value="'+n.id+'"/></td>';
+							html += '<td>'+n.name+'</td>';
+							html += '<td>'+n.startDate+'</td>';
+							html += '<td>'+n.endDate+'</td>';
+							html += '<td>'+n.owner+'</td>';
+							html += '</tr>';
+						})
+
+						$("#activitySearchBody").html(html);
+
+					}
+				})
+				//展示完列表后，将模态窗口默认的回车行为禁掉。
+				return false;
+			}
+
+		})
+
+		//为关联按钮绑定事件，执行关联表的添加操作
+		$("#relationActivity").click(function (){
+
+			//找到复选框中所有挑√的复选框的jquery对象
+			var $xz = $("input[name=xz]:checked");
+
+			if($xz.length==0){
+				alert("请选择需要关联的市场活动");
+			}else{
+				//肯定选了，而且有可能是1条，有可能是多条
+
+				//workbench/clue/bund.do?cid=xxx&aid=xxx&aid=xxx&aid=xxx
+
+				var param = "cid=${c.id}&";
+
+				for(var i=0;i<$xz.length;i++) {
+
+					param += "aid=" + $($xz[i]).val();
+
+					if (i < $xz.length - 1) {
+
+						param += "&";
+
+					}
+				}
+				alert(param);
+
+				$.ajax({
+
+					url: "workbench/clue/relationActivityById.do",
+					data: param,
+					type: "post",
+					dataType: "json",
+					success: function (data) {
+						if (data.success) {
+							alert("关联市场活动成功");
+							//关联成功后，关闭模态窗口，刷新市场活动列表
+							showActivityList();
+							// //清空模态窗口中的数据
+							// $("#ActivityAddForm")[0].reset();
+							//关闭市场活动的模态窗口
+							$("#bundModal").modal("hide");
+						} else {
+							alert("关联市场活动失败");
+						}
+					}
+				})
+			}
+
+		})
+
+		// //绑定 添加市场活动 按钮
+		// $("#bundModal").click(function (){
+		// 	alert("打开市场活动列表")
+		// })
 
 	});
 
@@ -66,6 +166,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		$.ajax({
 			url:"workbench/clue/showActivityList.do",
 			data:{
+				// El表达式
 				"clueId" : "${c.id}"
 			},
 			type:"get",
@@ -100,6 +201,39 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 
 	}
+
+	//解除市场活动
+	function unbund(id) {
+
+		$.ajax({
+			url : "workbench/clue/unbund.do",
+			data : {
+				"id" : id
+			},
+			type : "post",
+			dataType : "json",
+			success : function (data) {
+				/*
+					data
+						{"success":true/false}
+				 */
+				if(data){
+					alert("解除关联成功")
+					//解除关联成功
+					//刷新关联的市场活动列表
+					showActivityList();
+				}else{
+					alert("解除关联失败");
+				}
+			}
+		})
+
+	}
+
+	//展示关联市场活动列表
+	function  showRelationActivityList(){
+
+	}
 	
 </script>
 
@@ -117,10 +251,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<h4 class="modal-title">关联市场活动</h4>
 				</div>
 				<div class="modal-body">
-					<div class="btn-group" style="position: relative; top: 18%; left: 8px;">
+					<div id="ActivityAddForm" class="btn-group" style="position: relative; top: 18%; left: 8px;">
 						<form class="form-inline" role="form">
 						  <div class="form-group has-feedback">
-						    <input type="text" class="form-control" style="width: 300px;" placeholder="请输入市场活动名称，支持模糊查询">
+						    <input type="text" id="aname" class="form-control" style="width: 300px;" placeholder="请输入市场活动名称，支持模糊查询">
 						    <span class="glyphicon glyphicon-search form-control-feedback"></span>
 						  </div>
 						</form>
@@ -136,187 +270,17 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 								<td></td>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td><input type="checkbox"/></td>
-								<td>发传单</td>
-								<td>2020-10-10</td>
-								<td>2020-10-20</td>
-								<td>zhangsan</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"/></td>
-								<td>发传单</td>
-								<td>2020-10-10</td>
-								<td>2020-10-20</td>
-								<td>zhangsan</td>
-							</tr>
+						<tbody id="activitySearchBody">
 						</tbody>
 					</table>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">关联</button>
+					<button id="relationActivity" type="button" class="btn btn-primary">关联</button>
 				</div>
 			</div>
 		</div>
 	</div>
-
-    <!-- 修改线索的模态窗口 -->
-    <div class="modal fade" id="editClueModal" role="dialog">
-        <div class="modal-dialog" role="document" style="width: 90%;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">修改线索</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" role="form">
-
-                        <div class="form-group">
-                            <label for="edit-clueOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <select class="form-control" id="edit-clueOwner">
-                                    <option>zhangsan</option>
-                                    <option>lisi</option>
-                                    <option>wangwu</option>
-                                </select>
-                            </div>
-                            <label for="edit-company" class="col-sm-2 control-label">公司<span style="font-size: 15px; color: red;">*</span></label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-company" value="动力节点">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="edit-call" class="col-sm-2 control-label">称呼</label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <select class="form-control" id="edit-call">
-                                    <option></option>
-                                    <option selected>先生</option>
-                                    <option>夫人</option>
-                                    <option>女士</option>
-                                    <option>博士</option>
-                                    <option>教授</option>
-                                </select>
-                            </div>
-                            <label for="edit-surname" class="col-sm-2 control-label">姓名<span style="font-size: 15px; color: red;">*</span></label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-surname" value="李四">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="edit-job" class="col-sm-2 control-label">职位</label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-job" value="CTO">
-                            </div>
-                            <label for="edit-email" class="col-sm-2 control-label">邮箱</label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-email" value="lisi@bjpowernode.com">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="edit-phone" class="col-sm-2 control-label">公司座机</label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-phone" value="010-84846003">
-                            </div>
-                            <label for="edit-website" class="col-sm-2 control-label">公司网站</label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-website" value="http://www.bjpowernode.com">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="edit-mphone" class="col-sm-2 control-label">手机</label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-mphone" value="12345678901">
-                            </div>
-                            <label for="edit-status" class="col-sm-2 control-label">线索状态</label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <select class="form-control" id="edit-status">
-                                    <option></option>
-                                    <option>试图联系</option>
-                                    <option>将来联系</option>
-                                    <option selected>已联系</option>
-                                    <option>虚假线索</option>
-                                    <option>丢失线索</option>
-                                    <option>未联系</option>
-                                    <option>需要条件</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="edit-source" class="col-sm-2 control-label">线索来源</label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <select class="form-control" id="edit-source">
-                                    <option></option>
-                                    <option selected>广告</option>
-                                    <option>推销电话</option>
-                                    <option>员工介绍</option>
-                                    <option>外部介绍</option>
-                                    <option>在线商场</option>
-                                    <option>合作伙伴</option>
-                                    <option>公开媒介</option>
-                                    <option>销售邮件</option>
-                                    <option>合作伙伴研讨会</option>
-                                    <option>内部研讨会</option>
-                                    <option>交易会</option>
-                                    <option>web下载</option>
-                                    <option>web调研</option>
-                                    <option>聊天</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="edit-describe" class="col-sm-2 control-label">描述</label>
-                            <div class="col-sm-10" style="width: 81%;">
-                                <textarea class="form-control" rows="3" id="edit-describe">这是一条线索的描述信息</textarea>
-                            </div>
-                        </div>
-
-                        <div style="height: 1px; width: 103%; background-color: #D5D5D5; left: -13px; position: relative;"></div>
-
-                        <div style="position: relative;top: 15px;">
-                            <div class="form-group">
-                                <label for="edit-contactSummary" class="col-sm-2 control-label">联系纪要</label>
-                                <div class="col-sm-10" style="width: 81%;">
-                                    <textarea class="form-control" rows="3" id="edit-contactSummary">这个线索即将被转换</textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="edit-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
-                                <div class="col-sm-10" style="width: 300px;">
-                                    <input type="text" class="form-control" id="edit-nextContactTime" value="2017-05-01">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style="height: 1px; width: 103%; background-color: #D5D5D5; left: -13px; position: relative; top : 10px;"></div>
-
-                        <div style="position: relative;top: 20px;">
-                            <div class="form-group">
-                                <label for="edit-address" class="col-sm-2 control-label">详细地址</label>
-                                <div class="col-sm-10" style="width: 81%;">
-                                    <textarea class="form-control" rows="1" id="edit-address">北京大兴区大族企业湾</textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">更新</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 	<!-- 返回按钮 -->
 	<div style="position: relative; top: 35px; left: 10px;">
@@ -330,8 +294,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		</div>
 		<div style="position: relative; height: 50px; width: 500px;  top: -72px; left: 700px;">
 			<button type="button" class="btn btn-default" onclick="window.location.href='workbench/clue/convert.jsp';"><span class="glyphicon glyphicon-retweet"></span> 转换</button>
-<%--			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editClueModal"><span class="glyphicon glyphicon-edit"></span> 编辑</button>--%>
-<%--			<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>--%>
 		</div>
 	</div>
 	
@@ -440,20 +402,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						</tr>
 					</thead>
 					<tbody id="showActivity">
-<%--						<tr>--%>
-<%--							<td>发传单</td>--%>
-<%--							<td>2020-10-10</td>--%>
-<%--							<td>2020-10-20</td>--%>
-<%--							<td>zhangsan</td>--%>
-<%--							<td><a href="javascript:void(0);"  style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>解除关联</a></td>--%>
-<%--						</tr>--%>
-<%--						<tr>--%>
-<%--							<td>发传单</td>--%>
-<%--							<td>2020-10-10</td>--%>
-<%--							<td>2020-10-20</td>--%>
-<%--							<td>zhangsan</td>--%>
-<%--							<td><a href="javascript:void(0);"  style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>解除关联</a></td>--%>
-<%--						</tr>--%>
 					</tbody>
 				</table>
 			</div>

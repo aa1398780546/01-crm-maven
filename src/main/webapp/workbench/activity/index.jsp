@@ -311,7 +311,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		
 	});
 
-
 	//查询市场活动列表方法，		pageNo:页码		pageSize:每页展示记录数
 	function pageList(pageNo,pageSize){
 
