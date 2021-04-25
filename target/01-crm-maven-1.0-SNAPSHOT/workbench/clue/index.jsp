@@ -17,6 +17,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 <script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
 <script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
 
+<%--	分页插件--%>
+<link rel="stylesheet" type="text/css" href="jquery/bs_pagination/jquery.bs_pagination.min.css">
+<script type="text/javascript" src="jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
+<script type="text/javascript" src="jquery/bs_pagination/en.js"></script>
+
 <script type="text/javascript">
 
 	$(function(){
@@ -95,6 +100,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				success:function (data){
 					if (data){
 						alert("线索添加成功！")
+						//刷新市场活动列表
+						//回到首页，每页展示已经设置好的记录数
+						pageList(1,$("#cluePage").bs_pagination('getOption', 'rowsPerPage'));
 						//清空模态窗口中的数据
 						$("#clueAddForm")[0].reset();
 						//关闭市场活动的模态窗口
@@ -107,12 +115,123 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 
 		})
+
+		//为全选的复选框绑定事件，触发全选操作
+		$("#qx").click(function () {
+
+			$("input[name=xz]").prop("checked",this.checked);
+
+		})
+
+		//为全选款下面的复选框，如果都选✔，全选框✔
+		$("#clueBody").on("click",$("input[name=xz]"),function () {
+			//如果	总个数=✔个数		全选框✔
+			$("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
+		})
+
+		//为线索页面的详细信息按钮保存按钮绑定事件。
+
+
+		//页面加载完毕后触发pageList
+		pageList(1,3);
 		
 	});
+
+	//查询市场活动列表方法，		pageNo:页码		pageSize:每页展示记录数
+	function pageList(pageNo,pageSize){
+
+		//将全选的复选框的√干掉
+		$("#qx").prop("checked",false);
+
+		//发送Ajax请求
+		$.ajax({
+			url:"workbench/clue/pageList.do",
+			data:{
+				"pageNo":pageNo,
+				"pageSize":pageSize,
+			},
+			type:"get",
+			dataType:"json",
+			success:function (data){
+				/*
+					data需要为我提供：
+						1. 我们需要的：市场活动信息列表	[{市场活动1},{市场活动2},{市场活动3},...]
+						2. 分页查询需要：查询出来的总记录数	{"total":100}
+					所以data的输出形式为：
+						data={"total":100,"dataList":[{市场活动1},{市场活动2},{市场活动3},...]}
+				 */
+				/*
+					字符串拼接格式：
+					<tr class="active">
+							<td><input type="checkbox" /></td>
+							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/clue/detail.jsp';">王健林先生</a></td>
+							<td>动力节点</td>
+							<td>010-84846003</td>
+							<td>12345678901</td>
+							<td>广告</td>
+							<td>zhangsan</td>
+							<td>已联系</td>
+					</tr>
+				 */
+				var html ="";
+
+				$.each(data.dataList,function (i,n){
+					html += '<tr class="clue">'
+					html += '	<td><input type="checkbox" name="xz" value="'+n.id+'"/></td>';
+					html += '	<td><a style="text-decoration: none; cursor: pointer;"onclick="window.location.href=\'workbench/clue/detail.do?id='+n.id+'\';">'+n.fullname+''+n.appellation+'</a></td>';
+					html += '	<td>'+n.company+'</td>';
+					html += '	<td>'+n.phone+'</td>';
+					html += '	<td>'+n.mphone+'</td>';
+					html += '	<td>'+n.source+'</td>';
+					html += '	<td>'+n.createBy+'</td>';
+					html += '	<td>'+n.state+'</td>';
+					html += '</tr>';
+				})
+
+				$("#clueBody").html(html);
+
+				//计算总页数
+				var totalPages = data.total%pageSize==0?data.total/pageSize:parseInt(data.total/pageSize)+1;
+
+				//数据处理完毕后，结合分页查询，对前端展现分页信息
+				$("#cluePage").bs_pagination({
+					currentPage: pageNo, // 页码
+					rowsPerPage: pageSize, // 每页显示的记录条数
+					maxRowsPerPage: 20, // 每页最多显示的记录条数
+					totalPages: totalPages, // 总页数
+					totalRows: data.total, // 总记录条数
+
+					visiblePageLinks: 3, // 显示几个卡片
+
+					showGoToPage: true,
+					showRowsPerPage: true,
+					showRowsInfo: true,
+					showRowsDefaultInfo: true,
+
+					onChangePage : function(event, data){
+						pageList(data.currentPage , data.rowsPerPage);
+					}
+				});
+
+
+			}
+		})
+
+	}
+	
 	
 </script>
 </head>
 <body>
+
+<%--	&lt;%&ndash;	添加隐藏域&ndash;%&gt;--%>
+<%--	<input type="hidden" id="hidden-name"/>--%>
+<%--	<input type="hidden" id="hidden-company"/>--%>
+<%--	<input type="hidden" id="hidden-phone"/>--%>
+<%--	<input type="hidden" id="hidden-mphone"/>--%>
+<%--	<input type="hidden" id="hidden-source"/>--%>
+<%--	<input type="hidden" id="hidden-createBy"/>--%>
+<%--	<input type="hidden" id="hidden-state"/>--%>
 
 	<!-- 创建线索的模态窗口 -->
 	<div class="modal fade" id="createClueModal" role="dialog">
@@ -403,10 +522,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			</div>
 		</div>
 	</div>
-	
-	
-	
-	
+
 	<div>
 		<div style="position: relative; left: 10px; top: -10px;">
 			<div class="page-header">
@@ -414,110 +530,25 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			</div>
 		</div>
 	</div>
-	
-	<div style="position: relative; top: -20px; left: 0px; width: 100%; height: 100%;">
-	
-		<div style="width: 100%; position: absolute;top: 5px; left: 10px;">
-		
-			<div class="btn-toolbar" role="toolbar" style="height: 80px;">
-				<form class="form-inline" role="form" style="position: relative;top: 8%; left: 5px;">
-				  
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">名称</div>
-				      <input class="form-control" type="text">
-				    </div>
-				  </div>
-				  
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">公司</div>
-				      <input class="form-control" type="text">
-				    </div>
-				  </div>
-				  
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">公司座机</div>
-				      <input class="form-control" type="text">
-				    </div>
-				  </div>
-				  
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">线索来源</div>
-					  <select class="form-control">
-					  	  <option></option>
-					  	  <option>广告</option>
-						  <option>推销电话</option>
-						  <option>员工介绍</option>
-						  <option>外部介绍</option>
-						  <option>在线商场</option>
-						  <option>合作伙伴</option>
-						  <option>公开媒介</option>
-						  <option>销售邮件</option>
-						  <option>合作伙伴研讨会</option>
-						  <option>内部研讨会</option>
-						  <option>交易会</option>
-						  <option>web下载</option>
-						  <option>web调研</option>
-						  <option>聊天</option>
-					  </select>
-				    </div>
-				  </div>
-				  
-				  <br>
-				  
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">所有者</div>
-				      <input class="form-control" type="text">
-				    </div>
-				  </div>
-				  
-				  
-				  
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">手机</div>
-				      <input class="form-control" type="text">
-				    </div>
-				  </div>
-				  
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">线索状态</div>
-					  <select class="form-control">
-					  	<option></option>
-					  	<option>试图联系</option>
-					  	<option>将来联系</option>
-					  	<option>已联系</option>
-					  	<option>虚假线索</option>
-					  	<option>丢失线索</option>
-					  	<option>未联系</option>
-					  	<option>需要条件</option>
-					  </select>
-				    </div>
-				  </div>
 
-				  <button type="submit" class="btn btn-default">查询</button>
-				  
-				</form>
-			</div>
+	<div style="position: relative; top: -20px; left: 0px; width: 100%; height: 100%;">
+
+		<div style="width: 100%; position: absolute;top: 5px; left: 10px;">
+
 			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 40px;">
 				<div class="btn-group" style="position: relative; top: 18%;">
 				  <button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
 				  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editClueModal"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
 				  <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 				</div>
-				
-				
+
+
 			</div>
 			<div style="position: relative;top: 50px;">
 				<table class="table table-hover">
 					<thead>
 						<tr style="color: #B3B3B3;">
-							<td><input type="checkbox" /></td>
+							<td><input type="checkbox" id="qx" /></td>
 							<td>名称</td>
 							<td>公司</td>
 							<td>公司座机</td>
@@ -527,64 +558,33 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 							<td>线索状态</td>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/clue/detail.jsp';">李四先生</a></td>
-							<td>动力节点</td>
-							<td>010-84846003</td>
-							<td>12345678901</td>
-							<td>广告</td>
-							<td>zhangsan</td>
-							<td>已联系</td>
-						</tr>
-                        <tr class="active">
-                            <td><input type="checkbox" /></td>
-                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/clue/detail.jsp';">李四先生</a></td>
-                            <td>动力节点</td>
-                            <td>010-84846003</td>
-                            <td>12345678901</td>
-                            <td>广告</td>
-                            <td>zhangsan</td>
-                            <td>已联系</td>
-                        </tr>
+					<tbody id="clueBody">
+<%--						<tr>--%>
+<%--							<td><input type="checkbox" /></td>--%>
+<%--							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/clue/detail.do?id=a62268e70b0d48358bf4d9661fc48645';">马云先生</a></td>--%>
+<%--							<td>xxx</td>--%>
+<%--							<td>010-84846003</td>--%>
+<%--							<td>12345678901</td>--%>
+<%--							<td>广告</td>--%>
+<%--							<td>zhangsan</td>--%>
+<%--							<td>已联系</td>--%>
+<%--						</tr>--%>
+<%--                        <tr class="active">--%>
+<%--                            <td><input type="checkbox" /></td>--%>
+<%--                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/clue/detail.jsp';">王健林先生</a></td>--%>
+<%--                            <td>xxx</td>--%>
+<%--                            <td>010-84846003</td>--%>
+<%--                            <td>12345678901</td>--%>
+<%--                            <td>广告</td>--%>
+<%--                            <td>zhangsan</td>--%>
+<%--                            <td>已联系</td>--%>
+<%--                        </tr>--%>
 					</tbody>
 				</table>
 			</div>
 			
 			<div style="height: 50px; position: relative;top: 60px;">
-				<div>
-					<button type="button" class="btn btn-default" style="cursor: default;">共<b>50</b>条记录</button>
-				</div>
-				<div class="btn-group" style="position: relative;top: -34px; left: 110px;">
-					<button type="button" class="btn btn-default" style="cursor: default;">显示</button>
-					<div class="btn-group">
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							10
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">20</a></li>
-							<li><a href="#">30</a></li>
-						</ul>
-					</div>
-					<button type="button" class="btn btn-default" style="cursor: default;">条/页</button>
-				</div>
-				<div style="position: relative;top: -88px; left: 285px;">
-					<nav>
-						<ul class="pagination">
-							<li class="disabled"><a href="#">首页</a></li>
-							<li class="disabled"><a href="#">上一页</a></li>
-							<li class="active"><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#">下一页</a></li>
-							<li class="disabled"><a href="#">末页</a></li>
-						</ul>
-					</nav>
-				</div>
+				<div id="cluePage">	</div>
 			</div>
 			
 		</div>

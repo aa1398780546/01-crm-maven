@@ -41,7 +41,80 @@ public class ClueController extends HttpServlet {
            getUserList(request,response);
         } else if ("/workbench/clue/save.do".equals(path)) {
            save(request,response);
+        } else if ("/workbench/clue/detail.do".equals(path)) {
+           detail(request,response);
+        } else if ("/workbench/clue/pageList.do".equals(path)){
+            pageList(request,response);
+        }else if ("/workbench/clue/showActivityList.do".equals(path)) {
+            showActivityList(request, response);
         }
+    }
+
+    //获取Clue-detail.jsp市场活动列表
+    private void showActivityList(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("进入ClueController-showActivityList");
+
+        String clueId = request.getParameter("clueId");
+
+        System.out.println("clueId...:" + clueId);
+
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+
+        List<Activity> activityList = as.getActivityListById(clueId);
+
+        PrintJson.printJsonObj(response,activityList);
+
+    }
+
+    //获取Clue-index.jsp分页列表所要的total和ActivityList
+    private void pageList(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("进入到查询物流管理信息列表的操作（结合条件查询+分页查询）");
+
+         /*
+                计算出略过的记录数
+                为什么要记录这个 因为数据库的分页 select * form student limit 10,5
+                表示的意思是从略过第10个，从第11个开始数，数5个。
+         */
+        //页码,计算略过的记录数，但是数据库不需要这个
+        Integer pageNo = Integer.valueOf(request.getParameter("pageNo"));
+        //每页展现的记录数，计算略过的记录数，数据库需要这个
+        Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
+        System.out.println("pageSize:  "+ pageSize);
+        //计算略过的记录数
+        int skipCount = (pageNo-1)*pageSize;
+//        System.out.println("pageNo:   " + pageNo);
+        System.out.println("SkipCount:   " + skipCount);
+
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("pageSize",pageSize);
+        map.put("skipCount",skipCount);
+
+        //使用动态代理的方法，创建ActivityService的实例对象。
+        ClueService cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+
+        PaginationVO<Clue> vo = cs.pageList(map);
+
+        PrintJson.printJsonObj(response,vo);
+
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String id = request.getParameter("id");
+
+        System.out.println("id=======" + id);
+
+        ClueService clueService = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+
+        Clue clue = clueService.detail(id);
+
+        //打开一个新的页面，不是使用局部刷新，选择重定向或者请求转发。
+//        PrintJson.printJsonObj(response,clue);
+
+        request.setAttribute("c",clue);
+        request.getRequestDispatcher("/workbench/clue/detail.jsp").forward(request,response);
 
     }
 

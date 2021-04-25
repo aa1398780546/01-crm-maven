@@ -315,6 +315,16 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	//查询市场活动列表方法，		pageNo:页码		pageSize:每页展示记录数
 	function pageList(pageNo,pageSize){
 
+		//年月日的时间日历格式
+		$(".time").datetimepicker({
+			minView: "month",
+			language:  'zh-CN',
+			format: 'yyyy-mm-dd',
+			autoclose: true,
+			todayBtn: true,
+			pickerPosition: "bottom-left"
+		});
+
 		//将全选的复选框的√干掉
 		$("#qx").prop("checked",false);
 
@@ -573,13 +583,13 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">开始日期</div>
-					  <input class="form-control" type="text" id="search-startDate"/>
+					  <input class="form-control time" type="text" id="search-startDate"/>
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">结束日期</div>
-					  <input class="form-control" type="text" id="search-endDate">
+					  <input class="form-control time" type="text" id="search-endDate">
 				    </div>
 				  </div>
 				  

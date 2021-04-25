@@ -91,7 +91,7 @@ public class ActivityController extends HttpServlet {
 
     }
 
-    //新增一条备注
+    //市场活动-详细信息页-新增一条备注
     private void saveRemark(HttpServletRequest request, HttpServletResponse response) {
 
         System.out.println("执行添加备注操作");
@@ -124,7 +124,7 @@ public class ActivityController extends HttpServlet {
 
     }
 
-    //根据Id删除备注信息
+    //市场活动-详细信息页-删除备注信息
     private void deleteRemark(HttpServletRequest request, HttpServletResponse response) {
 
         System.out.println("删除备注操作");
@@ -139,7 +139,7 @@ public class ActivityController extends HttpServlet {
 
     }
 
-    //根据Id刷新备注信息
+    //市场活动-详细信息页-刷新备注信息
     private void getRemarkListByAid(HttpServletRequest request, HttpServletResponse response) {
 
         System.out.println("根据物流管理id，取得备注信息列表");

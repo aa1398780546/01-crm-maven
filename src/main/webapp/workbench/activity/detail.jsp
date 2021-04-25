@@ -159,8 +159,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	});
 
 	//页面加载完毕后，展现改市场活动关联的备注信息列表
-	//为何不和页面一起加载，因为要局部刷新，每次添加备注都重新刷一次页面。
-	//还有添加、修改、删除后，都需要刷新列表。
 	function showRemarkList(){
 
 		$.ajax({
@@ -259,7 +257,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 </head>
 <body>
-	
+
+
 	<!-- 修改市场活动备注的模态窗口 -->
 	<div class="modal fade" id="editRemarkModal" role="dialog">
 		<%-- 备注的id --%>
@@ -283,7 +282,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-default" onclick="window.location.href='workbench/clue/convert.jsp';"><span class="glyphicon glyphicon-retweet"></span> 转换</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <button type="button" class="btn btn-primary" id="updateRemarkBtn">更新</button>
                 </div>
             </div>
@@ -302,8 +302,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<br><br>
 		</div>
 <%--		<div style="position: relative; height: 50px; width: 250px;  top: -72px; left: 700px;">--%>
-<%--			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editActivityModal"><span class="glyphicon glyphicon-edit"></span> 编辑</button>--%>
-<%--			<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>--%>
+<%--&lt;%&ndash;			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editActivityModal"><span class="glyphicon glyphicon-edit"></span> 编辑</button>&ndash;%&gt;--%>
+<%--&lt;%&ndash;			<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>&ndash;%&gt;--%>
 <%--		</div>--%>
 	</div>
 	
@@ -358,21 +358,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<h4>备注</h4>
 		</div>
 
-<%--		<!-- 备注1 -->--%>
-<%--		<div class="remarkDiv" style="height: 60px;">--%>
-<%--			<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">--%>
-<%--			<div style="position: relative; top: -40px; left: 40px;" >--%>
-<%--				<h5>哎呦！</h5>--%>
-<%--				<font color="gray">市场活动</font> <font color="gray">-</font> <b>发传单</b> <small style="color: gray;"> 2017-01-22 10:10:10 由zhangsan</small>--%>
-<%--				<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">--%>
-<%--					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #E6E6E6;"></span></a>--%>
-<%--					&nbsp;&nbsp;&nbsp;&nbsp;--%>
-<%--					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a>--%>
-<%--				</div>--%>
-<%--			</div>--%>
-<%--		</div>--%>
-
-
 		<div id="remarkDiv" style="background-color: #E6E6E6; width: 870px; height: 90px;">
 			<form role="form" style="position: relative;top: 10px; left: 10px;">
 				<textarea id="remark" class="form-control" style="width: 850px; resize : none;" rows="2"  placeholder="添加备注..."></textarea>
@@ -384,6 +369,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		</div>
 
 	</div>
+
+
 	<div style="height: 200px;"></div>
 </body>
 </html>

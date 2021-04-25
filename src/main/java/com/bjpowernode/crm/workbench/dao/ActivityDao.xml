@@ -171,4 +171,23 @@
 
 
     </select>
+    <select id="getActivityListById" resultType="Activity">
+
+        select
+            a.id,
+            u.name as owner,
+            a.name,
+            a.startDate,
+            a.endDate
+
+        from tbl_activity a
+
+        join tbl_user u
+        on a.owner=u.id
+
+        join tbl_clue_activity_relation t
+        on a.id=t.activityId
+
+        where t.clueId=#{clueId}
+    </select>
 </mapper>
