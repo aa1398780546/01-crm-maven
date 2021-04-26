@@ -57,6 +57,18 @@
 
     </select>
 
+    <select id="getClueListByCondition" resultType="Customer"   >
+        select  * from tbl_customer
+    </select>
+
+    <select id="getTotalByCondition" resultType="int">
+
+        select count(*)
+
+        from tbl_customer
+
+    </select>
+
 </mapper>
 
 

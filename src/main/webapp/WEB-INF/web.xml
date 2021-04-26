@@ -91,6 +91,16 @@
         <url-pattern>/workbench/transaction/tranList.do</url-pattern>
     </servlet-mapping>
 
+    <!--  顾客活动-->
+    <servlet>
+        <servlet-name>CustomerController</servlet-name>
+        <servlet-class>com.bjpowernode.crm.workbench.web.controller.CustomerController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CustomerController</servlet-name>
+        <url-pattern>/workbench/customer/customerList.do</url-pattern>
+    </servlet-mapping>
+
 </web-app>
 
 
