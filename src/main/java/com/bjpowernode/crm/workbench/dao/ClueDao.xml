@@ -5,6 +5,12 @@
 
 <mapper namespace="com.bjpowernode.crm.workbench.dao.ClueDao">
 
+    <delete id="delete">
+
+        delete from tbl_clue where id=#{id}
+
+    </delete>
+
     <insert id="save">
         insert into tbl_clue(
             id,
@@ -75,6 +81,10 @@
         join tbl_user u
         on c.owner=u.id
         where c.id=#{id}
+    </select>
+
+    <select id="getById" resultType="Clue">
+        select * from tbl_clue where id=#{id}
     </select>
 
 <!--    线索信息列表-->

@@ -15,6 +15,18 @@
 
     </insert>
 
+    <select id="getListByClueId" resultType="ClueActivityRelation">
+
+        select * from tbl_clue_activity_relation where clueId=#{clueId}
+
+    </select>
+
+    <delete id="delete">
+
+        delete from tbl_clue_activity_relation where id=#{id}
+
+    </delete>
+
 </mapper>
 
 

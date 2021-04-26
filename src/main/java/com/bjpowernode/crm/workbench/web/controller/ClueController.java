@@ -11,6 +11,7 @@ import com.bjpowernode.crm.vo.PaginationVO;
 import com.bjpowernode.crm.workbench.domain.Activity;
 import com.bjpowernode.crm.workbench.domain.ActivityRemark;
 import com.bjpowernode.crm.workbench.domain.Clue;
+import com.bjpowernode.crm.workbench.domain.Tran;
 import com.bjpowernode.crm.workbench.service.ActivityService;
 import com.bjpowernode.crm.workbench.service.ClueService;
 import com.bjpowernode.crm.workbench.service.impl.ActivityServiceImpl;
@@ -53,7 +54,82 @@ public class ClueController extends HttpServlet {
             getActivityListByNameAndNotByClueId(request, response);
         }else if ("/workbench/clue/relationActivityById.do".equals(path)) {
             relationActivityById(request, response);
+        }else if ("/workbench/clue/getActivityByName.do".equals(path)) {
+            getActivityByName(request, response);
+        }else if ("/workbench/clue/convert.do".equals(path)) {
+            convert(request, response);
         }
+    }
+
+    //执行线索转换的操作
+    private void convert(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        System.out.println("执行线索转换的操作");
+
+        String clueId = request.getParameter("clueId");
+
+        //接收是否需要创建交易的标记
+        String flag = request.getParameter("flag");
+
+        String createBy = ((User)request.getSession().getAttribute("user")).getName();
+
+        Tran t = null;
+
+        //如果需要创建交易
+        if("a".equals(flag)){
+
+            t = new Tran();
+
+            //接收交易表单中的参数
+            String money = request.getParameter("money");
+            String name = request.getParameter("name");
+            String expectedDate = request.getParameter("expectedDate");
+            String stage = request.getParameter("stage");
+            String activityId = request.getParameter("activityId");
+            String id = UUIDUtil.getUUID();
+            String createTime = DateTimeUtil.getSysTime();
+
+            t.setId(id);
+            t.setMoney(money);
+            t.setName(name);
+            t.setExpectedDate(expectedDate);
+            t.setStage(stage);
+            t.setActivityId(activityId);
+            t.setCreateBy(createBy);
+            t.setCreateTime(createTime);
+
+        }
+
+        ClueService cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+
+        /*
+            为业务层传递的参数：
+
+            1.必须传递的参数clueId，有了这个clueId之后我们才知道要转换哪条记录
+            2.必须传递的参数t，因为在线索转换的过程中，有可能会临时创建一笔交易（业务层接收的t也有可能是个null）
+
+         */
+        boolean flag1 = cs.convert(clueId,t,createBy);
+
+        if(flag1){
+            //重定向302，因为不是Ajax请求。
+            response.sendRedirect(request.getContextPath()+"/workbench/clue/index.jsp");
+
+        }
+    }
+
+    //为Clue-convert.jsp的搜索框，搜索市场活动
+    private void getActivityByName(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("根据用户输入的值查询市场活动");
+
+        String aname = request.getParameter("aname");
+
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        List<Activity> activityList = as.getActivityByName(aname);
+
+        PrintJson.printJsonObj(response,activityList);
+
     }
 
     //为Clue-detail.jsp的关联市场活动进行关联
@@ -159,7 +235,7 @@ public class ClueController extends HttpServlet {
 
     }
 
-    //获取从Clue-index.jsp打开detail.jsp所需要的信息
+    //获取从Clue-index.jsp打开detail.jsp所需要的信息,request.setAttribute("c",clue);
     private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String id = request.getParameter("id");

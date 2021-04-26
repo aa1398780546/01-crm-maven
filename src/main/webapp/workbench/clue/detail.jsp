@@ -127,7 +127,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 					}
 				}
-				alert(param);
 
 				$.ajax({
 
@@ -230,9 +229,36 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 	}
 
-	//展示关联市场活动列表
-	function  showRelationActivityList(){
+	//对关联市场活动列表进行刷新
+	function defaultRelationActivityList(){
+		$.ajax({
 
+			url : "workbench/clue/getActivityListByNameAndNotByClueId.do",
+			data : {
+				"aname" : $.trim($("#aname").val("")),
+				"clueId" : "${c.id}"
+			},
+			type : "get",
+			dataType : "json",
+			success : function (data) {
+
+				var html = "";
+
+				$.each(data,function (i,n) {
+					html += '<tr>';
+					html += '<td><input type="checkbox" name="xz" value="'+n.id+'"/></td>';
+					html += '<td>'+n.name+'</td>';
+					html += '<td>'+n.startDate+'</td>';
+					html += '<td>'+n.endDate+'</td>';
+					html += '<td>'+n.owner+'</td>';
+					html += '</tr>';
+				})
+
+				$("#activitySearchBody").html(html);
+			}
+		})
+		//展示完列表后，将模态窗口默认的回车行为禁掉。
+		return false;
 	}
 	
 </script>
@@ -293,7 +319,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<h3>${c.fullname}${c.appellation} <small>${c.company}</small></h3>
 		</div>
 		<div style="position: relative; height: 50px; width: 500px;  top: -72px; left: 700px;">
-			<button type="button" class="btn btn-default" onclick="window.location.href='workbench/clue/convert.jsp';"><span class="glyphicon glyphicon-retweet"></span> 转换</button>
+			<button type="button" class="btn btn-default" onclick="window.location.href='workbench/clue/convert.jsp?id=${c.id}&fullname=${c.fullname}&appellation=${c.appellation}&company=${c.company}&createBy=${c.createBy}';"><span class="glyphicon glyphicon-retweet"></span> 转换</button>
 		</div>
 	</div>
 	
@@ -382,7 +408,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
             <div style="height: 1px; width: 850px; background: #D5D5D5; position: relative; top: -20px;"></div>
         </div>
 	</div>
-	
 
 	<!-- 市场活动 -->
 	<div>

@@ -77,6 +77,18 @@
         <url-pattern>/workbench/clue/unbund.do</url-pattern>
         <url-pattern>/workbench/clue/getActivityListByNameAndNotByClueId.do</url-pattern>
         <url-pattern>/workbench/clue/relationActivityById.do</url-pattern>
+        <url-pattern>/workbench/clue/getActivityByName.do</url-pattern>
+        <url-pattern>/workbench/clue/convert.do</url-pattern>
+    </servlet-mapping>
+
+    <!--  交易活动-->
+    <servlet>
+        <servlet-name>TranController</servlet-name>
+        <servlet-class>com.bjpowernode.crm.workbench.web.controller.TranController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TranController</servlet-name>
+        <url-pattern>/workbench/transaction/xx.do</url-pattern>
     </servlet-mapping>
 
 </web-app>

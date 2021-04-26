@@ -77,6 +77,8 @@
         <url-pattern>/workbench/clue/unbund.do</url-pattern>
         <url-pattern>/workbench/clue/getActivityListByNameAndNotByClueId.do</url-pattern>
         <url-pattern>/workbench/clue/relationActivityById.do</url-pattern>
+        <url-pattern>/workbench/clue/getActivityByName.do</url-pattern>
+        <url-pattern>/workbench/clue/convert.do</url-pattern>
     </servlet-mapping>
 
 </web-app>
