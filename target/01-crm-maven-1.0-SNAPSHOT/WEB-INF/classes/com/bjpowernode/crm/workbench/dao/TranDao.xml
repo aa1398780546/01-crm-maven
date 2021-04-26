@@ -4,8 +4,92 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bjpowernode.crm.workbench.dao.TranDao">
-	
-  	
+
+    <insert id="save">
+
+        insert into tbl_tran(
+
+            id,
+            owner,
+            money,
+            name,
+            expectedDate,
+            customerId,
+            stage,
+            type,
+            source,
+            activityId,
+            contactsId,
+            createBy,
+            createTime,
+            description,
+            contactSummary,
+            nextContactTime
+
+
+        )
+
+        values(
+
+                  #{id},
+                  #{owner},
+                  #{money},
+                  #{name},
+                  #{expectedDate},
+                  #{customerId},
+                  #{stage},
+                  #{type},
+                  #{source},
+                  #{activityId},
+                  #{contactsId},
+                  #{createBy},
+                  #{createTime},
+                  #{description},
+                  #{contactSummary},
+                  #{nextContactTime}
+
+              )
+
+
+    </insert>
+
+    <select id="getClueListByCondition" resultType="Tran"   >
+        select
+            t.id,
+            t.owner,
+            t.money,
+            t.name,
+            t.expectedDate,
+            u.name as customerId,
+            t.stage,
+            t.type,
+            t.source,
+            t.activityId,
+            o.fullname as contactsId,
+            t.createBy,
+            t.createTime,
+            t.editBy,
+            t.editTime,
+            t.description,
+            t.contactSummary,
+            t.nextContactTime
+
+        from tbl_tran t
+            join tbl_contacts o
+                on t.contactsId=o.id
+            join tbl_customer u
+                 on t.customerId=u.id
+
+    </select>
+
+    <select id="getTotalByCondition" resultType="int">
+
+        select count(*)
+
+        from tbl_tran
+
+    </select>
+
 </mapper>
 
 

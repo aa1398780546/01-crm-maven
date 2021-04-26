@@ -5,6 +5,12 @@
 
 <mapper namespace="com.bjpowernode.crm.workbench.dao.ClueDao">
 
+    <delete id="delete">
+
+        delete from tbl_clue where id=#{id}
+
+    </delete>
+
     <insert id="save">
         insert into tbl_clue(
             id,
@@ -77,6 +83,10 @@
         where c.id=#{id}
     </select>
 
+    <select id="getById" resultType="Clue">
+        select * from tbl_clue where id=#{id}
+    </select>
+
 <!--    线索信息列表-->
     <select id="getClueListByCondition" resultType="Clue">
         select
@@ -104,51 +114,6 @@
 
         from tbl_clue
 
-<!--        <where>-->
-
-<!--            <if test="fullname!=null and fullname!=''">-->
-
-<!--                fullname like '%' #{fullname} '%'-->
-
-<!--            </if>-->
-
-<!--            <if test="company!=null and company!=''">-->
-
-<!--                and company like '%' #{company} '%'-->
-
-<!--            </if>-->
-
-<!--            <if test="phone!=null and phone!=''">-->
-
-<!--                and phone like '%' #{phone} '%'-->
-
-<!--            </if>-->
-
-<!--            <if test="mphone!=null and mphone!=''">-->
-
-<!--                and mphone like '%' #{mphone} '%'-->
-
-<!--            </if>-->
-
-<!--            <if test="source!=null and source!=''">-->
-
-<!--                and source like '%' #{source} '%'-->
-
-<!--            </if>-->
-
-<!--            <if test="createBy!=null and createBy!=''">-->
-
-<!--                and createBy like '%' #{createBy} '%'-->
-
-<!--            </if>-->
-
-<!--            <if test="state!=null and state!=''">-->
-
-<!--                and state like '%' #{state} '%'-->
-
-<!--            </if>-->
-
-<!--        </where>-->
     </select>
   	
 </mapper>

@@ -61,7 +61,7 @@ public class ClueController extends HttpServlet {
         }
     }
 
-    //执行线索转换的操作
+    //Clue-convert.jsp执行线索转换的操作
     private void convert(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         System.out.println("执行线索转换的操作");

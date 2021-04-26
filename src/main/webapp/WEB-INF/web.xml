@@ -88,7 +88,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>TranController</servlet-name>
-        <url-pattern>/workbench/transaction/xx.do</url-pattern>
+        <url-pattern>/workbench/transaction/tranList.do</url-pattern>
     </servlet-mapping>
 
 </web-app>
