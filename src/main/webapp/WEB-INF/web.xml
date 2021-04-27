@@ -89,6 +89,8 @@
     <servlet-mapping>
         <servlet-name>TranController</servlet-name>
         <url-pattern>/workbench/transaction/tranList.do</url-pattern>
+        <url-pattern>/workbench/transaction/getUserList.do</url-pattern>
+        <url-pattern>/workbench/transaction/getCustomerName.do</url-pattern>
     </servlet-mapping>
 
     <!--  顾客活动-->
@@ -100,6 +102,18 @@
         <servlet-name>CustomerController</servlet-name>
         <url-pattern>/workbench/customer/customerList.do</url-pattern>
     </servlet-mapping>
+
+
+    <!--  联系人活动-->
+    <servlet>
+        <servlet-name>ContactsController</servlet-name>
+        <servlet-class>com.bjpowernode.crm.workbench.web.controller.ContactsController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContactsController</servlet-name>
+        <url-pattern>/workbench/contacts/contactsList.do</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>
 

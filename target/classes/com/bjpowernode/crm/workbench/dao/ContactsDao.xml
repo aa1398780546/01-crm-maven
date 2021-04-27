@@ -54,7 +54,42 @@
 
 
     </insert>
-  	
+
+    <select id="getClueListByCondition" resultType="Contacts"   >
+        select
+            o.id,
+            o.owner,
+            o.source,
+            u.name as customerId,
+            o.fullname,
+            o.appellation,
+            o.email,
+            o.mphone,
+            o.job,
+            o.birth,
+            o.createBy,
+            o.createTime,
+            o.editBy,
+            o.editTime,
+            o.description,
+            o.contactSummary,
+            o.nextContactTime,
+            o.address
+
+        from tbl_contacts o
+            join tbl_customer u
+                on o.customerId=u.id
+
+    </select>
+
+    <select id="getTotalByCondition" resultType="int">
+
+        select count(*)
+
+        from tbl_contacts
+
+    </select>
+
 </mapper>
 
 

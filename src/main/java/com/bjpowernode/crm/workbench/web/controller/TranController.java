@@ -13,9 +13,11 @@ import com.bjpowernode.crm.workbench.domain.Clue;
 import com.bjpowernode.crm.workbench.domain.Tran;
 import com.bjpowernode.crm.workbench.service.ActivityService;
 import com.bjpowernode.crm.workbench.service.ClueService;
+import com.bjpowernode.crm.workbench.service.CustomerService;
 import com.bjpowernode.crm.workbench.service.TranService;
 import com.bjpowernode.crm.workbench.service.impl.ActivityServiceImpl;
 import com.bjpowernode.crm.workbench.service.impl.ClueServiceImpl;
+import com.bjpowernode.crm.workbench.service.impl.CustomerServiceImpl;
 import com.bjpowernode.crm.workbench.service.impl.TranServiceImpl;
 
 import javax.servlet.ServletException;
@@ -41,9 +43,38 @@ public class TranController extends HttpServlet {
 
         if ("/workbench/transaction/tranList.do".equals(path)) {
             tranList(request,response);
-        } else if ("/workbench/transaction/xx.do".equals(path)) {
-
+        } else if ("/workbench/transaction/getUserList.do".equals(path)) {
+            getUserList(request,response);
+        }else if ("/workbench/transaction/getCustomerName.do".equals(path)) {
+            getCustomerName(request,response);
         }
+
+    }
+
+    private void getCustomerName(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("取得 客户名称列表（按照客户名称进行模糊查询）");
+
+        String name = request.getParameter("name");
+
+        CustomerService cs = (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
+
+        List<String> sList = cs.getCustomerName(name);
+
+        PrintJson.printJsonObj(response, sList);
+
+    }
+
+    //获得所有用户列表，为创建交易的所有者插入数据。
+    private void getUserList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        UserService userService = (UserService) ServiceFactory.getService(new UserServiceImpl());
+
+        List<User> userList = userService.getUserList();
+
+        request.setAttribute("userList",userList);
+
+        request.getRequestDispatcher("/workbench/transaction/save.jsp").forward(request,response);
 
     }
 

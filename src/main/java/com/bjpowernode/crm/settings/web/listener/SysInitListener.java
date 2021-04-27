@@ -28,12 +28,20 @@ public class SysInitListener implements ServletContextListener {
 
         //创建业务层对象
         DicService ds = (DicService) ServiceFactory.getService(new DicServiceImpl());
-        //调用业务层的方法
+        //调用业务层的方法,将七个分好类的List放入到Map中。
         Map<String, List<DicValue>> map = ds.getAll();
-        //将map解析为全局作用域对象中保存的键值对。
+        //set保存的都是map集合的所有key值。
         Set<String> set = map.keySet();
+        //遍历key值获取到value值，把一对key和value保存的全局作用域中。
         for (String key:set){
             application.setAttribute(key,map.get(key));
+            //application.setAttribute("appellation",appellationList);
+            //application.setAttribute("clueState",clueStateList);
+            //application.setAttribute("returnPriority",returnPriorityList);
+            //application.setAttribute("returnState",returnStateList);
+            //application.setAttribute("source",sourceList);
+            //application.setAttribute("stage",stageList);
+            //application.setAttribute("transactionType",transactionTypeList);
         }
 
         System.out.println("数据字典处理结束！");

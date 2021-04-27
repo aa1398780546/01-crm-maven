@@ -33,5 +33,14 @@ public class CustomerServiceImpl implements CustomerService {
         return vo;
     }
 
+    @Override
+    public List<String> getCustomerName(String name) {
+
+        List<String> sList = customerDao.getCustomerName(name);
+
+        return sList;
+
+    }
+
 
 }
