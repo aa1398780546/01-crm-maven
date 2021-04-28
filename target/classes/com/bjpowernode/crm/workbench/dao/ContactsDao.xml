@@ -80,6 +80,10 @@
             join tbl_customer u
                 on o.customerId=u.id
 
+        order by o.createTime desc
+
+        limit #{skipCount},#{pageSize}
+
     </select>
 
     <select id="getTotalByCondition" resultType="int">

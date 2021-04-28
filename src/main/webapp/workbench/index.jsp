@@ -169,9 +169,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 <%--				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-user"></span> 客户公海</a></li>--%>
 				<li class="liClass"><a href="workbench/activity/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-play-circle"></span> 运输管理</a></li>
 				<li class="liClass"><a href="workbench/clue/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-search"></span> 潜在客户</a></li>
-				<li class="liClass"><a href="workbench/customer/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-user"></span> 客户</a></li>
+				<li class="liClass"><a href="workbench/customer/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-user"></span> 公司</a></li>
 				<li class="liClass"><a href="workbench/contacts/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-earphone"></span> 联系人</a></li>
-				<li class="liClass"><a href="workbench/transaction/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-usd"></span> 交易</a></li>
+				<li class="liClass"><a href="workbench/transaction/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-usd"></span> 交易订单</a></li>
 <%--				<li class="liClass"><a href="visit/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-phone-alt"></span> 售后回访</a></li>--%>
 <%--				<li class="liClass">--%>
 <%--					<a href="#no2" class="collapsed" data-toggle="collapse"><span class="glyphicon glyphicon-stats"></span> 统计图表</a>--%>

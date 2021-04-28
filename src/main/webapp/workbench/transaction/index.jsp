@@ -53,7 +53,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 					html += '<tr>';
 						html += '<td><input type="checkbox" name="xz" value="'+n.id+'"/></td>';
-						html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/transaction/xx.do?id='+n.id+'\';">'+n.name+'</a></td>';
+						html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/transaction/detail.do?id='+n.id+'\';">'+n.name+'</a></td>';
 						html += '<td>'+n.customerId+'</td>';
 						html += '<td>'+n.stage+'</td>';
 						html += '<td>'+n.type+'</td>';

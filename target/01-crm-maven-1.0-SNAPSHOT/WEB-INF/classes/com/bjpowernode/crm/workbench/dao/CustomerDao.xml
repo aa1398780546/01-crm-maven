@@ -58,7 +58,12 @@
     </select>
 
     <select id="getClueListByCondition" resultType="Customer"   >
+
         select  * from tbl_customer
+
+        order by createTime desc
+        limit #{skipCount},#{pageSize}
+
     </select>
 
     <select id="getTotalByCondition" resultType="int">
@@ -68,6 +73,7 @@
         from tbl_customer
 
     </select>
+
 
 </mapper>
 

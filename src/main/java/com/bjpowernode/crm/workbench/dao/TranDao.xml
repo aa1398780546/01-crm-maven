@@ -80,6 +80,9 @@
             join tbl_customer u
                  on t.customerId=u.id
 
+        order by t.createTime desc
+        limit #{skipCount},#{pageSize}
+
     </select>
 
     <select id="getTotalByCondition" resultType="int">
@@ -87,6 +90,38 @@
         select count(*)
 
         from tbl_tran
+
+    </select>
+
+    <select id="detail" resultType="Tran">
+
+        select
+            t.id,
+            t.owner,
+            t.money,
+            t.name,
+            t.expectedDate,
+            u.name as customerId,
+            t.stage,
+            t.type,
+            t.source,
+            o.fullname as activityId,
+            t.contactsId,
+            t.createBy,
+            t.createTime,
+            t.editBy,
+            t.editTime,
+            t.description,
+            t.contactSummary,
+            t.nextContactTime
+
+        from tbl_tran t
+            join tbl_customer u
+                on t.customerId=u.id
+            join tbl_contacts o
+                on t.contactsId=o.id
+
+        where t.id=#{id}
 
     </select>
 

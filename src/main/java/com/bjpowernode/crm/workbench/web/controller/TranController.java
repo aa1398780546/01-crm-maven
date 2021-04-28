@@ -11,6 +11,7 @@ import com.bjpowernode.crm.vo.PaginationVO;
 import com.bjpowernode.crm.workbench.domain.Activity;
 import com.bjpowernode.crm.workbench.domain.Clue;
 import com.bjpowernode.crm.workbench.domain.Tran;
+import com.bjpowernode.crm.workbench.domain.TranHistory;
 import com.bjpowernode.crm.workbench.service.ActivityService;
 import com.bjpowernode.crm.workbench.service.ClueService;
 import com.bjpowernode.crm.workbench.service.CustomerService;
@@ -43,14 +44,140 @@ public class TranController extends HttpServlet {
 
         if ("/workbench/transaction/tranList.do".equals(path)) {
             tranList(request,response);
-        } else if ("/workbench/transaction/getUserList.do".equals(path)) {
+        }else if ("/workbench/transaction/getUserList.do".equals(path)) {
             getUserList(request,response);
         }else if ("/workbench/transaction/getCustomerName.do".equals(path)) {
             getCustomerName(request,response);
+        }else if ("/workbench/transaction/detail.do".equals(path)) {
+            detail(request,response);
+        }else if ("/workbench/transaction/save.do".equals(path)) {
+            save(request,response);
+        }else if ("/workbench/transaction/getHistoryByTranId.do".equals(path)) {
+            getHistoryByTranId(request,response);
         }
+
 
     }
 
+    //根据tranId获取历史阶段信息列表
+    private void getHistoryByTranId(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("根据tranId获取历史阶段信息列表");
+
+        String tranId = request.getParameter("tranId");
+
+        System.out.println("tranId=========="+tranId);
+
+        TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
+
+        List<TranHistory> historyList = ts.getHistoryByTranId(tranId);
+
+        for(TranHistory t : historyList){
+
+            //获得阶段stage
+            String stage = t.getStage();
+            //获得在监听器中放入application的Map
+            Map<String,String> pMap = (Map<String,String>)this.getServletContext().getAttribute("pMap");
+            //获得可能性
+            String possibility = pMap.get(stage);
+            //将可能性放入到每一个History中
+            t.setPossibility(possibility);
+        }
+
+        PrintJson.printJsonObj(response,historyList);
+
+    }
+
+    //接收表单传输过来的参数，重定向回到index页面
+    private void save(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        System.out.println("接收表单传输过来的参数，重定向回到index页面");
+
+        String id = UUIDUtil.getUUID();
+        String owner = request.getParameter("owner");
+        String money = request.getParameter("money");
+        String name = request.getParameter("name");
+        String expectedDate = request.getParameter("expectedDate");
+        String customerName = request.getParameter("customerName");
+        String stage = request.getParameter("stage");
+        String type = request.getParameter("type");
+        String source = request.getParameter("source");
+        String activityId = request.getParameter("activityId");
+        String contactsId = request.getParameter("contactsId");
+        String description = request.getParameter("description");
+        String contactSummary = request.getParameter("contactSummary");
+        String nextContactTime = request.getParameter("nextContactTime");
+
+        System.out.println("contactsId+++++++++++:"+contactsId);
+
+        String createBy = ((User)request.getSession().getAttribute("user")).getName();
+        String createTime = DateTimeUtil.getSysTime();
+
+        Tran t = new Tran();
+        t.setId(id);
+        t.setOwner(owner);
+        t.setMoney(money);
+        t.setName(name);
+        t.setExpectedDate(expectedDate);
+        t.setStage(stage);
+        t.setType(type);
+        t.setSource(source);
+        t.setActivityId(activityId);
+        t.setContactsId(contactsId);
+        t.setCreateTime(createTime);
+        t.setCreateBy(createBy);
+        t.setDescription(description);
+        t.setContactSummary(contactSummary);
+        t.setNextContactTime(nextContactTime);
+
+        TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
+
+        boolean flag = ts.save(t,customerName);
+
+        if(flag){
+
+            //如果添加交易成功，跳转到列表页
+            response.sendRedirect(request.getContextPath() + "/workbench/transaction/index.jsp");
+
+        }
+
+
+
+
+
+    }
+
+    //根据id查询跳转到详细信息页所需要展示的内容。
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+        System.out.println("根据id查询所有信息");
+
+        String id = request.getParameter("id");
+
+        TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
+        Tran tran = ts.detail(id);
+
+        //处理可能性
+        /*
+            阶段 t
+            阶段和可能性之间的对应关系 pMap
+         */
+        //获得阶段stage
+        String stage = tran.getStage();
+        //获得在监听器中放入application的Map
+        Map<String,String> pMap = (Map<String,String>)this.getServletContext().getAttribute("pMap");
+        //获得可能性
+        String possibility = pMap.get(stage);
+
+        //直接在实体类中加多一个？？？？？
+        tran.setPossibility(possibility);
+
+        request.setAttribute("t",tran);
+        request.getRequestDispatcher("/workbench/transaction/detail.jsp").forward(request,response);
+
+    }
+
+    //根据用户输入的name来模糊查询name的完整名称。
     private void getCustomerName(HttpServletRequest request, HttpServletResponse response) {
 
         System.out.println("取得 客户名称列表（按照客户名称进行模糊查询）");

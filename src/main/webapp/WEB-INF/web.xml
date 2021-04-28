@@ -91,6 +91,9 @@
         <url-pattern>/workbench/transaction/tranList.do</url-pattern>
         <url-pattern>/workbench/transaction/getUserList.do</url-pattern>
         <url-pattern>/workbench/transaction/getCustomerName.do</url-pattern>
+        <url-pattern>/workbench/transaction/save.do</url-pattern>
+        <url-pattern>/workbench/transaction/detail.do</url-pattern>
+        <url-pattern>/workbench/transaction/getHistoryByTranId.do</url-pattern>
     </servlet-mapping>
 
     <!--  顾客活动-->
