@@ -1,11 +1,16 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+%>
 <!DOCTYPE html>
 <html>
 <head>
+	<base href="<%=basePath%>">
 <meta charset="UTF-8">
-<link href="../../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 
-<script type="text/javascript" src="../../../jquery/jquery-1.11.1-min.js"></script>
-<script type="text/javascript" src="../../../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
+<script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -95,56 +100,6 @@
 			</div>
 		</div>
 	</div>
-	
-	<div class="btn-toolbar" role="toolbar" style="position: relative; height: 80px; left: 30px; top: -10px;">
-		<form class="form-inline" role="form" style="position: relative;top: 8%; left: 5px;">
-		  
-		  <div class="form-group">
-		    <div class="input-group">
-		      <div class="input-group-addon">用户姓名</div>
-		      <input class="form-control" type="text">
-		    </div>
-		  </div>
-		  &nbsp;&nbsp;&nbsp;&nbsp;
-		  <div class="form-group">
-		    <div class="input-group">
-		      <div class="input-group-addon">部门名称</div>
-		      <input class="form-control" type="text">
-		    </div>
-		  </div>
-		  &nbsp;&nbsp;&nbsp;&nbsp;
-		  <div class="form-group">
-		    <div class="input-group">
-		      <div class="input-group-addon">锁定状态</div>
-			  <select class="form-control">
-			  	  <option></option>
-			      <option>锁定</option>
-				  <option>启用</option>
-			  </select>
-		    </div>
-		  </div>
-		  <br><br>
-		  
-		  <div class="form-group">
-		    <div class="input-group">
-		      <div class="input-group-addon">失效时间</div>
-			  <input class="form-control" type="text" id="startTime" />
-		    </div>
-		  </div>
-		  
-		  ~
-		  
-		  <div class="form-group">
-		    <div class="input-group">
-			  <input class="form-control" type="text" id="endTime" />
-		    </div>
-		  </div>
-		  
-		  <button type="submit" class="btn btn-default">查询</button>
-		  
-		</form>
-	</div>
-	
 	
 	<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;left: 30px; width: 110%; top: 20px;">
 		<div class="btn-group" style="position: relative; top: 18%;">

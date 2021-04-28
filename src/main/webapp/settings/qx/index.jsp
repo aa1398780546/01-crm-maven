@@ -36,8 +36,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			$(this).children("a").css("color","white");
 		});
 		
-		
-		window.open("workbench/main/index.jsp","workareaFrame");
+		//展示市场活动页面
+		window.open("settings/qx/user/index.jsp","workareaFrame");
 		
 	});
 	
@@ -69,17 +69,18 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	
 	<!-- 顶部 -->
 	<div id="top" style="height: 50px; background-color: #3C3C3C; width: 100%;">
-		<div style="position: absolute; top: 5px; left: 0px; font-size: 30px; font-weight: 400; color: white; font-family: 'times new roman'"><span style="font-size: 12px;"></span></div>
+		<div style="position: absolute; top: 5px; left: 0px; font-size: 30px; font-weight: 400; color: white; font-family: 'times new roman'"> &nbsp;<span style="font-size: 12px;">&nbsp;</span></div>
 		<div style="position: absolute; top: 15px; right: 15px;">
 			<ul>
 				<li class="dropdown user-dropdown">
 					<a href="javascript:void(0)" style="text-decoration: none; color: white;" class="dropdown-toggle" data-toggle="dropdown">
-						<span class="glyphicon glyphicon-user"></span> ${sessionScope.user.name} &nbsp&nbsp&nbsp&nbsp<span class="caret"></span>
+						<span class="glyphicon glyphicon-user"></span> zhangsan <span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="settings/index.jsp"><span class="glyphicon glyphicon-wrench"></span> 系统设置</a></li>
+						<li><a href="workbench/index.jsp"><span class="glyphicon glyphicon-home"></span> 工作台</a></li>
+						<li><a href="index.jsp"><span class="glyphicon glyphicon-wrench"></span> 系统设置</a></li>
 						<li><a href="javascript:void(0);" data-toggle="modal" data-target="#exitModal"><span class="glyphicon glyphicon-off"></span> 退出</a></li>
-					</ul>&nbsp&nbsp&nbsp&nbsp&nbsp
+					</ul>
 				</li>
 			</ul>
 		</div>
@@ -92,17 +93,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		<div id="navigation" style="left: 0px; width: 18%; position: relative; height: 100%; overflow:auto;">
 		
 			<ul id="no1" class="nav nav-pills nav-stacked">
-				<li class="liClass"><a href="workbench/activity/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-play-circle"></span> 运输管理</a></li>
-				<li class="liClass"><a href="workbench/clue/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-search"></span> 潜在客户</a></li>
-				<li class="liClass"><a href="workbench/customer/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-user"></span> 公司</a></li>
-				<li class="liClass"><a href="workbench/contacts/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-earphone"></span> 联系人</a></li>
-				<li class="liClass"><a href="workbench/transaction/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-usd"></span> 物流订单</a></li>
-				<li class="liClass">
-					<a href="#no2" class="collapsed" data-toggle="collapse"><span class="glyphicon glyphicon-stats"></span> 物流单量统计图</a>
-					<ul id="no2" class="nav nav-pills nav-stacked collapse">
-						<li class="liClass"><a href="workbench/chart/transaction/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 物流单量漏斗图</a></li>
-					</ul>
-				</li>
+				<li class="liClass"><a href="settings/qx/user/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-user"></span> 账号管理</a></li>
 			</ul>
 			
 			<!-- 分割线 -->
