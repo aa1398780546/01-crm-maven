@@ -54,9 +54,69 @@ public class TranController extends HttpServlet {
             save(request,response);
         }else if ("/workbench/transaction/getHistoryByTranId.do".equals(path)) {
             getHistoryByTranId(request,response);
+        }else if ("/workbench/transaction/changeStage.do".equals(path)) {
+            changeStage(request,response);
+        }else if ("/workbench/transaction/getCharts.do".equals(path)) {
+            getCharts(request,response);
         }
 
 
+    }
+
+    //Echarts统计图
+    private void getCharts(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("取得交易阶段数量统计图表的数据");
+
+        TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
+
+        /*
+
+            业务层为我们返回
+                total
+                dataList
+
+                通过map打包以上两项进行返回
+
+
+         */
+        Map<String,Object> map = ts.getCharts();
+
+        PrintJson.printJsonObj(response, map);
+    }
+
+    //点击图标后修改数据库中的state等信息，同时新建一个交易历史表。
+    private void changeStage(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("执行改变阶段的操作");
+
+        String id = request.getParameter("id");
+        String stage = request.getParameter("stage");
+        String money = request.getParameter("money");
+        String expectedDate = request.getParameter("expectedDate");
+        String editTime = DateTimeUtil.getSysTime();
+        String editBy = ((User)request.getSession().getAttribute("user")).getName();
+
+        Tran t = new Tran();
+        t.setId(id);
+        t.setStage(stage);
+        t.setMoney(money);
+        t.setExpectedDate(expectedDate);
+        t.setEditBy(editBy);
+        t.setEditTime(editTime);
+
+        TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
+
+        boolean flag = ts.changeStage(t);
+
+        Map<String,String> pMap = (Map<String,String>)this.getServletContext().getAttribute("pMap");
+        t.setPossibility(pMap.get(stage));
+
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("success", flag);
+        map.put("t", t);
+
+        PrintJson.printJsonObj(response, map);
     }
 
     //根据tranId获取历史阶段信息列表
@@ -141,10 +201,6 @@ public class TranController extends HttpServlet {
 
         }
 
-
-
-
-
     }
 
     //根据id查询跳转到详细信息页所需要展示的内容。
@@ -169,7 +225,7 @@ public class TranController extends HttpServlet {
         //获得可能性
         String possibility = pMap.get(stage);
 
-        //直接在实体类中加多一个？？？？？
+        //直接在实体类中加多一个
         tran.setPossibility(possibility);
 
         request.setAttribute("t",tran);

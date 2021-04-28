@@ -105,8 +105,8 @@
             t.stage,
             t.type,
             t.source,
-            o.fullname as activityId,
-            t.contactsId,
+            t.activityId,
+            o.fullname as contactsId,
             t.createBy,
             t.createTime,
             t.editBy,
@@ -122,6 +122,31 @@
                 on t.contactsId=o.id
 
         where t.id=#{id}
+
+    </select>
+
+    <update id="changeStage">
+
+        update tbl_tran set stage=#{stage},editBy=#{editBy},editTime=#{editTime}
+        where id=#{id}
+
+    </update>
+
+    <select id="getCharts" resultType="map">
+
+        select
+
+            count(*) as value,stage as name
+
+        from tbl_tran
+
+        group by stage
+
+    </select>
+
+    <select id="getTotal" resultType="int">
+
+        select count(*) from tbl_tran
 
     </select>
 

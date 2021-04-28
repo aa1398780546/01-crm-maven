@@ -163,7 +163,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		<div id="navigation" style="left: 0px; width: 18%; position: relative; height: 100%; overflow:auto;">
 		
 			<ul id="no1" class="nav nav-pills nav-stacked">
-				<li class="liClass"><a href="workbench/main/index.html" target="workareaFrame"><span class="glyphicon glyphicon-home"></span> 工作台</a></li>
+<%--				<li class="liClass"><a href="workbench/main/index.html" target="workareaFrame"><span class="glyphicon glyphicon-home"></span> 工作台</a></li>--%>
 <%--				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-tag"></span> 动态</a></li>--%>
 <%--				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-time"></span> 审批</a></li>--%>
 <%--				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-user"></span> 客户公海</a></li>--%>
@@ -171,17 +171,17 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				<li class="liClass"><a href="workbench/clue/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-search"></span> 潜在客户</a></li>
 				<li class="liClass"><a href="workbench/customer/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-user"></span> 公司</a></li>
 				<li class="liClass"><a href="workbench/contacts/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-earphone"></span> 联系人</a></li>
-				<li class="liClass"><a href="workbench/transaction/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-usd"></span> 交易订单</a></li>
+				<li class="liClass"><a href="workbench/transaction/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-usd"></span> 物流订单</a></li>
 <%--				<li class="liClass"><a href="visit/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-phone-alt"></span> 售后回访</a></li>--%>
-<%--				<li class="liClass">--%>
-<%--					<a href="#no2" class="collapsed" data-toggle="collapse"><span class="glyphicon glyphicon-stats"></span> 统计图表</a>--%>
-<%--					<ul id="no2" class="nav nav-pills nav-stacked collapse">--%>
+				<li class="liClass">
+					<a href="#no2" class="collapsed" data-toggle="collapse"><span class="glyphicon glyphicon-stats"></span> 物流单量统计图</a>
+					<ul id="no2" class="nav nav-pills nav-stacked collapse">
 <%--						<li class="liClass"><a href="chart/activity/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 市场活动统计图表</a></li>--%>
 <%--						<li class="liClass"><a href="chart/clue/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 线索统计图表</a></li>--%>
 <%--						<li class="liClass"><a href="chart/customerAndContacts/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 客户和联系人统计图表</a></li>--%>
-<%--						<li class="liClass"><a href="chart/transaction/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 交易统计图表</a></li>--%>
-<%--					</ul>--%>
-<%--				</li>--%>
+						<li class="liClass"><a href="workbench/chart/transaction/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 物流单量漏斗图</a></li>
+					</ul>
+				</li>
 <%--				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-file"></span> 报表</a></li>--%>
 <%--				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-shopping-cart"></span> 销售订单</a></li>--%>
 <%--				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-send"></span> 发货单</a></li>--%>

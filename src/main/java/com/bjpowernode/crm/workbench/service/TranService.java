@@ -20,4 +20,7 @@ public interface TranService {
 
     List<TranHistory> getHistoryByTranId(String tranId);
 
+    boolean changeStage(Tran t);
+
+    Map<String, Object> getCharts();
 }
