@@ -136,7 +136,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					dataType: "json",
 					success: function (data) {
 						if (data.success) {
-							alert("关联市场活动成功");
+							alert("关联货物成功");
 							//关联成功后，关闭模态窗口，刷新市场活动列表
 							showActivityList();
 							// //清空模态窗口中的数据
@@ -151,11 +151,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			}
 
 		})
-
-		// //绑定 添加市场活动 按钮
-		// $("#bundModal").click(function (){
-		// 	alert("打开市场活动列表")
-		// })
 
 	});
 
@@ -274,7 +269,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span>
 					</button>
-					<h4 class="modal-title">关联市场活动</h4>
+					<h4 class="modal-title">货物归属</h4>
 				</div>
 				<div class="modal-body">
 					<div id="ActivityAddForm" class="btn-group" style="position: relative; top: 18%; left: 8px;">
@@ -413,7 +408,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	<div>
 		<div style="position: relative; top: 60px; left: 40px;">
 			<div class="page-header">
-				<h4>市场活动</h4>
+				<h4>所属货物</h4>
 			</div>
 			<div style="position: relative;top: 0px;">
 				<table class="table table-hover" style="width: 900px;">
@@ -432,7 +427,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			</div>
 			
 			<div>
-				<a href="javascript:void(0);" data-toggle="modal" data-target="#bundModal" style="text-decoration: none;"><span class="glyphicon glyphicon-plus"></span>关联市场活动</a>
+				<a href="javascript:void(0);" data-toggle="modal" data-target="#bundModal" style="text-decoration: none;"><span class="glyphicon glyphicon-plus"></span>关联货物</a>
 			</div>
 		</div>
 	</div>

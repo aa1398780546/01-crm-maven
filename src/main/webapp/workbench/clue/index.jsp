@@ -99,7 +99,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				dataType: "json",
 				success:function (data){
 					if (data){
-						alert("线索添加成功！")
+						alert("潜在客户添加成功！")
 						//刷新市场活动列表
 						//回到首页，每页展示已经设置好的记录数
 						pageList(1,$("#cluePage").bs_pagination('getOption', 'rowsPerPage'));
@@ -128,9 +128,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			//如果	总个数=✔个数		全选框✔
 			$("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
 		})
-
-		//为线索页面的详细信息按钮保存按钮绑定事件。
-
 
 		//页面加载完毕后触发pageList
 		pageList(1,3);
@@ -211,15 +208,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 </head>
 <body>
 
-<%--	&lt;%&ndash;	添加隐藏域&ndash;%&gt;--%>
-<%--	<input type="hidden" id="hidden-name"/>--%>
-<%--	<input type="hidden" id="hidden-company"/>--%>
-<%--	<input type="hidden" id="hidden-phone"/>--%>
-<%--	<input type="hidden" id="hidden-mphone"/>--%>
-<%--	<input type="hidden" id="hidden-source"/>--%>
-<%--	<input type="hidden" id="hidden-createBy"/>--%>
-<%--	<input type="hidden" id="hidden-state"/>--%>
-
 	<!-- 创建线索的模态窗口 -->
 	<div class="modal fade" id="createClueModal" role="dialog">
 		<div class="modal-dialog" role="document" style="width: 90%;">
@@ -228,18 +216,18 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">创建线索</h4>
+					<h4 class="modal-title" id="myModalLabel">创建潜在客户</h4>
 				</div>
 				<div class="modal-body">
 					<form id="clueAddForm" class="form-horizontal" role="form">
 					
 						<div class="form-group">
-							<label for="create-clueOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
+							<label for="create-clueOwner" class="col-sm-2 control-label">管理员<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
 								<select class="form-control" id="create-owner">
 								</select>
 							</div>
-							<label for="create-company" class="col-sm-2 control-label">公司<span style="font-size: 15px; color: red;">*</span></label>
+							<label for="create-company" class="col-sm-2 control-label">公司名称<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
 								<input type="text" class="form-control" id="create-company">
 							</div>
@@ -254,18 +242,18 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 									</c:forEach>
 								</select>
 							</div>
-							<label for="create-surname" class="col-sm-2 control-label">姓名<span style="font-size: 15px; color: red;">*</span></label>
+							<label for="create-surname" class="col-sm-2 control-label">联系人姓名<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
 								<input type="text" class="form-control" id="create-fullname">
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label for="create-job" class="col-sm-2 control-label">职位</label>
+							<label for="create-job" class="col-sm-2 control-label">联系人职位</label>
 							<div class="col-sm-10" style="width: 300px;">
 								<input type="text" class="form-control" id="create-job">
 							</div>
-							<label for="create-email" class="col-sm-2 control-label">邮箱</label>
+							<label for="create-email" class="col-sm-2 control-label">联系人邮箱</label>
 							<div class="col-sm-10" style="width: 300px;">
 								<input type="text" class="form-control" id="create-email">
 							</div>
@@ -283,11 +271,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						</div>
 						
 						<div class="form-group">
-							<label for="create-mphone" class="col-sm-2 control-label">手机</label>
+							<label for="create-mphone" class="col-sm-2 control-label">联系人手机</label>
 							<div class="col-sm-10" style="width: 300px;">
 								<input type="text" class="form-control" id="create-mphone">
 							</div>
-							<label for="create-status" class="col-sm-2 control-label">线索状态</label>
+							<label for="create-status" class="col-sm-2 control-label">联系人状态</label>
 							<div class="col-sm-10" style="width: 300px;">
 								<select class="form-control" id="create-state">
 									<c:forEach items="${clueStateList}" var="c">
@@ -298,7 +286,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						</div>
 						
 						<div class="form-group">
-							<label for="create-source" class="col-sm-2 control-label">线索来源</label>
+							<label for="create-source" class="col-sm-2 control-label">潜在客户来源</label>
 							<div class="col-sm-10" style="width: 300px;">
 								<select class="form-control" id="create-source">
 									<c:forEach items="${sourceList}" var="s">
@@ -310,7 +298,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						
 
 						<div class="form-group">
-							<label for="create-describe" class="col-sm-2 control-label">线索描述</label>
+							<label for="create-describe" class="col-sm-2 control-label">潜在客户描述</label>
 							<div class="col-sm-10" style="width: 81%;">
 								<textarea class="form-control" rows="3" id="create-description"></textarea>
 							</div>
@@ -337,7 +325,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						
 						<div style="position: relative;top: 20px;">
 							<div class="form-group">
-                                <label for="create-address" class="col-sm-2 control-label">详细地址</label>
+                                <label for="create-address" class="col-sm-2 control-label">联系人详细地址</label>
                                 <div class="col-sm-10" style="width: 81%;">
                                     <textarea class="form-control" rows="1" id="create-address"></textarea>
                                 </div>
@@ -513,7 +501,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	<div>
 		<div style="position: relative; left: 10px; top: -10px;">
 			<div class="page-header">
-				<h3>线索列表</h3>
+				<h3>潜在客户列表</h3>
 			</div>
 		</div>
 	</div>

@@ -14,5 +14,25 @@
         select * from tbl_user
     </select>
 
+    <!--    线索信息列表-->
+    <select id="getClueListByCondition" resultType="User">
+        select  *
+        from tbl_user
+
+        order by createTime desc
+
+        limit #{skipCount},#{pageSize}
+
+    </select>
+
+    <!--    查询出来的总数-->
+    <select id="getTotalByCondition" resultType="int">
+
+        select count(*)
+
+        from tbl_user
+
+    </select>
+
 
 </mapper>

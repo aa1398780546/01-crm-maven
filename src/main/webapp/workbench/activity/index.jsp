@@ -94,7 +94,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					// alert(data.success);	//undefined
 					if (data){
 						//添加市场活动成功，刷新市场活动信息列表(局部刷新)
-						alert("添加物流管理成功");
+						alert("添加货物成功");
 						//刷新市场活动列表
 						//回到首页，每页展示已经设置好的记录数
 						pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
@@ -426,26 +426,26 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel1">创建物流管理</h4>
+					<h4 class="modal-title" id="myModalLabel1">创建货物管理</h4>
 				</div>
 				<div class="modal-body">
 				
 					<form id="activityAddForm" class="form-horizontal" role="form">
 					
 						<div class="form-group">
-								<label for="create-marketActivityOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
+								<label for="create-marketActivityOwner" class="col-sm-2 control-label">管理员名称<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
 								<select class="form-control" id="create-owner">
 								</select>
 							</div>
-                            <label for="create-marketActivityName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
+                            <label for="create-marketActivityName" class="col-sm-2 control-label">货物名称<span style="font-size: 15px; color: red;">*</span></label>
                             <div class="col-sm-10" style="width: 300px;">
                                 <input type="text" class="form-control" id="create-name">
                             </div>
 						</div>
 						
 						<div class="form-group">
-							<label for="create-startTime" class="col-sm-2 control-label">开始日期</label>
+							<label for="create-startTime" class="col-sm-2 control-label">接收货物日期</label>
 							<div class="col-sm-10" style="width: 300px;">
 								<input type="text" class="form-control time" id="create-startDate" readonly>
 							</div>
@@ -456,13 +456,13 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						</div>
                         <div class="form-group">
 
-                            <label for="create-cost" class="col-sm-2 control-label">成本</label>
+                            <label for="create-cost" class="col-sm-2 control-label">货物价格</label>
                             <div class="col-sm-10" style="width: 300px;">
                                 <input type="text" class="form-control" id="create-cost">
                             </div>
                         </div>
 						<div class="form-group">
-							<label for="create-describe" class="col-sm-2 control-label">描述</label>
+							<label for="create-describe" class="col-sm-2 control-label">货物描述</label>
 							<div class="col-sm-10" style="width: 81%;">
 								<textarea class="form-control" rows="3" id="create-description"></textarea>
 							</div>
@@ -554,7 +554,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	<div>
 		<div style="position: relative; left: 10px; top: -10px;">
 			<div class="page-header">
-				<h3>运输管理列表</h3>
+				<h3>货物管理列表</h3>
 			</div>
 		</div>
 	</div>
@@ -566,7 +566,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				  
 				  <div class="form-group">
 				    <div class="input-group">
-				      <div class="input-group-addon">名称</div>
+				      <div class="input-group-addon">货物名称</div>
 				      <input class="form-control" type="text" id="search-name">
 				    </div>
 				  </div>
@@ -609,9 +609,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<thead>
 						<tr style="color: #B3B3B3;">
 							<td><input type="checkbox" id="qx"/></td>
-							<td>名称</td>
+							<td>货物名称</td>
                             <td>所有者</td>
-							<td>开始日期</td>
+							<td>接收货物日期</td>
 							<td>结束日期</td>
 						</tr>
 					</thead>

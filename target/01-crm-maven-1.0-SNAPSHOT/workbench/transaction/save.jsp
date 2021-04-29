@@ -163,108 +163,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 </head>
 <body>
 
-	<!-- 查找市场活动 -->	
-	<div class="modal fade" id="findMarketActivity" role="dialog">
-		<div class="modal-dialog" role="document" style="width: 80%;">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">×</span>
-					</button>
-					<h4 class="modal-title">查找市场活动</h4>
-				</div>
-				<div class="modal-body">
-					<div class="btn-group" style="position: relative; top: 18%; left: 8px;">
-						<form class="form-inline" role="form">
-						  <div class="form-group has-feedback">
-						    <input type="text" class="form-control" style="width: 300px;" placeholder="请输入市场活动名称，支持模糊查询">
-						    <span class="glyphicon glyphicon-search form-control-feedback"></span>
-						  </div>
-						</form>
-					</div>
-					<table id="activityTable3" class="table table-hover" style="width: 900px; position: relative;top: 10px;">
-						<thead>
-							<tr style="color: #B3B3B3;">
-								<td></td>
-								<td>名称</td>
-								<td>开始日期</td>
-								<td>结束日期</td>
-								<td>所有者</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td><input type="radio" name="activity"/></td>
-								<td>发传单</td>
-								<td>2020-10-10</td>
-								<td>2020-10-20</td>
-								<td>zhangsan</td>
-							</tr>
-							<tr>
-								<td><input type="radio" name="activity"/></td>
-								<td>发传单</td>
-								<td>2020-10-10</td>
-								<td>2020-10-20</td>
-								<td>zhangsan</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- 查找联系人 -->	
-	<div class="modal fade" id="findContacts" role="dialog">
-		<div class="modal-dialog" role="document" style="width: 80%;">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">×</span>
-					</button>
-					<h4 class="modal-title">查找联系人</h4>
-				</div>
-				<div class="modal-body">
-					<div class="btn-group" style="position: relative; top: 18%; left: 8px;">
-						<form class="form-inline" role="form">
-						  <div class="form-group has-feedback">
-						    <input type="text" class="form-control" style="width: 300px;" placeholder="请输入联系人名称，支持模糊查询">
-						    <span class="glyphicon glyphicon-search form-control-feedback"></span>
-						  </div>
-						</form>
-					</div>
-					<table id="activityTable" class="table table-hover" style="width: 900px; position: relative;top: 10px;">
-						<thead>
-							<tr style="color: #B3B3B3;">
-								<td></td>
-								<td>名称</td>
-								<td>邮箱</td>
-								<td>手机</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td><input type="radio" name="activity"/></td>
-								<td>李四</td>
-								<td>lisi@bjpowernode.com</td>
-								<td>12345678901</td>
-							</tr>
-							<tr>
-								<td><input type="radio" name="activity"/></td>
-								<td>李四</td>
-								<td>lisi@bjpowernode.com</td>
-								<td>12345678901</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	
 	<div style="position:  relative; left: 30px;">
-		<h3>创建交易</h3>
+		<h3>创建订单</h3>
 	  	<div style="position: relative; top: -40px; left: 70%;">
 			<button type="button" class="btn btn-primary" id="saveBtn">保存</button>
 			<button type="button" class="btn btn-default" id="qxBtn">取消</button>
@@ -273,7 +173,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	</div>
 	<form action="workbench/transaction/save.do" id="tranForm" method="post" class="form-horizontal" role="form" style="position: relative; top: -30px;">
 		<div class="form-group">
-			<label for="create-transactionOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
+			<label for="create-transactionOwner" class="col-sm-2 control-label">管理员<span style="font-size: 15px; color: red;">*</span></label>
 			<div class="col-sm-10" style="width: 300px;">
 				<select class="form-control" id="create-transactionOwner" name="onwer">
 					<option></option>
@@ -282,14 +182,14 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					</c:forEach>
 				</select>
 			</div>
-			<label for="create-amountOfMoney" class="col-sm-2 control-label">金额</label>
+			<label for="create-amountOfMoney" class="col-sm-2 control-label">订单金额</label>
 			<div class="col-sm-10" style="width: 300px;">
 				<input type="text" class="form-control" id="create-amountOfMoney" name="money">
 			</div>
 		</div>
 		
 		<div class="form-group">
-			<label for="create-transactionName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
+			<label for="create-transactionName" class="col-sm-2 control-label">交易名称<span style="font-size: 15px; color: red;">*</span></label>
 			<div class="col-sm-10" style="width: 300px;">
 				<input type="text" class="form-control" id="create-transactionName" name="name">
 			</div>
@@ -304,7 +204,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<div class="col-sm-10" style="width: 300px;">
 				<input type="text" class="form-control" id="create-customerName" name="customerName" placeholder="支持自动补全，输入客户不存在则新建">
 			</div>
-			<label for="create-transactionStage" class="col-sm-2 control-label">阶段<span style="font-size: 15px; color: red;">*</span></label>
+			<label for="create-transactionStage" class="col-sm-2 control-label">物流阶段<span style="font-size: 15px; color: red;">*</span></label>
 			<div class="col-sm-10" style="width: 300px;">
 			  <select class="form-control" id="create-stage" name="stage">
 			  	<option></option>
@@ -316,7 +216,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		</div>
 		
 		<div class="form-group">
-			<label for="create-transactionType" class="col-sm-2 control-label">类型</label>
+			<label for="create-transactionType" class="col-sm-2 control-label">物流类型</label>
 			<div class="col-sm-10" style="width: 300px;">
 				<select class="form-control" id="create-transactionType" name="type">
 				  <option></option>
@@ -325,14 +225,14 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					</c:forEach>
 				</select>
 			</div>
-			<label for="create-possibility" class="col-sm-2 control-label">可能性</label>
+			<label for="create-possibility" class="col-sm-2 control-label">成交可能性</label>
 			<div class="col-sm-10" style="width: 300px;">
 				<input type="text" class="form-control" id="create-possibility">
 			</div>
 		</div>
 		
 		<div class="form-group">
-			<label for="create-clueSource" class="col-sm-2 control-label">来源</label>
+			<label for="create-clueSource" class="col-sm-2 control-label">订单来源</label>
 			<div class="col-sm-10" style="width: 300px;">
 				<select class="form-control" id="create-clueSource" name="source">
 				  <option></option>
@@ -341,15 +241,15 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					</c:forEach>
 				</select>
 			</div>
-			<label for="create-activitySrc" class="col-sm-2 control-label">市场活动源&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal" data-target="#findMarketActivity"><span class="glyphicon glyphicon-search"></span></a></label>
+			<label for="create-activitySrc" class="col-sm-2 control-label">货物&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal" data-target="#findMarketActivity"><span class="glyphicon glyphicon-search"></span></a></label>
 			<div class="col-sm-10" style="width: 300px;">
-				<input type="text" class="form-control" id="create-activitySrc" value="发传单1">
+				<input type="text" class="form-control" id="create-activitySrc" value="货物">
 				<input type="hidden" name="activityId" value="1d598ac0910a4a2ebb262b0a27eae7cc"/>
 			</div>
 		</div>
 		
 		<div class="form-group">
-			<label for="create-contactsName" class="col-sm-2 control-label">联系人名称&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal" data-target="#findContacts"><span class="glyphicon glyphicon-search"></span></a></label>
+			<label for="create-contactsName" class="col-sm-2 control-label">订单联系人名称&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal" data-target="#findContacts"><span class="glyphicon glyphicon-search"></span></a></label>
 			<div class="col-sm-10" style="width: 300px;">
 				<input type="text" class="form-control" id="create-contactsName" value="马云">
 				<input type="hidden" name="contactsId" value="c0ed6fea95a148a19488e34472cd12a2"/>
@@ -357,7 +257,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		</div>
 		
 		<div class="form-group">
-			<label for="create-describe" class="col-sm-2 control-label">描述</label>
+			<label for="create-describe" class="col-sm-2 control-label">订单描述</label>
 			<div class="col-sm-10" style="width: 70%;">
 				<textarea class="form-control" rows="3" id="create-describe" name="description"></textarea>
 			</div>

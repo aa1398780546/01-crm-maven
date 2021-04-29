@@ -51,16 +51,19 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 <link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 
 <style type="text/css">
-.mystage{
-	font-size: 20px;
-	vertical-align: middle;
-	cursor: pointer;
-}
-.closingDate{
-	font-size : 15px;
-	cursor: pointer;
-	vertical-align: middle;
-}
+
+	.mystage{
+		font-size: 20px;
+		vertical-align: middle;
+		cursor: pointer;
+	}
+
+	.closingDate{
+		font-size : 15px;
+		cursor: pointer;
+		vertical-align: middle;
+	}
+
 </style>
 	
 <script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
@@ -177,7 +180,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
         stage：需要改变的阶段
         i：需要改变的阶段对应的下标
  */
-	function changeStage(stage,i) {
+	function changeStage(stage,i) 	{
 
 		//alert(stage);
 		//alert(i);
@@ -631,11 +634,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				<table id="activityTable" class="table table-hover" style="width: 900px;">
 					<thead>
 						<tr style="color: #B3B3B3;">
-							<td>阶段</td>
+							<td>订单阶段</td>
 							<td>金额</td>
-							<td>可能性</td>
+							<td>成交的可能性</td>
 							<td>预计成交日期</td>
-							<td>创建时间</td>
+							<td>订单创建时间</td>
 							<td>创建人</td>
 						</tr>
 					</thead>
