@@ -6,6 +6,10 @@ import com.bjpowernode.crm.settings.service.impl.UserServiceImpl;
 import com.bjpowernode.crm.utils.MD5Util;
 import com.bjpowernode.crm.utils.PrintJson;
 import com.bjpowernode.crm.utils.ServiceFactory;
+import com.bjpowernode.crm.vo.PaginationVO;
+import com.bjpowernode.crm.workbench.domain.Clue;
+import com.bjpowernode.crm.workbench.service.ClueService;
+import com.bjpowernode.crm.workbench.service.impl.ClueServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -15,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,13 +37,38 @@ public class UserController extends HttpServlet {
 
         //根据访问路劲，执行对应的方法。
         if ("/settings/user/login.do".equals(path)) {
-
             login(request,response);
-
-        } else if ("".equals(path)) {
-
-
+        } else if ("/settings/user/getUserList.do".equals(path)) {
+            getUserList(request,response);
         }
+
+    }
+
+    //获取所有用户列表
+    private void getUserList(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("进入到所有用户列表界面");
+
+        //页码,计算略过的记录数，但是数据库不需要这个
+        Integer pageNo = Integer.valueOf(request.getParameter("pageNo"));
+        //每页展现的记录数，计算略过的记录数，数据库需要这个
+        Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
+        System.out.println("pageSize:  "+ pageSize);
+        //计算略过的记录数
+        int skipCount = (pageNo-1)*pageSize;
+        System.out.println("SkipCount:   " + skipCount);
+
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("pageSize",pageSize);
+        map.put("skipCount",skipCount);
+
+        UserService us = (UserService) ServiceFactory.getService(new UserServiceImpl());
+
+        PaginationVO<User> vo = us.pageList(map);
+
+        PrintJson.printJsonObj(response,vo);
+
+
 
     }
 

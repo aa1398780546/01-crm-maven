@@ -148,6 +148,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 		})
 
+		//为取消按钮绑定事件，点击返回到index.jsp
+		$("#qxBtn").click(function (){
+
+
+		})
 
 	})
 
@@ -262,7 +267,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		<h3>创建交易</h3>
 	  	<div style="position: relative; top: -40px; left: 70%;">
 			<button type="button" class="btn btn-primary" id="saveBtn">保存</button>
-			<button type="button" class="btn btn-default">取消</button>
+			<button type="button" class="btn btn-default" id="qxBtn">取消</button>
 		</div>
 		<hr style="position: relative; top: -40px;">
 	</div>

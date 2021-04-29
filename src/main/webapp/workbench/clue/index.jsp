@@ -160,19 +160,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					所以data的输出形式为：
 						data={"total":100,"dataList":[{市场活动1},{市场活动2},{市场活动3},...]}
 				 */
-				/*
-					字符串拼接格式：
-					<tr class="active">
-							<td><input type="checkbox" /></td>
-							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/clue/detail.jsp';">王健林先生</a></td>
-							<td>动力节点</td>
-							<td>010-84846003</td>
-							<td>12345678901</td>
-							<td>广告</td>
-							<td>zhangsan</td>
-							<td>已联系</td>
-					</tr>
-				 */
 				var html ="";
 
 				$.each(data.dataList,function (i,n){
@@ -559,26 +546,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						</tr>
 					</thead>
 					<tbody id="clueBody">
-<%--						<tr>--%>
-<%--							<td><input type="checkbox" /></td>--%>
-<%--							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/clue/detail.do?id=a62268e70b0d48358bf4d9661fc48645';">马云先生</a></td>--%>
-<%--							<td>xxx</td>--%>
-<%--							<td>010-84846003</td>--%>
-<%--							<td>12345678901</td>--%>
-<%--							<td>广告</td>--%>
-<%--							<td>zhangsan</td>--%>
-<%--							<td>已联系</td>--%>
-<%--						</tr>--%>
-<%--                        <tr class="active">--%>
-<%--                            <td><input type="checkbox" /></td>--%>
-<%--                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/clue/detail.jsp';">王健林先生</a></td>--%>
-<%--                            <td>xxx</td>--%>
-<%--                            <td>010-84846003</td>--%>
-<%--                            <td>12345678901</td>--%>
-<%--                            <td>广告</td>--%>
-<%--                            <td>zhangsan</td>--%>
-<%--                            <td>已联系</td>--%>
-<%--                        </tr>--%>
 					</tbody>
 				</table>
 			</div>

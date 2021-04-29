@@ -11,6 +11,89 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 <script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
 <script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+
+<%--	分页插件--%>
+<link rel="stylesheet" type="text/css" href="jquery/bs_pagination/jquery.bs_pagination.min.css">
+<script type="text/javascript" src="jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
+<script type="text/javascript" src="jquery/bs_pagination/en.js"></script>
+
+<script type="text/javascript">
+
+	$(function (){
+
+		showUserList(1,3);
+
+	})
+
+	function showUserList(pageNo,pageSize){
+
+		//将全选的复选框的√干掉
+		$("#qx").prop("checked",false);
+
+		$.ajax({
+			url:"settings/user/getUserList.do",
+			data:{
+				"pageNo":pageNo,
+				"pageSize":pageSize
+			},
+			type:"get",
+			dataType:"json",
+			success:function (data){
+				//返回用户列表 [{用户1}，{用户2}，{.....}]
+
+				var html="";
+
+				$.each(data.dataList,function (i,n){
+					html += '<tr class="active">';
+					html += '<td><input type="checkbox" /></td>';
+					html += '<td>'+(i+1)+'</td>';
+					html += '<td><a  href="detail.html">'+n.loginAct+'</a></td>';
+					html += '<td>'+n.name+'</td>';
+					html += '<td>'+n.email+'</td>';
+					html += '<td>'+n.expireTime+'</td>';
+					html += '<td>'+n.allowIps+'</td>';
+					html += '<td>'+n.lockState+'</td>';
+					html += '<td>'+n.createBy+'</td>';
+					html += '<td>'+n.createTime+'</td>';
+					html += '<td>'+n.editBy+'</td>';
+					html += '<td>'+n.editTime+'</td>';
+					html += '</tr>';
+				})
+
+				$("#userBody").html(html);
+
+				//计算总页数
+				var totalPages = data.total%pageSize==0?data.total/pageSize:parseInt(data.total/pageSize)+1;
+
+				//数据处理完毕后，结合分页查询，对前端展现分页信息
+				$("#cluePage").bs_pagination({
+					currentPage: pageNo, // 页码
+					rowsPerPage: pageSize, // 每页显示的记录条数
+					maxRowsPerPage: 20, // 每页最多显示的记录条数
+					totalPages: totalPages, // 总页数
+					totalRows: data.total, // 总记录条数
+
+					visiblePageLinks: 3, // 显示几个卡片
+
+					showGoToPage: true,
+					showRowsPerPage: true,
+					showRowsInfo: true,
+					showRowsDefaultInfo: true,
+
+					onChangePage : function(event, data){
+						pageList(data.currentPage , data.rowsPerPage);
+					}
+				});
+
+			}
+		})
+
+
+	}
+
+
+</script>
+
 </head>
 <body>
 
@@ -117,7 +200,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<td>序号</td>
 					<td>登录帐号</td>
 					<td>用户姓名</td>
-					<td>部门名称</td>
 					<td>邮箱</td>
 					<td>失效时间</td>
 					<td>允许访问IP</td>
@@ -128,74 +210,13 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<td>修改时间</td>
 				</tr>
 			</thead>
-			<tbody>
-				<tr class="active">
-					<td><input type="checkbox" /></td>
-					<td>1</td>
-					<td><a  href="detail.html">zhangsan</a></td>
-					<td>张三</td>
-					<td>市场部</td>
-					<td>zhangsan@bjpowernode.com</td>
-					<td>2017-02-14 10:10:10</td>
-					<td>127.0.0.1,192.168.100.2</td>
-					<td>启用</td>
-					<td>admin</td>
-					<td>2017-02-10 10:10:10</td>
-					<td>admin</td>
-					<td>2017-02-10 20:10:10</td>
-				</tr>
-				<tr>
-					<td><input type="checkbox" /></td>
-					<td>2</td>
-					<td><a  href="detail.html">lisi</a></td>
-					<td>李四</td>
-					<td>市场部</td>
-					<td>lisi@bjpowernode.com</td>
-					<td>2017-02-14 10:10:10</td>
-					<td>127.0.0.1,192.168.100.2</td>
-					<td>锁定</td>
-					<td>admin</td>
-					<td>2017-02-10 10:10:10</td>
-					<td>admin</td>
-					<td>2017-02-10 20:10:10</td>
-				</tr>
+			<tbody id="userBody">
 			</tbody>
 		</table>
 	</div>
 	
 	<div style="height: 50px; position: relative;top: 30px; left: 30px;">
-		<div>
-			<button type="button" class="btn btn-default" style="cursor: default;">共<b>50</b>条记录</button>
-		</div>
-		<div class="btn-group" style="position: relative;top: -34px; left: 110px;">
-			<button type="button" class="btn btn-default" style="cursor: default;">显示</button>
-			<div class="btn-group">
-				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-					10
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu">
-					<li><a href="#">20</a></li>
-					<li><a href="#">30</a></li>
-				</ul>
-			</div>
-			<button type="button" class="btn btn-default" style="cursor: default;">条/页</button>
-		</div>
-		<div style="position: relative;top: -88px; left: 285px;">
-			<nav>
-				<ul class="pagination">
-					<li class="disabled"><a href="#">首页</a></li>
-					<li class="disabled"><a href="#">上一页</a></li>
-					<li class="active"><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#">下一页</a></li>
-					<li class="disabled"><a href="#">末页</a></li>
-				</ul>
-			</nav>
-		</div>
+		<div id="cluePage">	</div>
 	</div>
 			
 </body>

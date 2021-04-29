@@ -39,7 +39,8 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>UserController</servlet-name>
-    <url-pattern>/settings/user/login.do</url-pattern>
+      <url-pattern>/settings/user/login.do</url-pattern>
+      <url-pattern>/settings/user/getUserList.do</url-pattern>
   </servlet-mapping>
   
 <!--  市场活动-->

@@ -6,6 +6,9 @@ import com.bjpowernode.crm.settings.domain.User;
 import com.bjpowernode.crm.settings.service.UserService;
 import com.bjpowernode.crm.utils.DateTimeUtil;
 import com.bjpowernode.crm.utils.SqlSessionUtil;
+import com.bjpowernode.crm.vo.PaginationVO;
+import com.bjpowernode.crm.workbench.domain.Clue;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,5 +77,18 @@ public class UserServiceImpl implements UserService {
         List<User> userList = userDao.getUserList();
 
         return userList;
+    }
+
+    @Override
+    public PaginationVO<User> pageList(Map<String, Object> map) {
+
+        int total = userDao.getTotalByCondition(map);
+        List<User> dataList = userDao.getClueListByCondition(map);
+
+        PaginationVO<User> vo = new PaginationVO<User>() ;
+        vo.setDataList(dataList);
+        vo.setTotal(total);
+
+        return vo;
     }
 }
