@@ -26,7 +26,7 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public Boolean save(Activity a) {
 
-        System.out.println("进入到市场活动列表：ActivityServiceImpl-save");
+        System.out.println("进入到货物管理列表：ActivityServiceImpl-save");
 
         Boolean flag = true;
 

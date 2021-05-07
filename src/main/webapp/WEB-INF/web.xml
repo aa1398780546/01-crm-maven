@@ -97,6 +97,7 @@
         <url-pattern>/workbench/transaction/getHistoryByTranId.do</url-pattern>
         <url-pattern>/workbench/transaction/changeStage.do</url-pattern>
         <url-pattern>/workbench/transaction/getCharts.do</url-pattern>
+        <url-pattern>/workbench/transaction/delete.do</url-pattern>
     </servlet-mapping>
 
     <!--  顾客活动-->

@@ -101,7 +101,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
 						html += '<div style="position: relative; top: -40px; left: 40px;" >';
 						html += '<h5>'+data.ar.noteContent+'</h5>';
-						html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${a.name}</b> <small style="color: gray;"> '+(data.ar.createTime)+' 由'+(data.ar.createBy)+'</small>';
+						html += '<font color="gray">货物-</font> <font color="gray">-</font> <b>${a.name}</b> <small style="color: gray;"> '+(data.ar.createTime)+' 由'+(data.ar.createBy)+'</small>';
 						html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
 						html += '<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
 						html += '&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -185,7 +185,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
 					html += '<div style="position: relative; top: -40px; left: 40px;" >';
 					html += '<h5 id="e'+n.id+'">'+n.noteContent+'</h5>';
-					html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${a.name}</b> <small style="color: gray;" id="s'+n.id+'"> '+(n.editFlag==0?n.createTime:n.editTime)+' 由'+(n.editFlag==0?n.createBy:n.editBy)+'</small>';
+					html += '<font color="gray">货物管理</font> <font color="gray">-</font> <b>${a.name}</b> <small style="color: gray;" id="s'+n.id+'"> '+(n.editFlag==0?n.createTime:n.editTime)+' 由'+(n.editFlag==0?n.createBy:n.editBy)+'</small>';
 					html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
 					html += '<a class="myHref" href="javascript:void(0);" onclick="editRemark(\''+n.id+'\')"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
 					html += '&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -235,7 +235,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	//点击备注中的修改按钮，修改备注信息
 	function editRemark(id) {
 
-		alert("触发editRemark");
+		// alert("触发editRemark");
 
 		//将模态窗口中，隐藏域中的id进行赋值
 		$("#remarkId").val(id);
@@ -282,7 +282,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                     </form>
                 </div>
                 <div class="modal-footer">
-					<button type="button" class="btn btn-default" onclick="window.location.href='workbench/clue/convert.jsp';"><span class="glyphicon glyphicon-retweet"></span> 转换</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <button type="button" class="btn btn-primary" id="updateRemarkBtn">更新</button>
                 </div>
@@ -298,28 +297,24 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	<!-- 大标题 -->
 	<div style="position: relative; left: 40px; top: -30px;">
 		<div class="page-header">
-			<h3>市场活动-${a.name} <small>${a.startDate} ~ ${a.endDate}</small></h3>
+			<h3>货物管理-${a.name} <small>${a.startDate} ~ ${a.endDate}</small></h3>
 			<br><br>
 		</div>
-<%--		<div style="position: relative; height: 50px; width: 250px;  top: -72px; left: 700px;">--%>
-<%--&lt;%&ndash;			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editActivityModal"><span class="glyphicon glyphicon-edit"></span> 编辑</button>&ndash;%&gt;--%>
-<%--&lt;%&ndash;			<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>&ndash;%&gt;--%>
-<%--		</div>--%>
 	</div>
 	
 	<!-- 详细信息 -->
 	<div style="position: relative; top: -70px;">
 		<div style="position: relative; left: 40px; height: 30px;">
-			<div style="width: 300px; color: gray;">所有者</div>
+			<div style="width: 300px; color: gray;">管理员</div>
 			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${a.owner}</b></div>
-			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">名称</div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">货物名称</div>
 			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${a.name}</b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>
 
 		<div style="position: relative; left: 40px; height: 30px; top: 10px;">
-			<div style="width: 300px; color: gray;">开始日期</div>
+			<div style="width: 300px; color: gray;">接收货物日期</div>
 			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${a.startDate}</b></div>
 			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">结束日期</div>
 			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${a.endDate}</b></div>
@@ -327,22 +322,22 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 20px;">
-			<div style="width: 300px; color: gray;">成本</div>
+			<div style="width: 300px; color: gray;">货物价格</div>
 			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${a.cost}</b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 30px;">
-			<div style="width: 300px; color: gray;">创建者</div>
+			<div style="width: 300px; color: gray;">货物表单创建者</div>
 			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${a.createBy}&nbsp;&nbsp;</b><small style="font-size: 10px; color: gray;">${a.createTime}</small></div>
 			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 40px;">
-			<div style="width: 300px; color: gray;">修改者</div>
+			<div style="width: 300px; color: gray;">货物表单修改者</div>
 			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${a.editBy}&nbsp;&nbsp;</b><small style="font-size: 10px; color: gray;">${a.editTime}</small></div>
 			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 50px;">
-			<div style="width: 300px; color: gray;">描述</div>
+			<div style="width: 300px; color: gray;">货物描述</div>
 			<div style="width: 630px;position: relative; left: 200px; top: -20px;">
 				<b>
 					${a.description}
@@ -355,7 +350,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	<!-- 备注 -->
 	<div id="remarkBody" style="position: relative; top: 30px; left: 40px;">
 		<div class="page-header">
-			<h4>备注</h4>
+			<h4>货物备注</h4>
 		</div>
 
 		<div id="remarkDiv" style="background-color: #E6E6E6; width: 870px; height: 90px;">

@@ -137,12 +137,96 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		//在页面加载完毕后，展示阶段历史信息。
 		showHistoryList();
 
+		//为全选的复选框绑定事件，触发全选操作
+		$("#qx").click(function () {
+
+			$("input[name=xz]").prop("checked",this.checked);
+
+		})
+
+		//为全选款下面的复选框，如果都选✔，全选框✔
+		$("#tranHistoryBody").on("click",$("input[name=xz]"),function () {
+			//如果	总个数=✔个数		全选框✔
+			$("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
+			//以下这种做法是不行的
+			/*$("input[name=xz]").click(function () {
+
+                alert(123);
+
+            })*/
+
+			//因为动态生成的元素，是不能够以普通绑定事件的形式来进行操作的
+			/*
+
+                动态生成的元素，我们要以on方法的形式来触发事件
+
+                语法：
+                    $(需要绑定元素的有效的外层元素).on(绑定事件的方式,需要绑定的元素的jquery对象,回调函数)
+
+             */
+		})
+
+		//为删除按钮绑定事件，执行市场活动删除操作
+		$("#deleteBtn").click(function () {
+
+			//找到复选框中所有挑√的复选框的jquery对象
+			var $xz = $("input[name=xz]:checked");
+
+			if($xz.length==0){
+				alert("请选择需要删除的记录");
+			}else{
+				//肯定选了，而且有可能是1条，有可能是多条
+
+				if(confirm("确定删除所选中的记录吗？")){
+
+					//param = id=xxx&	id=xxx&		id=xxx
+
+					//拼接参数
+					var param = "";
+
+					//将$xz中的每一个dom对象遍历出来，取其value值，就相当于取得了需要删除的记录的id
+					for(var i=0;i<$xz.length;i++){
+
+						param += "id="+$($xz[i]).val();
+
+						//如果不是最后一个元素，需要在后面追加一个&符
+						if(i<$xz.length-1){
+							param += "&";
+						}
+
+					}
+
+					$.ajax({
+
+						url : "workbench/transaction/delete.do",
+						data : param,
+						type : "post",
+						dataType : "json",
+						success : function (data) {
+
+							if(data.success){
+
+								//删除成功后
+								//回到第一页，维持每页展现的记录数
+								showHistoryList();
+
+							}else{
+								alert("删除市场活动失败");
+							}
+						}
+					})
+				}
+			}
+		})
 
 
 	});
 
 	//展现交易历史列表
 	function showHistoryList(){
+
+		//将全选的复选框的√干掉
+		$("#qx").prop("checked",false);
 
 		$.ajax({
 
@@ -158,6 +242,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 				$.each(data,function (i,n){
 					html += '<tr>';
+						html += '<td><input type="checkbox" name="xz" value="'+n.id+'"/></td>';
+						html += '<td>'+(++i)+'</td>';
 						html += '<td>'+n.stage+'</td>';
 						html += '<td>'+n.money+'</td>';
 						html += '<td>'+n.possibility+'</td>';
@@ -190,7 +276,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			data : {
 
 				"id" : "${t.id}",
-				"stage" : stage,
+				"stage" : "${t.stage}",
 				"money" : "${t.money}",		//生成交易历史用
 				"expectedDate" : "${t.expectedDate}"	//生成交易历史用
 
@@ -217,12 +303,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					showHistoryList();
 
 				}else{
-
-
 					alert("改变阶段失败");
-
 				}
-
 
 			}
 
@@ -375,6 +457,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			String currentStage = t.getStage();
 			//准备当前阶段的可能性
 			String currentPossibility = pMap.get(currentStage);
+			System.out.println("当前阶段的可能性为： " + currentPossibility);
 
 			//判断当前阶段
 			//如果当前阶段的可能性为0 前7个一定是黑圈，后两个一个是红叉，一个是黑叉
@@ -394,50 +477,50 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						if(listStage.equals(currentStage)){
 
 							//红叉-----------------------------------------
-		%>
+							%>
 
-		<span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
-			  class="glyphicon glyphicon-remove mystage"
-			  data-toggle="popover" data-placement="bottom"
-			  data-content="<%=dv.getText()%>" style="color: #FF0000;"></span>
-		-----------
+							<span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
+								  class="glyphicon glyphicon-remove mystage"
+								  data-toggle="popover" data-placement="bottom"
+								  data-content="<%=dv.getText()%>" style="color: #FF0000;"></span>
+							-----------
 
-		<%
-			//如果不是当前的阶段
+							<%
+
+		//如果不是当前的阶段
 		}else{
 
 			//黑叉-----------------------------------------
-		%>
+			%>
 
-		<span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
-			  class="glyphicon glyphicon-remove mystage"
-			  data-toggle="popover" data-placement="bottom"
-			  data-content="<%=dv.getText()%>" style="color: #000000;"></span>
-		-----------
+			<span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
+				  class="glyphicon glyphicon-remove mystage"
+				  data-toggle="popover" data-placement="bottom"
+				  data-content="<%=dv.getText()%>" style="color: #000000;"></span>
+			-----------
 
-		<%
+			<%
 			}
 
 
-			//如果遍历出来的阶段的可能性不为0，说明是前7个，一定是黑圈
+		//如果遍历出来的阶段的可能性不为0，说明是前7个，一定是黑圈
 		}else{
 
 			//黑圈-----------------------------------------
-		%>
+			%>
 
-		<span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
-			  class="glyphicon glyphicon-record mystage"
-			  data-toggle="popover" data-placement="bottom"
-			  data-content="<%=dv.getText()%>" style="color: #000000;"></span>
-		-----------
+			<span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
+				  class="glyphicon glyphicon-record mystage"
+				  data-toggle="popover" data-placement="bottom"
+				  data-content="<%=dv.getText()%>" style="color: #000000;"></span>
+			-----------
 
-		<%
-				}
-
+			<%
 			}
+		}
 
 
-			//如果当前阶段的可能性不为0 前7个有可能性是绿圈，绿色标记，黑圈，后两个一定是黑叉
+		//如果当前阶段的可能性不为0 前7个有可能性是绿圈，绿色标记，黑圈，后两个一定是黑叉
 		}else{
 
 			//准备当前阶段的下标
@@ -465,71 +548,64 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				if("0".equals(listPossibility)){
 
 					//黑叉--------------------------------------------
-		%>
+					%>
 
-		<span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
-			  class="glyphicon glyphicon-remove mystage"
-			  data-toggle="popover" data-placement="bottom"
-			  data-content="<%=dv.getText()%>" style="color: #000000;"></span>
-		-----------
+					<span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
+						  class="glyphicon glyphicon-remove mystage"
+						  data-toggle="popover" data-placement="bottom"
+						  data-content="<%=dv.getText()%>" style="color: #000000;"></span>
+					-----------
 
-		<%
+					<%
 
-			//如果遍历出来的阶段的可能性不为0 说明是前7个阶段 绿圈，绿色标记，黑圈
+		//如果遍历出来的阶段的可能性不为0 说明是前7个阶段 绿圈，绿色标记，黑圈
 		}else{
 
 			//如果是当前阶段
 			if(i==index){
 
 				//绿色标记-----------------------------------
-		%>
+				%>
 
-		<span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
-			  class="glyphicon glyphicon-map-marker mystage"
-			  data-toggle="popover" data-placement="bottom"
-			  data-content="<%=dv.getText()%>" style="color: #90F790;"></span>
-		-----------
+				<span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
+					  class="glyphicon glyphicon-map-marker mystage"
+					  data-toggle="popover" data-placement="bottom"
+					  data-content="<%=dv.getText()%>" style="color: #90F790;"></span>
+				-----------
 
-		<%
+				<%
 
 			//如果小于当前阶段
 		}else if(i<index){
 
 			//绿圈----------------------------------------
-		%>
+			%>
 
-		<span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
-			  class="glyphicon glyphicon-ok-circle mystage"
-			  data-toggle="popover" data-placement="bottom"
-			  data-content="<%=dv.getText()%>" style="color: #90F790;"></span>
-		-----------
+			<span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
+				  class="glyphicon glyphicon-ok-circle mystage"
+				  data-toggle="popover" data-placement="bottom"
+				  data-content="<%=dv.getText()%>" style="color: #90F790;"></span>
+			-----------
 
-		<%
+			<%
 
 			//如果大于当前阶段
 		}else{
 
 			//黑圈----------------------------------------
-		%>
+			%>
 
-		<span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
-			  class="glyphicon glyphicon-record mystage"
-			  data-toggle="popover" data-placement="bottom"
-			  data-content="<%=dv.getText()%>" style="color: #000000;"></span>
-		-----------
+			<span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
+				  class="glyphicon glyphicon-record mystage"
+				  data-toggle="popover" data-placement="bottom"
+				  data-content="<%=dv.getText()%>" style="color: #000000;"></span>
+			-----------
 
-		<%
-
-						}
-
-
+			<%
 					}
-
 				}
-
-
 			}
-
+		}
 
 		%>
 
@@ -565,9 +641,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 30px;">
 			<div style="width: 300px; color: gray;">类型</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b id="possibility">${t.type}</b></div>
-			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">可能性</div>
-			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${t.possibility}</b></div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${t.type}</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">成交可能性</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b id="possibility">&nbsp;${t.possibility}</b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>
@@ -628,12 +704,15 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	<div>
 		<div style="position: relative; top: 100px; left: 40px;">
 			<div class="page-header">
-				<h4>阶段历史</h4>
+				<h4>本订单交易历史</h4>
 			</div>
+
 			<div style="position: relative;top: 0px;">
 				<table id="activityTable" class="table table-hover" style="width: 900px;">
 					<thead>
 						<tr style="color: #B3B3B3;">
+							<td><input type="checkbox" id="qx"/></td>
+							<td>序号</td>
 							<td>订单阶段</td>
 							<td>金额</td>
 							<td>成交的可能性</td>
@@ -647,7 +726,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					</tbody>
 				</table>
 			</div>
-			
+
+			<div class="btn-group" style="position: relative; top: 18%;">
+				<button type="button"  class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+			</div>
+
 		</div>
 	</div>
 	

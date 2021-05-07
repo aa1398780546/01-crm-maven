@@ -240,7 +240,7 @@ public class ActivityController extends HttpServlet {
     //删除选中的市场活动信息
     private void delete(HttpServletRequest request, HttpServletResponse response) {
 
-        System.out.println("执行物流管理的删除操作");
+        System.out.println("执行货物的删除操作");
 
         String ids[] = request.getParameterValues("id");
 

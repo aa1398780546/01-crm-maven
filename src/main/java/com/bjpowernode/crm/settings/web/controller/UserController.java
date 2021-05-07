@@ -80,6 +80,9 @@ public class UserController extends HttpServlet {
         //获取到前端传过来的参数
         String loginAct = request.getParameter("loginAct");
         String loginPwd = request.getParameter("loginPwd");
+        //0是管理员，1是用户
+        String loginUser = request.getParameter("loginUser");
+
 
 
         //接收浏览器的ip地址

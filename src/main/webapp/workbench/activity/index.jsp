@@ -102,7 +102,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						$("#activityAddForm")[0].reset();
 						//关闭市场活动的模态窗口
 						$("#createActivityModal").modal("hide");
-
 					}else {
 						alert("添加市场活动失败！")
 					}

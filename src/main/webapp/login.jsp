@@ -31,6 +31,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				login();
 			})
 
+			//让两个按钮都为非选中状态
+			$("#loginUser").attr("checked",false);
+			$("#loginAd").attr("checked",false);
+
 			//为当前窗口绑定敲键盘事件
 			//event：这个事件可以取得我们敲的是哪一个键
 			$(window).keydown(function (event){
@@ -43,6 +47,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 		//登录验证的方法
 		function login(){
+
+			var loginUser = $(':radio[name="loginUser"]:checked').val();
+
 			//验证账号密码不能为空
 			//获取用户输入的账号和密码
 			//将文本中的左右空格去掉，使用$.trim(文本)
@@ -59,7 +66,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				url:"settings/user/login.do",
 				data:{
 					"loginAct":loginAct,
-					"loginPwd":loginPwd
+					"loginPwd":loginPwd,
+					"loginUser":loginUser
 				},
 				type:"post",
 				dataType:"json",
@@ -69,11 +77,14 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 							{"success":true/false,"msg":"哪儿错了"}
 					 */
 					//如果登录成功
-					if (data.success){
+					if (data.success&loginUser==0){
 						//window.location.href("workbench/index.jsp");
 						//alert("登陆成功");
 						window.location.href = "workbench/index.jsp";
-					}else {
+					}else if (data.success&loginUser==1){
+						window.location.href = "workbench/userIndex.jsp";
+					}
+					else {
 						//登录失败有四种情况，账号密码错误，时间失效，锁定状态，ip不正确。
 						$("#msg").html(data.msg);
 					}
@@ -88,7 +99,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 </head>
 <body>
 	<div style="position: absolute; top: 0px; left: 0px; width: 100%;">
-		<img src="image/bg1.png" style="width: 100%; height: 90%; position: relative; top: 50px;">
+		<img src="image/bg1.png" style="width: 99.3%; height: 90%; position: relative; top: 50px;">
 	</div>
 	<div id="top" style="height: 50px; background-color: #3C3C3C; width: 100%;">
 		<div style="position: absolute; top: 5px; right: 0px; font-size: 25px; font-weight: 400; color: white; font-family: 'times new roman'">物流管理系统的设计与实现 &nbsp;<span style="font-size: 20px;">指导老师：卢利琼</span></div>
@@ -108,9 +119,14 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<div style="width: 350px; position: relative;top: 20px;">
 						<input class="form-control" type="password" placeholder="密码" id="loginPwd">
 					</div>
-					<div class="checkbox"  style="position: relative;top: 30px; left: 10px;">
+					<div style="width: 350px; position: relative;top: 40px;" align="center">
+						<input  type="radio" name="loginUser" value="1" id="loginUser">用户
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<input  type="radio" name="loginUser" value="0" id="loginAd">管理员
+					</div>
+					<div class="checkbox"  style="position: relative;top: 40px; left: 10px;">
 							 <%--输出错误消息的位置--%>
-							<span id="msg" style="color:red">123</span>
+							<span id="msg" style="color:red"></span>
 
 					</div>
 					<!--

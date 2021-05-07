@@ -54,15 +54,12 @@ public class UserServiceImpl implements UserService {
         if (expireTime.compareTo(nowTime)<0){
             throw new LoginException("账号已失效");
         }
-
         if ("0".equals(lockState)){
             throw new LoginException("账号未激活");
         }
-
         if (!allowIps.contains(ip)){
             throw new LoginException("无效的IP地址");
         }
-
         return user;
 
     }

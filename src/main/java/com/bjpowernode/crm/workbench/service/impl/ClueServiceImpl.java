@@ -178,10 +178,10 @@ public class ClueServiceImpl implements ClueService {
         //直接使用con.getId();
         //--------------------------------------------------------------------------
 
-        //(5) “线索和市场活动”的关系转换到“联系人和市场活动”的关系
-        //查询出与该条线索关联的市场活动，查询与市场活动的关联关系列表
+        //(5) “潜在客户和货物”的关系转换到“联系人和货物”的关系
+        //查询出与该条潜在客户关联的货物，查询与货物的关联关系列表
         List<ClueActivityRelation> clueActivityRelationList = clueActivityRelationDao.getListByClueId(clueId);
-        //遍历出每一条与市场活动关联的关联关系记录
+        //遍历出每一条与货物关联的关联关系记录
         for(ClueActivityRelation clueActivityRelation : clueActivityRelationList){
 
             //从每一条遍历出来的记录中取出关联的市场活动id
@@ -243,8 +243,7 @@ public class ClueServiceImpl implements ClueService {
 
         }
 
-
-        //(9) 删除线索和市场活动的关系
+        //(9) 删除潜在客户和货物的关系
         for(ClueActivityRelation clueActivityRelation : clueActivityRelationList){
 
             int count9 = clueActivityRelationDao.delete(clueActivityRelation);
@@ -256,12 +255,11 @@ public class ClueServiceImpl implements ClueService {
 
         }
 
-        //(10) 删除线索
+        //(10) 删除潜在客户
         int count10 = clueDao.delete(clueId);
         if(count10!=1){
             flag = false;
         }
-
 
         return flag;
     }

@@ -90,17 +90,11 @@
 <!--    线索信息列表-->
     <select id="getClueListByCondition" resultType="Clue">
         select
-        id,
-        appellation,
-        fullname,
-        company,
-        phone,
-        mphone,
-        source,
-        createBy,
-        state
+        *
 
         from tbl_clue
+
+        order by createTime desc
 
         limit #{skipCount},#{pageSize}
 

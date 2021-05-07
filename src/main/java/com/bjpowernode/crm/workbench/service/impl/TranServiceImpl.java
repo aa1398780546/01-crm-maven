@@ -137,17 +137,12 @@ public class TranServiceImpl implements TranService {
 
     @Override
     public boolean changeStage(Tran t) {
-
         boolean flag = true;
-
         //改变交易阶段
         int count1 = tranDao.changeStage(t);
         if(count1!=1){
-
             flag = false;
-
         }
-
         //交易阶段改变后，生成一条交易历史
         TranHistory th = new TranHistory();
         th.setId(UUIDUtil.getUUID());
@@ -159,11 +154,8 @@ public class TranServiceImpl implements TranService {
         //添加交易历史
         int count2 = tranHistoryDao.save(th);
         if(count2!=1){
-
             flag = false;
-
         }
-
         return flag;
     }
 
@@ -183,5 +175,21 @@ public class TranServiceImpl implements TranService {
 
         //返回map
         return map;
+    }
+
+    @Override
+    public boolean delete(String[] ids) {
+
+        boolean flag = true;
+
+        //删除市场活动
+        int count3 = tranHistoryDao.delete(ids);
+        if(count3!=ids.length){
+
+            flag = false;
+
+        }
+
+        return flag;
     }
 }

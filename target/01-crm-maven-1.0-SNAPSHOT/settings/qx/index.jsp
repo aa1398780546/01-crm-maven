@@ -74,7 +74,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<ul>
 				<li class="dropdown user-dropdown">
 					<a href="javascript:void(0)" style="text-decoration: none; color: white;" class="dropdown-toggle" data-toggle="dropdown">
-						<span class="glyphicon glyphicon-user"></span> zhangsan <span class="caret"></span>
+						<span class="glyphicon glyphicon-user"></span> 张三 <span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="workbench/index.jsp"><span class="glyphicon glyphicon-home"></span> 工作台</a></li>

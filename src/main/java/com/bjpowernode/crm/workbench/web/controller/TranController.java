@@ -58,9 +58,24 @@ public class TranController extends HttpServlet {
             changeStage(request,response);
         }else if ("/workbench/transaction/getCharts.do".equals(path)) {
             getCharts(request,response);
+        }else if ("/workbench/transaction/delete.do".equals(path)) {
+            delete(request,response);
         }
 
 
+    }
+
+    private void delete(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("执行交易列表的删除操作");
+
+        String ids[] = request.getParameterValues("id");
+
+        TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
+
+        boolean flag = ts.delete(ids);
+
+        PrintJson.printJsonFlag(response, flag);
     }
 
     //Echarts统计图
@@ -92,6 +107,7 @@ public class TranController extends HttpServlet {
 
         String id = request.getParameter("id");
         String stage = request.getParameter("stage");
+        System.out.println("stage========="+stage);
         String money = request.getParameter("money");
         String expectedDate = request.getParameter("expectedDate");
         String editTime = DateTimeUtil.getSysTime();

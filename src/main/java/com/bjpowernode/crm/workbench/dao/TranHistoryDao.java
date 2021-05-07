@@ -9,4 +9,6 @@ public interface TranHistoryDao {
     int save(TranHistory th);
 
     List<TranHistory> getHistoryByTranId(String tranId);
+
+    int delete(String[] ids);
 }
