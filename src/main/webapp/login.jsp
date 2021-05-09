@@ -81,7 +81,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						//window.location.href("workbench/index.jsp");
 						//alert("登陆成功");
 						window.location.href = "workbench/index.jsp";
-					}else if (data.success&loginUser==1){
+					}else if (!data.success&loginUser==1){
 						window.location.href = "workbench/userIndex.jsp";
 					}
 					else {

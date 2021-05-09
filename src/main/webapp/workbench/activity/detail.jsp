@@ -305,7 +305,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	<!-- 详细信息 -->
 	<div style="position: relative; top: -70px;">
 		<div style="position: relative; left: 40px; height: 30px;">
-			<div style="width: 300px; color: gray;">管理员</div>
+			<div style="width: 300px; color: gray;">货物拥有者</div>
 			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${a.owner}</b></div>
 			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">货物名称</div>
 			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${a.name}</b></div>

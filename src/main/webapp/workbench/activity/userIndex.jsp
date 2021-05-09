@@ -85,51 +85,22 @@
                 pickerPosition: "bottom-left"
             });
 
-            //将全选的复选框的√干掉
-            $("#qx").prop("checked",false);
-
-            //查询前，将隐藏域中保存的信息取出来，重新赋予到搜索框中
-            $("#search-name").val($.trim($("#hidden-name").val()));
-            $("#search-owner").val($.trim($("#hidden-owner").val()));
-            $("#search-startDate").val($.trim($("#hidden-startDate").val()));
-            $("#search-endDate").val($.trim($("#hidden-endDate").val()));
-
             //发送Ajax请求
             $.ajax({
-                url:"workbench/activity/pageList.do",
+                url:"workbench/activity/getUserListById.do",
                 data:{
                     "pageNo":pageNo,
                     "pageSize":pageSize,
-                    "name":$.trim($("#search-name").val()),
-                    "owner":$.trim($("#search-owner").val()),
-                    "startDate":$.trim($("#search-startDate").val()),
-                    "endDate":$.trim($("#search-endDate").val())
+                    "id":"${user.id}"
                 },
                 type:"get",
                 dataType:"json",
                 success:function (data){
-                    /*
-                        data需要为我提供：
-                            1. 我们需要的：市场活动信息列表	[{市场活动1},{市场活动2},{市场活动3},...]
-                            2. 分页查询需要：查询出来的总记录数	{"total":100}
-                        所以data的输出形式为：
-                            data={"total":100,"dataList":[{市场活动1},{市场活动2},{市场活动3},...]}
-                     */
-                    /*
-                        字符串拼接格式：
-                        <tr class="active">
-                                <td><input type="checkbox" /></td>
-                                <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/activity/detail.jsp';">发传单</a></td>
-                                <td>zhangsan</td>
-                                <td>2020-10-10</td>
-                                <td>2020-10-20</td>
-                            </tr>
-                     */
+
                     var html ="";
 
                     $.each(data.dataList,function (i,n){
                         html += '<tr class="active">'
-                        html += '	<td><input type="checkbox" name="xz" value="'+n.id+'"/></td>';
                         html += '	<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.do?id='+n.id+'\';">'+n.name+'</a></td>';
                         html += '	<td>'+n.owner+'</td>';
                         html += '	<td>'+n.startDate+'</td>';
@@ -173,12 +144,6 @@
 </head>
 <body>
 
-<%--	添加隐藏域--%>
-<input type="hidden" id="hidden-name"/>
-<input type="hidden" id="hidden-owner"/>
-<input type="hidden" id="hidden-startDate"/>
-<input type="hidden" id="hidden-endDate"/>
-
 <div>
     <div style="position: relative; left: 10px; top: -10px;">
         <div class="page-header">
@@ -188,47 +153,10 @@
 </div>
 <div style="position: relative; top: -20px; left: 0px; width: 100%; height: 100%;">
     <div style="width: 100%; position: absolute;top: 5px; left: 10px;">
-
-        <div class="btn-toolbar" role="toolbar" style="height: 80px;">
-            <form class="form-inline" role="form" style="position: relative;top: 8%; left: 5px;">
-
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon">货物名称</div>
-                        <input class="form-control" type="text" id="search-name">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon">所有者</div>
-                        <input class="form-control" type="text" id="search-owner">
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon">开始日期</div>
-                        <input class="form-control time" type="text" id="search-startDate"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon">结束日期</div>
-                        <input class="form-control time" type="text" id="search-endDate">
-                    </div>
-                </div>
-
-                <button type="button" class="btn btn-default" id="searchBtb">查询</button>
-
-            </form>
-        </div>
         <div style="position: relative;top: 10px;">
             <table class="table table-hover">
                 <thead>
                 <tr style="color: #B3B3B3;">
-                    <td><input type="checkbox" id="qx"/></td>
                     <td>货物名称</td>
                     <td>所有者</td>
                     <td>接收货物日期</td>

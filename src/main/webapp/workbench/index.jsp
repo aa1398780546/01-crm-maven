@@ -92,17 +92,18 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		<div id="navigation" style="left: 0px; width: 18%; position: relative; height: 100%; overflow:auto;">
 		
 			<ul id="no1" class="nav nav-pills nav-stacked">
+				<li class="liClass"><a href="workbench/clue/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-search"></span> 普通客户</a></li>
+<%--				<li class="liClass"><a href="workbench/customer/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-user"></span> 公司</a></li>--%>
+				<li class="liClass"><a href="workbench/contacts/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-earphone"></span> Vip客户</a></li>
 				<li class="liClass"><a href="workbench/activity/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-play-circle"></span> 货物管理</a></li>
-				<li class="liClass"><a href="workbench/clue/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-search"></span> 潜在客户</a></li>
-				<li class="liClass"><a href="workbench/customer/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-user"></span> 公司</a></li>
-				<li class="liClass"><a href="workbench/contacts/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-earphone"></span> 联系人</a></li>
 				<li class="liClass"><a href="workbench/transaction/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-usd"></span> 物流订单</a></li>
-				<li class="liClass">
-					<a href="#no2" class="collapsed" data-toggle="collapse"><span class="glyphicon glyphicon-stats"></span> 物流单量统计图</a>
-					<ul id="no2" class="nav nav-pills nav-stacked collapse">
-						<li class="liClass"><a href="workbench/chart/transaction/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 订单阶段漏斗图</a></li>
-					</ul>
-				</li>
+<%--				<li class="liClass">--%>
+<%--					<a href="#no2" class="collapsed" data-toggle="collapse"><span class="glyphicon glyphicon-stats"></span> 物流单量统计图</a>--%>
+<%--					<ul id="no2" class="nav nav-pills nav-stacked collapse">--%>
+<%--						<li class="liClass"><a href="workbench/chart/transaction/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 订单阶段漏斗图</a></li>--%>
+<%--					</ul>--%>
+<%--				</li>--%>
+				<li class="liClass"><a href="workbench/chart/transaction/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-usd"></span> 物流单量统计图</a></li>
 			</ul>
 			
 			<!-- 分割线 -->

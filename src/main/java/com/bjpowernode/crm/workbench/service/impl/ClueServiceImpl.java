@@ -197,19 +197,14 @@ public class ClueServiceImpl implements ClueService {
             if(count5!=1){
                 flag = false;
             }
-
-
         }
 
         //(6)如果有创建交易需求，创建一条交易
         if(t!=null){
-
             /*
                 t对象在controller里面已经封装好的信息如下：
                     id,money,name,expectedDate,stage,activityId,createBy,createTime
-
                 接下来可以通过第一步生成的c对象，取出一些信息，继续完善对t对象的封装
-
              */
 
             t.setSource(c.getSource());
@@ -239,8 +234,6 @@ public class ClueServiceImpl implements ClueService {
             if(count7!=1){
                 flag = false;
             }
-
-
         }
 
         //(9) 删除潜在客户和货物的关系

@@ -57,9 +57,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						html += '<td>'+n.customerId+'</td>';
 						html += '<td>'+n.stage+'</td>';
 						html += '<td>'+n.type+'</td>';
-						html += '<td>'+n.createBy+'</td>';
+						// html += '<td>'+n.createBy+'</td>';
 						html += '<td>'+n.source+'</td>';
-						html += '<td>'+n.contactsId+'</td>';
+						// html += '<td>'+n.contactsId+'</td>';
 					html += '</tr>';
 				})
 
@@ -126,13 +126,13 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<thead>
 						<tr style="color: #B3B3B3;">
 							<td><input type="checkbox" /></td>
-							<td>名称</td>
+							<td>订单名称</td>
 							<td>客户名称</td>
-							<td>阶段</td>
-							<td>类型</td>
-							<td>所有者</td>
-							<td>来源</td>
-							<td>联系人名称</td>
+							<td>订单阶段</td>
+							<td>订单类型</td>
+<%--							<td>订单所有者</td>--%>
+							<td>订单来源</td>
+<%--							<td>订单联系人名称</td>--%>
 						</tr>
 					</thead>
 					<tbody id="tranBody">

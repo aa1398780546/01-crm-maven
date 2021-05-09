@@ -53,7 +53,7 @@
 
     </insert>
 
-    <select id="getClueListByCondition" resultType="Tran"   >
+    <select id="getClueListByCondition" resultType="Tran">
         select
             t.id,
             t.owner,

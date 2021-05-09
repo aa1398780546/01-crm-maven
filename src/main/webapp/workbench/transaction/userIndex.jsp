@@ -33,15 +33,13 @@
         //查询交易列表方法，		pageNo:页码		pageSize:每页展示记录数
         function pageList(pageNo,pageSize){
 
-            //将全选的复选框的√干掉
-            $("#qx").prop("checked",false);
-
             //发送Ajax请求
             $.ajax({
-                url:"workbench/transaction/tranList.do",
+                url:"workbench/transaction/getTranListById.do",
                 data:{
                     "pageNo":pageNo,
                     "pageSize":pageSize,
+                    "id":"${user.id}"
                 },
                 type:"get",
                 dataType:"json",
@@ -52,7 +50,6 @@
                     $.each(data.dataList,function (i,n){
 
                         html += '<tr>';
-                        html += '<td><input type="checkbox" name="xz" value="'+n.id+'"/></td>';
                         html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/transaction/detail.do?id='+n.id+'\';">'+n.name+'</a></td>';
                         html += '<td>'+n.customerId+'</td>';
                         html += '<td>'+n.stage+'</td>';
@@ -116,7 +113,6 @@
             <table class="table table-hover">
                 <thead>
                 <tr style="color: #B3B3B3;">
-                    <td><input type="checkbox" /></td>
                     <td>名称</td>
                     <td>客户名称</td>
                     <td>阶段</td>

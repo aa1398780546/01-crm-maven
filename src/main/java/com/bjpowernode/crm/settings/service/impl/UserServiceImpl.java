@@ -28,7 +28,10 @@ public class UserServiceImpl implements UserService {
         分别对对象中的expireTime,lockState和ip地址进行验证，如果都符合要求，将User返回给UserServlet
      */
     @Override
-    public User login(String loginAct, String loginPwd, String ip) throws LoginException {
+    public Map<String, Object> login(String loginAct, String loginPwd, String ip) throws LoginException {
+
+        boolean role = false;
+        Map<String,Object> resultMap = new HashMap<>();
 
         //将参数 loginAct 和 loginPwd 放到一个Map集合中
         Map<String, String> map = new HashMap<>();
@@ -54,13 +57,16 @@ public class UserServiceImpl implements UserService {
         if (expireTime.compareTo(nowTime)<0){
             throw new LoginException("账号已失效");
         }
-        if ("0".equals(lockState)){
-            throw new LoginException("账号未激活");
+        if ("1".equals(lockState)){
+            role = true;
         }
         if (!allowIps.contains(ip)){
             throw new LoginException("无效的IP地址");
         }
-        return user;
+        resultMap.put("user",user);
+        resultMap.put("role",role);
+
+        return resultMap;
 
     }
 

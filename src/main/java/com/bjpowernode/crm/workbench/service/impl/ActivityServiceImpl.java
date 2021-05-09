@@ -46,14 +46,6 @@ public class ActivityServiceImpl implements ActivityService {
     public PaginationVO<Activity> pageList(Map<String, Object> map) {
         System.out.println("进入到查询市场活动信息列表的操作ActivityServiceImpl-pageList");
 
-        /*
-            分析：将发送过来的Map传给ActivityDao
-                 给ActivityController返回一个Vo，那这里需要创建一个VO,
-                 VO有两个属性 int total   ， List<T> dataList
-         */
-//        Integer skipCount = (Integer) map.get("skipCount");
-//        System.out.println("ActivityServiceImpl的skipCount " + skipCount);
-
         int total = activityDao.getTotalByCondition(map);
         List<Activity> dataList = activityDao.getActivityListByCondition(map);
 

@@ -173,9 +173,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	</div>
 	<form action="workbench/transaction/save.do" id="tranForm" method="post" class="form-horizontal" role="form" style="position: relative; top: -30px;">
 		<div class="form-group">
-			<label for="create-transactionOwner" class="col-sm-2 control-label">管理员<span style="font-size: 15px; color: red;">*</span></label>
+			<label for="create-transactionOwner" class="col-sm-2 control-label">创建订单管理员<span style="font-size: 15px; color: red;">*</span></label>
 			<div class="col-sm-10" style="width: 300px;">
-				<select class="form-control" id="create-transactionOwner" name="onwer">
+				<select class="form-control" id="create-transactionOwner" name="owner">
 					<option></option>
 					<c:forEach items="${userList}" var="u">
 						<option value="${u.id}" ${user.id eq u.id ? "selected" : ""}>${u.name}</option>
@@ -193,14 +193,14 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<div class="col-sm-10" style="width: 300px;">
 				<input type="text" class="form-control" id="create-transactionName" name="name">
 			</div>
-			<label for="create-expectedClosingDate" class="col-sm-2 control-label">预计成交日期<span style="font-size: 15px; color: red;">*</span></label>
+			<label for="create-expectedClosingDate" class="col-sm-2 control-label">预计发货日期<span style="font-size: 15px; color: red;">*</span></label>
 			<div class="col-sm-10" style="width: 300px;">
 				<input type="text" class="form-control time1" id="create-expectedClosingDate" name="expectedDate">
 			</div>
 		</div>
 		
 		<div class="form-group">
-			<label for="create-accountName" class="col-sm-2 control-label">客户名称<span style="font-size: 15px; color: red;">*</span></label>
+			<label for="create-accountName" class="col-sm-2 control-label">订单创建人<span style="font-size: 15px; color: red;">*</span></label>
 			<div class="col-sm-10" style="width: 300px;">
 				<input type="text" class="form-control" id="create-customerName" name="customerName" placeholder="支持自动补全，输入客户不存在则新建">
 			</div>
@@ -225,37 +225,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					</c:forEach>
 				</select>
 			</div>
-			<label for="create-possibility" class="col-sm-2 control-label">成交可能性</label>
-			<div class="col-sm-10" style="width: 300px;">
-				<input type="text" class="form-control" id="create-possibility">
-			</div>
 		</div>
-		
-		<div class="form-group">
-			<label for="create-clueSource" class="col-sm-2 control-label">订单来源</label>
-			<div class="col-sm-10" style="width: 300px;">
-				<select class="form-control" id="create-clueSource" name="source">
-				  <option></option>
-					<c:forEach items="${sourceList}" var="s">
-						<option value="${s.value}">${s.text}</option>
-					</c:forEach>
-				</select>
-			</div>
-			<label for="create-activitySrc" class="col-sm-2 control-label">货物&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal" data-target="#findMarketActivity"><span class="glyphicon glyphicon-search"></span></a></label>
-			<div class="col-sm-10" style="width: 300px;">
-				<input type="text" class="form-control" id="create-activitySrc" value="货物">
-				<input type="hidden" name="activityId" value="1d598ac0910a4a2ebb262b0a27eae7cc"/>
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label for="create-contactsName" class="col-sm-2 control-label">订单联系人名称&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal" data-target="#findContacts"><span class="glyphicon glyphicon-search"></span></a></label>
-			<div class="col-sm-10" style="width: 300px;">
-				<input type="text" class="form-control" id="create-contactsName" value="马云">
-				<input type="hidden" name="contactsId" value="c0ed6fea95a148a19488e34472cd12a2"/>
-			</div>
-		</div>
-		
+
 		<div class="form-group">
 			<label for="create-describe" class="col-sm-2 control-label">订单描述</label>
 			<div class="col-sm-10" style="width: 70%;">
@@ -263,20 +234,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			</div>
 		</div>
 		
-		<div class="form-group">
-			<label for="create-contactSummary" class="col-sm-2 control-label">联系纪要</label>
-			<div class="col-sm-10" style="width: 70%;">
-				<textarea class="form-control" rows="3" id="create-contactSummary" name="contactSummary"></textarea>
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label for="create-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
-			<div class="col-sm-10" style="width: 300px;">
-				<input type="text" class="form-control time2" id="create-nextContactTime" name="nextContactTime">
-			</div>
-		</div>
-		
+
 	</form>
 </body>
 </html>

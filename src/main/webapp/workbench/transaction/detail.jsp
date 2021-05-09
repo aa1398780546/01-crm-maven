@@ -648,29 +648,14 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 40px;">
-			<div style="width: 300px; color: gray;">来源</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${t.source}</b></div>
-			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">市场活动源</div>
-			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${t.expectedDate}</b></div>
+			<div style="width: 300px; color: gray;">创建者</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${t.createBy}&nbsp;&nbsp;</b><small style="font-size: 10px; color: gray;">${t.createTime}</small></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">修改者</div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b id="editBy">z${t.editBy}&nbsp;&nbsp;</b><small id="editTime" style="font-size: 10px; color: gray;">${t.editTime}</small></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 50px;">
-			<div style="width: 300px; color: gray;">联系人名称</div>
-			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${t.contactsId}</b></div>
-			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
-		</div>
-		<div style="position: relative; left: 40px; height: 30px; top: 60px;">
-			<div style="width: 300px; color: gray;">创建者</div>
-			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${t.createBy}&nbsp;&nbsp;</b><small style="font-size: 10px; color: gray;">${t.createTime}</small></div>
-			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
-		</div>
-		<div style="position: relative; left: 40px; height: 30px; top: 70px;">
-			<div style="width: 300px; color: gray;">修改者</div>
-			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b id="editBy">z${t.editBy}&nbsp;&nbsp;</b><small id="editTime" style="font-size: 10px; color: gray;">${t.editTime}</small></div>
-			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
-		</div>
-		<div style="position: relative; left: 40px; height: 30px; top: 80px;">
 			<div style="width: 300px; color: gray;">描述</div>
 			<div style="width: 630px;position: relative; left: 200px; top: -20px;">
 				<b>
@@ -679,16 +664,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			</div>
 			<div style="height: 1px; width: 850px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
-		<div style="position: relative; left: 40px; height: 30px; top: 90px;">
-			<div style="width: 300px; color: gray;">联系纪要</div>
-			<div style="width: 630px;position: relative; left: 200px; top: -20px;">
-				<b>
-					${t.contactSummary}
-				</b>
-			</div>
-			<div style="height: 1px; width: 850px; background: #D5D5D5; position: relative; top: -20px;"></div>
-		</div>
-		<div style="position: relative; left: 40px; height: 30px; top: 100px;">
+		<div style="position: relative; left: 40px; height: 30px; top: 60px;">
 			<div style="width: 300px; color: gray;">下次联系时间</div>
 			<div style="width: 500px;position: relative; left: 200px; top: -20px;">
 				<b>

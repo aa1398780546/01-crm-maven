@@ -103,14 +103,18 @@ public class UserController extends HttpServlet {
         try {
 
             //将参数发送到Service层的login方法，如果各种验证都通过将会返回一个User
-            User user = us.login(loginAct,loginPwd,ip);
+            Map<String,Object> resultMap = us.login(loginAct,loginPwd,ip);
+            User user = (User) resultMap.get("user");
+            Boolean role = (Boolean) resultMap.get("role");
+
 
             //程序执行到这里说明登陆成功，业务逻辑层没有为controller抛出任何异常
             //将User对象保存到Session域对象中
             request.getSession().setAttribute("user",user);
 
-            //调用工具类的方法，将 flag=true 的结果返回给浏览器。
-            PrintJson.printJsonFlag(response,true);
+            //调用工具类的方法，将 role=true 的结果返回给浏览器。
+            //role=true 管理员； role=false 用户
+            PrintJson.printJsonFlag(response,role);
 
         }catch (Exception e){
             e.printStackTrace();

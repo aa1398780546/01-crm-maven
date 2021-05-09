@@ -107,7 +107,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					}
 				}
 			})
-
 		})
 
 		//为点击市场活动后的-查询-按钮绑定事件，添加查询操作。
@@ -417,7 +416,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	<input type="hidden" id="hidden-startDate"/>
 	<input type="hidden" id="hidden-endDate"/>
 
-	<!-- 创建市场活动的模态窗口 -->
+	<!-- 创建货物的模态窗口 -->
 	<div class="modal fade" id="createActivityModal" role="dialog">
 		<div class="modal-dialog" role="document" style="width: 85%;">
 			<div class="modal-content">
@@ -432,7 +431,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<form id="activityAddForm" class="form-horizontal" role="form">
 					
 						<div class="form-group">
-								<label for="create-marketActivityOwner" class="col-sm-2 control-label">管理员名称<span style="font-size: 15px; color: red;">*</span></label>
+								<label for="create-marketActivityOwner" class="col-sm-2 control-label">货物拥有者<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
 								<select class="form-control" id="create-owner">
 								</select>

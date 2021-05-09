@@ -184,8 +184,6 @@ public class TranController extends HttpServlet {
         String contactSummary = request.getParameter("contactSummary");
         String nextContactTime = request.getParameter("nextContactTime");
 
-        System.out.println("contactsId+++++++++++:"+contactsId);
-
         String createBy = ((User)request.getSession().getAttribute("user")).getName();
         String createTime = DateTimeUtil.getSysTime();
 
@@ -207,14 +205,11 @@ public class TranController extends HttpServlet {
         t.setNextContactTime(nextContactTime);
 
         TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
-
         boolean flag = ts.save(t,customerName);
 
         if(flag){
-
             //如果添加交易成功，跳转到列表页
             response.sendRedirect(request.getContextPath() + "/workbench/transaction/index.jsp");
-
         }
 
     }

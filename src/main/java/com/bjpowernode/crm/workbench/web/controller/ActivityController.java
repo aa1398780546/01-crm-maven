@@ -325,7 +325,7 @@ public class ActivityController extends HttpServlet {
         PrintJson.printJsonObj(response,vo);
     }
 
-    //打开创建市场活动的模态窗口，添加完信息后，点击保存按钮。
+    //打开创建货物管理的模态窗口，添加完信息后，点击保存按钮。
     private void save(HttpServletRequest request, HttpServletResponse response) {
 
         System.out.println("进入到添加物流管理列表save");
@@ -357,7 +357,6 @@ public class ActivityController extends HttpServlet {
         Boolean flag = as.save(a);
 
         PrintJson.printJsonObj(response,flag);
-
     }
 
     //点击创建，所有者信息根据用户列表展现。
