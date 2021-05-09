@@ -82,17 +82,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					fullname : $.trim($("#create-fullname").val()),
 					appellation : $.trim($("#create-appellation").val()),
 					owner : $.trim($("#create-owner").val()),
-					company : $.trim($("#create-company").val()),
-					job : $.trim($("#create-job").val()),
 					email : $.trim($("#create-email").val()),
-					phone : $.trim($("#create-phone").val()),
-					website : $.trim($("#create-website").val()),
 					mphone : $.trim($("#create-mphone").val()),
-					state : $.trim($("#create-state").val()),
-					source : $.trim($("#create-source").val()),
-					description : $.trim($("#create-description").val()),
-					contactSummary : $.trim($("#create-contactSummary").val()),
-					nextContactTime : $.trim($("#create-nextContactTime").val()),
 					address : $.trim($("#create-address").val())
 				},
 				type: "post",
@@ -163,12 +154,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					html += '<tr class="clue">'
 					html += '	<td><input type="checkbox" name="xz" value="'+n.id+'"/></td>';
 					html += '	<td><a style="text-decoration: none; cursor: pointer;"onclick="window.location.href=\'workbench/clue/detail.do?id='+n.id+'\';">'+n.fullname+''+n.appellation+'</a></td>';
-					html += '	<td>'+n.company+'</td>';
-					html += '	<td>'+n.phone+'</td>';
 					html += '	<td>'+n.mphone+'</td>';
-					html += '	<td>'+n.source+'</td>';
-					html += '	<td>'+n.createBy+'</td>';
-					html += '	<td>'+n.state+'</td>';
+					html += '	<td>'+n.email+'</td>';
+					html += '	<td>'+n.address+'</td>';
 					html += '</tr>';
 				})
 
@@ -216,25 +204,18 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">创建潜在客户</h4>
+					<h4 class="modal-title" id="myModalLabel">创建客户</h4>
 				</div>
 				<div class="modal-body">
 					<form id="clueAddForm" class="form-horizontal" role="form">
 					
 						<div class="form-group">
-							<label for="create-clueOwner" class="col-sm-2 control-label">管理员<span style="font-size: 15px; color: red;">*</span></label>
+							<label for="create-clueOwner" class="col-sm-2 control-label">创建客户表管理员<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
 								<select class="form-control" id="create-owner">
 								</select>
 							</div>
-							<label for="create-company" class="col-sm-2 control-label">公司名称<span style="font-size: 15px; color: red;">*</span></label>
-							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="create-company">
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label for="create-call" class="col-sm-2 control-label">称呼</label>
+							<label for="create-call" class="col-sm-2 control-label">客户性别</label>
 							<div class="col-sm-10" style="width: 300px;">
 								<select class="form-control" id="create-appellation">
 									<c:forEach items="${appellationList}" var="a">
@@ -242,82 +223,23 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 									</c:forEach>
 								</select>
 							</div>
-							<label for="create-surname" class="col-sm-2 control-label">联系人姓名<span style="font-size: 15px; color: red;">*</span></label>
-							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="create-fullname">
-							</div>
 						</div>
 						
 						<div class="form-group">
-							<label for="create-job" class="col-sm-2 control-label">联系人职位</label>
+							<label for="create-surname" class="col-sm-2 control-label">客户姓名<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="create-job">
+								<input type="text" class="form-control" id="create-fullname">
 							</div>
-							<label for="create-email" class="col-sm-2 control-label">联系人邮箱</label>
+							<label for="create-email" class="col-sm-2 control-label">客户邮箱</label>
 							<div class="col-sm-10" style="width: 300px;">
 								<input type="text" class="form-control" id="create-email">
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label for="create-phone" class="col-sm-2 control-label">公司座机</label>
-							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="create-phone">
-							</div>
-							<label for="create-website" class="col-sm-2 control-label">公司网站</label>
-							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="create-website">
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label for="create-mphone" class="col-sm-2 control-label">联系人手机</label>
+							<label for="create-mphone" class="col-sm-2 control-label" >客户手机号码</label>
 							<div class="col-sm-10" style="width: 300px;">
 								<input type="text" class="form-control" id="create-mphone">
-							</div>
-							<label for="create-status" class="col-sm-2 control-label">联系人状态</label>
-							<div class="col-sm-10" style="width: 300px;">
-								<select class="form-control" id="create-state">
-									<c:forEach items="${clueStateList}" var="c">
-										<option value="${c.value}">${c.text}</option>
-									</c:forEach>
-								</select>
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label for="create-source" class="col-sm-2 control-label">潜在客户来源</label>
-							<div class="col-sm-10" style="width: 300px;">
-								<select class="form-control" id="create-source">
-									<c:forEach items="${sourceList}" var="s">
-										<option value="${s.value}">${s.text}</option>
-									</c:forEach>
-								</select>
-							</div>
-						</div>
-						
-
-						<div class="form-group">
-							<label for="create-describe" class="col-sm-2 control-label">潜在客户描述</label>
-							<div class="col-sm-10" style="width: 81%;">
-								<textarea class="form-control" rows="3" id="create-description"></textarea>
-							</div>
-						</div>
-						
-						<div style="height: 1px; width: 103%; background-color: #D5D5D5; left: -13px; position: relative;"></div>
-						
-						<div style="position: relative;top: 15px;">
-							<div class="form-group">
-								<label for="create-contactSummary" class="col-sm-2 control-label">联系纪要</label>
-								<div class="col-sm-10" style="width: 81%;">
-									<textarea class="form-control" rows="3" id="create-contactSummary"></textarea>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="create-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
-								<div class="col-sm-10" style="width: 300px;">
-									<input type="text" class="form-control time" id="create-nextContactTime">
-								</div>
 							</div>
 						</div>
 						
@@ -325,7 +247,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						
 						<div style="position: relative;top: 20px;">
 							<div class="form-group">
-                                <label for="create-address" class="col-sm-2 control-label">联系人详细地址</label>
+                                <label for="create-address" class="col-sm-2 control-label">客户详细地址</label>
                                 <div class="col-sm-10" style="width: 81%;">
                                     <textarea class="form-control" rows="1" id="create-address"></textarea>
                                 </div>
@@ -501,7 +423,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	<div>
 		<div style="position: relative; left: 10px; top: -10px;">
 			<div class="page-header">
-				<h3>潜在客户列表</h3>
+				<h3>普通客户列表</h3>
 			</div>
 		</div>
 	</div>
@@ -524,13 +446,13 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<thead>
 						<tr style="color: #B3B3B3;">
 							<td><input type="checkbox" id="qx" /></td>
-							<td>名称</td>
-							<td>公司</td>
-							<td>公司座机</td>
-							<td>手机</td>
-							<td>线索来源</td>
-							<td>所有者</td>
-							<td>线索状态</td>
+							<td>客户姓名</td>
+							<td>手机号码</td>
+							<td>邮箱</td>
+<%--							<td>客户类型</td>--%>
+							<td>客户详细地址</td>
+<%--							<td>所有者</td>--%>
+<%--							<td>线索状态</td>--%>
 						</tr>
 					</thead>
 					<tbody id="clueBody">

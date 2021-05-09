@@ -17,19 +17,10 @@
             fullname,
             appellation,
             owner,
-            company,
-            job,
             email,
-            phone,
-            website,
             mphone,
-            state,
-            source,
             createBy,
             createTime,
-            description,
-            contactSummary,
-            nextContactTime,
             address
         )
          values (
@@ -37,19 +28,10 @@
                     #{fullname},
                     #{appellation},
                     #{owner},
-                    #{company},
-                    #{job},
                     #{email},
-                    #{phone},
-                    #{website},
                     #{mphone},
-                    #{state},
-                    #{source},
                     #{createBy},
                     #{createTime},
-                    #{description},
-                    #{contactSummary},
-                    #{nextContactTime},
                     #{address}
                 )
     </insert>
