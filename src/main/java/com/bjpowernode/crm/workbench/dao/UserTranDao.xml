@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 写定义的接口名称-->
+<mapper namespace="com.bjpowernode.crm.workbench.dao.UserTranDao">
+
+    <select id="getActivityListByCondition" resultType="Tran">
+        select
+            t.id,
+            t.owner,
+            t.money,
+            t.name,
+            t.expectedDate,
+            u.name as customerId,
+            t.stage,
+            t.type,
+            t.source,
+            t.activityId,
+            o.fullname as contactsId,
+            t.createBy,
+            t.createTime,
+            t.editBy,
+            t.editTime,
+            t.description,
+            t.contactSummary,
+            t.nextContactTime
+
+        from tbl_tran t
+                 join tbl_contacts o
+                      on t.contactsId=o.id
+                 join tbl_customer u
+                      on t.customerId=u.id
+
+        where t.owner=#{id}
+
+        order by t.createTime desc
+            limit #{skipCount},#{pageSize}
+
+    </select>
+
+    <select id="getTotalByCondition" resultType="int">
+
+        select count(*)
+
+        from tbl_tran
+
+        where owner=#{id}
+
+    </select>
+
+</mapper>

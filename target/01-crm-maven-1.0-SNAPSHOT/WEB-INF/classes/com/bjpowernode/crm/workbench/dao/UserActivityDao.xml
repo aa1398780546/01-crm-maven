@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 写定义的接口名称-->
+<mapper namespace="com.bjpowernode.crm.workbench.dao.UserActivityDao">
+
+    <select id="getActivityListByCondition" resultType="Activity">
+
+        select
+
+            a.id,
+            a.name,
+            u.name as owner,
+            a.startDate,
+            a.endDate
+
+        from tbl_activity a
+                 join tbl_user u
+                      on a.owner=u.id
+
+        where owner=#{id}
+
+        order by a.createTime desc
+
+            limit #{skipCount},#{pageSize}
+
+
+    </select>
+
+    <select id="getTotalByCondition" resultType="int">
+
+        select count(*)
+
+        from tbl_activity a
+        join tbl_user u
+        on a.owner=u.id
+
+        where owner=#{id}
+
+    </select>
+
+</mapper>
