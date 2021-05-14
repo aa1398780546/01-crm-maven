@@ -90,7 +90,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				dataType: "json",
 				success:function (data){
 					if (data){
-						alert("潜在客户添加成功！")
+						alert("客户信息添加成功！")
 						//刷新市场活动列表
 						//回到首页，每页展示已经设置好的记录数
 						pageList(1,$("#cluePage").bs_pagination('getOption', 'rowsPerPage'));
@@ -154,6 +154,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					html += '<tr class="clue">'
 					html += '	<td><input type="checkbox" name="xz" value="'+n.id+'"/></td>';
 					html += '	<td><a style="text-decoration: none; cursor: pointer;"onclick="window.location.href=\'workbench/clue/detail.do?id='+n.id+'\';">'+n.fullname+''+n.appellation+'</a></td>';
+					html += '	<td>'+n.id+'</td>';
+					html += '	<td>******</td>';
 					html += '	<td>'+n.mphone+'</td>';
 					html += '	<td>'+n.email+'</td>';
 					html += '	<td>'+n.address+'</td>';
@@ -447,6 +449,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						<tr style="color: #B3B3B3;">
 							<td><input type="checkbox" id="qx" /></td>
 							<td>客户姓名</td>
+							<td>用户登录账号</td>
+							<td>用户登录密码</td>
 							<td>手机号码</td>
 							<td>邮箱</td>
 <%--							<td>客户类型</td>--%>

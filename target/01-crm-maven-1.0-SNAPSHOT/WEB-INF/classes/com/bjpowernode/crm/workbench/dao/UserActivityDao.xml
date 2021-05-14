@@ -10,19 +10,24 @@
 
         select
 
-            a.id,
-            a.name,
-            u.name as owner,
-            a.startDate,
-            a.endDate
+            id,
+            name,
+            owner,
+            startDate,
+            endDate,
+            cost,
+            description,
+            createTime,
+            createBy,
+            editTime,
+            editBy,
+            clueId
 
-        from tbl_activity a
-                 join tbl_user u
-                      on a.owner=u.id
+        from tbl_activity
 
-        where owner=#{id}
+        where  id=#{id}
 
-        order by a.createTime desc
+        order by createTime desc
 
             limit #{skipCount},#{pageSize}
 
@@ -33,11 +38,9 @@
 
         select count(*)
 
-        from tbl_activity a
-        join tbl_user u
-        on a.owner=u.id
+        from tbl_activity
 
-        where owner=#{id}
+        where id=#{id}
 
     </select>
 

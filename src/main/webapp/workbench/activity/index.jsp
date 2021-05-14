@@ -608,9 +608,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						<tr style="color: #B3B3B3;">
 							<td><input type="checkbox" id="qx"/></td>
 							<td>货物名称</td>
-                            <td>所有者</td>
+                            <td>记录管理员</td>
 							<td>接收货物日期</td>
-							<td>结束日期</td>
+							<td>结束货物日期</td>
 						</tr>
 					</thead>
 					<tbody id="activityBody">

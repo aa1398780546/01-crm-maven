@@ -15,6 +15,15 @@ public class Activity {
     private String createBy;        //创建人
     private String editTime;        //修改时间 年月日时分秒
     private String editBy;          //修改人
+    private String clueId;
+
+    public String getClueId() {
+        return clueId;
+    }
+
+    public void setClueId(String clueId) {
+        this.clueId = clueId;
+    }
 
     public String getId() {
         return id;

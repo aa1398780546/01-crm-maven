@@ -3,10 +3,7 @@ package com.bjpowernode.crm.workbench.web.controller;
 import com.bjpowernode.crm.settings.domain.User;
 import com.bjpowernode.crm.settings.service.UserService;
 import com.bjpowernode.crm.settings.service.impl.UserServiceImpl;
-import com.bjpowernode.crm.utils.DateTimeUtil;
-import com.bjpowernode.crm.utils.PrintJson;
-import com.bjpowernode.crm.utils.ServiceFactory;
-import com.bjpowernode.crm.utils.UUIDUtil;
+import com.bjpowernode.crm.utils.*;
 import com.bjpowernode.crm.vo.PaginationVO;
 import com.bjpowernode.crm.workbench.domain.Activity;
 import com.bjpowernode.crm.workbench.domain.Clue;
@@ -170,42 +167,123 @@ public class TranController extends HttpServlet {
         System.out.println("接收表单传输过来的参数，重定向回到index页面");
 
         String id = UUIDUtil.getUUID();
+        String clueId = UUIDUtil.generateShortUuid();
         String owner = request.getParameter("owner");
+        String tranName = request.getParameter("tranName");
         String money = request.getParameter("money");
-        String name = request.getParameter("name");
-        String expectedDate = request.getParameter("expectedDate");
-        String customerName = request.getParameter("customerName");
         String stage = request.getParameter("stage");
         String type = request.getParameter("type");
-        String source = request.getParameter("source");
-        String activityId = request.getParameter("activityId");
-        String contactsId = request.getParameter("contactsId");
+        String fullname = request.getParameter("fullname");
+        String appellation = "先生";
+        String email = request.getParameter("email");
+        String mphone = request.getParameter("mphone");
+        String address = request.getParameter("address");
+        String Rfullname = request.getParameter("Rfullname");
+        String Rappellation = "女士";
+        String Rmphone = request.getParameter("Rmphone");
+        String Raddress = request.getParameter("Raddress");
+        String expectedDate = request.getParameter("expectedDate");
+        String receivedDate = request.getParameter("receivedDate");
+        String editBy = request.getParameter("editBy");
+        String editTime = request.getParameter("editTime");
         String description = request.getParameter("description");
-        String contactSummary = request.getParameter("contactSummary");
-        String nextContactTime = request.getParameter("nextContactTime");
-
         String createBy = ((User)request.getSession().getAttribute("user")).getName();
         String createTime = DateTimeUtil.getSysTime();
 
+        System.out.println("=============1.创建交易订单表START========================");
         Tran t = new Tran();
-        t.setId(id);
+        t.setId(clueId);
+        t.setClueId(clueId);
         t.setOwner(owner);
+        t.setTranName(tranName);
         t.setMoney(money);
-        t.setName(name);
-        t.setExpectedDate(expectedDate);
         t.setStage(stage);
         t.setType(type);
-        t.setSource(source);
-        t.setActivityId(activityId);
-        t.setContactsId(contactsId);
-        t.setCreateTime(createTime);
-        t.setCreateBy(createBy);
+        t.setFullname(fullname);
+        t.setAppellation(appellation);
+        t.setEmail(email);
+        t.setMphone(mphone);
+        t.setAddress(address);
+        t.setRfullname(Rfullname);
+        t.setRappellation(Rappellation);
+        t.setRmphone(Rmphone);
+        t.setRaddress(Raddress);
+        t.setExpectedDate(expectedDate);
+        t.setReceivedDate(receivedDate);
+        t.setEditBy(editBy);
+        t.setEditTime(editTime);
         t.setDescription(description);
-        t.setContactSummary(contactSummary);
-        t.setNextContactTime(nextContactTime);
+        t.setCreateBy(createBy);
+        t.setCreateTime(createTime);
 
         TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
-        boolean flag = ts.save(t,customerName);
+        boolean flag = ts.save(t);
+        System.out.println("===========1.创建交易订单表END=============================");
+
+
+        System.out.println("===========2.1创建联系人表START============================");
+        //phone用来当作客户的初始密码123456
+        String phone = "123456";
+        Clue c = new Clue();
+        c.setId(clueId);
+        c.setFullname(fullname);
+        c.setAppellation(appellation);
+        c.setOwner(owner);
+        c.setEmail(email);
+        c.setPhone(phone);
+        c.setMphone(mphone);
+        c.setAddress(address);
+        c.setCreateTime(createTime);
+        c.setCreateBy(createBy);
+
+        ClueService clueService = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        Boolean clueFlag = clueService.save(c);
+
+        System.out.println("==============2.2添加普通客户表User信息=====================");
+        String loginAct = clueId;
+        String loginPwd = phone;
+        String name = fullname;
+        String expireTime ="2022-04-18 21:50:05";
+        String lockState ="0";
+        String allowIps ="192.168.1.1,192.168.1.2,127.0.0.1";
+        loginPwd = MD5Util.getMD5(loginPwd);
+
+        User user = new User();
+        user.setId(clueId);
+        user.setLoginAct(loginAct);
+        user.setName(name);
+        user.setLoginPwd(loginPwd);
+        user.setEmail(email);
+        user.setExpireTime(expireTime);
+        user.setLockState(lockState);
+        user.setAllowIps(allowIps);
+        user.setCreateTime(createTime);
+        user.setCreateBy(createBy);
+
+        UserService us = (UserService) ServiceFactory.getService(new UserServiceImpl());
+        Integer num = us.save(user);
+        System.out.println("==============2.2添加普通客户表User信息结束==================");
+
+        System.out.println("===========2.创建联系人表END===============================");
+
+
+        System.out.println("===========3.创建货物表START==============================");
+
+        Activity a = new Activity();
+        a.setId(clueId);
+        a.setOwner(owner);
+        a.setName(tranName);
+        a.setStartDate(expectedDate);
+        a.setEndDate(receivedDate);
+        a.setCost(money);
+        a.setDescription(description);
+        a.setCreateTime(createTime);
+        a.setCreateBy(createBy);
+        a.setClueId(clueId);
+
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        Boolean ActivityFlag = as.save(a);
+        System.out.println("===========3.创建货物表END================================");
 
         if(flag){
             //如果添加交易成功，跳转到列表页
@@ -224,12 +302,6 @@ public class TranController extends HttpServlet {
         TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
         Tran tran = ts.detail(id);
 
-        //处理可能性
-        /*
-            阶段 t
-            阶段和可能性之间的对应关系 pMap
-         */
-        //获得阶段stage
         String stage = tran.getStage();
         //获得在监听器中放入application的Map
         Map<String,String> pMap = (Map<String,String>)this.getServletContext().getAttribute("pMap");
@@ -238,7 +310,7 @@ public class TranController extends HttpServlet {
 
         //直接在实体类中加多一个
         tran.setPossibility(possibility);
-
+//
         request.setAttribute("t",tran);
         request.getRequestDispatcher("/workbench/transaction/detail.jsp").forward(request,response);
 

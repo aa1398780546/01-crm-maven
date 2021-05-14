@@ -8,79 +8,87 @@
     <insert id="save">
 
         insert into tbl_tran(
-
             id,
             owner,
+            tranName,
             money,
-            name,
-            expectedDate,
-            customerId,
             stage,
             type,
-            source,
-            activityId,
-            contactsId,
             createBy,
             createTime,
-            description,
-            contactSummary,
-            nextContactTime
-
-
+            clueId,
+            fullname,
+            appellation,
+            email,
+            mphone,
+            address,
+            Rfullname,
+            Rappellation,
+            Rmphone,
+            Raddress,
+            expectedDate,
+            receivedDate,
+            editBy,
+            editTime,
+            description
         )
 
         values(
-
-                  #{id},
-                  #{owner},
-                  #{money},
-                  #{name},
-                  #{expectedDate},
-                  #{customerId},
-                  #{stage},
-                  #{type},
-                  #{source},
-                  #{activityId},
-                  #{contactsId},
-                  #{createBy},
-                  #{createTime},
-                  #{description},
-                  #{contactSummary},
-                  #{nextContactTime}
-
+                #{id},
+                #{owner},
+                #{tranName},
+                #{money},
+                #{stage},
+                #{type},
+                #{createBy},
+                #{createTime},
+                #{clueId},
+                #{fullname},
+                #{appellation},
+                #{email},
+                #{mphone},
+                #{address},
+                #{Rfullname},
+                #{Rappellation},
+                #{Rmphone},
+                #{Raddress},
+                #{expectedDate},
+                #{receivedDate},
+                #{editBy},
+                #{editTime},
+                #{description}
               )
-
 
     </insert>
 
     <select id="getClueListByCondition" resultType="Tran">
         select
-            t.id,
-            t.owner,
-            t.money,
-            t.name,
-            t.expectedDate,
-            u.name as customerId,
-            t.stage,
-            t.type,
-            t.source,
-            t.activityId,
-            o.fullname as contactsId,
-            t.createBy,
-            t.createTime,
-            t.editBy,
-            t.editTime,
-            t.description,
-            t.contactSummary,
-            t.nextContactTime
+            id,
+            owner,
+            money,
+            expectedDate,
+            stage,
+            type,
+            createBy,
+            createTime,
+            description,
+            tranName,
+            clueId,
+            fullname,
+            appellation,
+            email,
+            mphone,
+            address,
+            Rfullname,
+            Rappellation,
+            Rmphone,
+            Raddress,
+            receivedDate,
+            editBy,
+            editTime
 
-        from tbl_tran t
-            join tbl_contacts o
-                on t.contactsId=o.id
-            join tbl_customer u
-                 on t.customerId=u.id
-
-        order by t.createTime desc
+        from tbl_tran
+        order by createTime desc
         limit #{skipCount},#{pageSize}
 
     </select>
@@ -96,30 +104,31 @@
     <select id="detail" resultType="Tran">
 
         select
-            t.id,
-            t.owner,
-            t.money,
-            t.name,
-            t.expectedDate,
-            u.name as customerId,
-            t.stage,
-            t.type,
-            t.source,
-            t.activityId,
-            o.fullname as contactsId,
-            t.createBy,
-            t.createTime,
-            t.editBy,
-            t.editTime,
-            t.description,
-            t.contactSummary,
-            t.nextContactTime
+            id,
+            owner,
+            tranName,
+            money,
+            stage,
+            type,
+            createBy,
+            createTime,
+            clueId,
+            fullname,
+            appellation,
+            email,
+            mphone,
+            address,
+            Rfullname,
+            Rappellation,
+            Rmphone,
+            Raddress,
+            expectedDate,
+            receivedDate,
+            editBy,
+            editTime,
+            description
 
         from tbl_tran t
-            join tbl_customer u
-                on t.customerId=u.id
-            join tbl_contacts o
-                on t.contactsId=o.id
 
         where t.id=#{id}
 

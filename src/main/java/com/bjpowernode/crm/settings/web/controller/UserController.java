@@ -96,8 +96,8 @@ public class UserController extends HttpServlet {
 //        UserService us = new UserServiceImpl();
         //创建Service层对象UserServiceImpl
         //在未来业务层开发，统一使用代理类形态的接口对象
-//        UserService us = (UserService) ServiceFactory.getService(new UserServiceImpl());
-        UserService us = new UserServiceImpl();
+        UserService us = (UserService) ServiceFactory.getService(new UserServiceImpl());
+//        UserService us = new UserServiceImpl();
 
 
         try {

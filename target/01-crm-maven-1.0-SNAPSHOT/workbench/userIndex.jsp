@@ -91,6 +91,7 @@
     <div id="navigation" style="left: 0px; width: 18%; position: relative; height: 100%; overflow:auto;">
 
         <ul id="no1" class="nav nav-pills nav-stacked">
+            <li class="liClass"><a href="workbench/activity/userUpdatePwd.jsp" target="workareaFrame"><span class="glyphicon glyphicon-play-circle"></span> 修改密码</a></li>
             <li class="liClass"><a href="workbench/activity/userIndex.jsp" target="workareaFrame"><span class="glyphicon glyphicon-play-circle"></span> 货物管理</a></li>
             <li class="liClass"><a href="workbench/transaction/userIndex.jsp" target="workareaFrame"><span class="glyphicon glyphicon-usd"></span> 物流订单</a></li>
         </ul>

@@ -34,6 +34,8 @@ public class ClueServiceImpl implements ClueService {
     private TranDao tranDao = SqlSessionUtil.getSqlSession().getMapper(TranDao.class);
     private TranHistoryDao tranHistoryDao = SqlSessionUtil.getSqlSession().getMapper(TranHistoryDao.class);
 
+    private ActivityDao activityDao = SqlSessionUtil.getSqlSession().getMapper(ActivityDao.class);
+
     @Override
     public Boolean save(Clue c) {
 
@@ -97,6 +99,12 @@ public class ClueServiceImpl implements ClueService {
             car.setId(UUIDUtil.getUUID());
             car.setActivityId(aid);
             car.setClueId(cid);
+
+            System.out.println("cid=============="+cid);
+            Activity a = new Activity();
+            a.setId(aid);
+            a.setClueId(cid);
+            activityDao.insertClueIdByActivityId(a);
 
             //添加关联关系表中的记录
             int count = clueActivityRelationDao.relationActivityById(car);
@@ -207,18 +215,18 @@ public class ClueServiceImpl implements ClueService {
                 接下来可以通过第一步生成的c对象，取出一些信息，继续完善对t对象的封装
              */
 
-            t.setSource(c.getSource());
-            t.setOwner(c.getOwner());
-            t.setNextContactTime(c.getNextContactTime());
-            t.setDescription(c.getDescription());
-            t.setCustomerId(cus.getId());
-            t.setContactSummary(c.getContactSummary());
-            t.setContactsId(con.getId());
-            //添加交易
-            int count6 = tranDao.save(t);
-            if(count6!=1){
-                flag = false;
-            }
+//            t.setSource(c.getSource());
+//            t.setOwner(c.getOwner());
+//            t.setNextContactTime(c.getNextContactTime());
+//            t.setDescription(c.getDescription());
+//            t.setCustomerId(cus.getId());
+//            t.setContactSummary(c.getContactSummary());
+//            t.setContactsId(con.getId());
+//            //添加交易
+//            int count6 = tranDao.save(t);
+//            if(count6!=1){
+//                flag = false;
+//            }
 
             //(7)如果创建了交易，则创建一条该交易下的交易历史
             TranHistory th = new TranHistory();

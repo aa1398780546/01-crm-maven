@@ -16,8 +16,10 @@
 
     <!--    线索信息列表-->
     <select id="getClueListByCondition" resultType="User">
+
         select  *
         from tbl_user
+        where lockState=1
 
         order by createTime desc
 
@@ -29,10 +31,36 @@
     <select id="getTotalByCondition" resultType="int">
 
         select count(*)
-
         from tbl_user
+        where lockState=1
 
     </select>
 
+    <insert id="save">
+        insert into tbl_user(
+            id,
+            loginAct,
+            name,
+            loginPwd,
+            email,
+            expireTime,
+            lockState,
+            allowIps,
+            createTime,
+            createBy
+        )
+        values (
+                   #{id},
+                   #{loginAct},
+                   #{name},
+                   #{loginPwd},
+                   #{email},
+                   #{expireTime},
+                   #{lockState},
+                   #{allowIps},
+                   #{createTime},
+                   #{createBy}
+               )
+    </insert>
 
 </mapper>

@@ -178,64 +178,18 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	</div>
 
 	<div id="title" class="page-header" style="position: relative; left: 20px;">
-		<h4>潜在客户转换为正常客户 <small>${param.fullname}-${param.appellation}</small></h4>
+		<h4>普通客户转换为VIP客户 <small>${param.fullname}-${param.appellation}</small></h4>
 	</div>
 	<div id="create-customer" style="position: relative; left: 40px; height: 35px;">
-		新建公司：${param.company}
+		${param.company}
 	</div>
 	<div id="create-contact" style="position: relative; left: 40px; height: 35px;">
-		新建联系人：${param.fullname}${param.appellation}
+		新建VIP客户：${param.fullname}${param.appellation}
 	</div>
-	<div id="create-transaction1" style="position: relative; left: 40px; height: 35px; top: 25px;">
-		<input type="checkbox" id="isCreateTransaction"/>
-		为客户创建订单
-	</div>
-	<div id="create-transaction2" style="position: relative; left: 40px; top: 20px; width: 80%; background-color: #F7F7F7; display: none;" >
-		<!--
 
-			提交表单行为结果：
-
-				workbench/clue/convert.do?clueId=xxx&money=xxx&name=xxx......&flag=a
-
-		-->
-		<form id="tranForm" action="workbench/clue/convert.do" method="post">
-
-		  <input type="hidden" name="clueId" value="${param.id}"/>
-		  <input type="hidden" name="flag" value="a"/>
-
-		  <div class="form-group" style="width: 400px; position: relative; left: 20px;">
-		    <label for="amountOfMoney">订单金额</label>
-		    <input type="text" class="form-control" id="amountOfMoney" name="money">
-		  </div>
-		  <div class="form-group" style="width: 400px;position: relative; left: 20px;">
-		    <label for="tradeName">订单名称</label>
-		    <input type="text" class="form-control" id="tradeName" name="name" >
-		  </div>
-		  <div class="form-group" style="width: 400px;position: relative; left: 20px;">
-		    <label for="expectedClosingDate">预计成交日期</label>
-		    <input type="text" class="form-control time" id="expectedClosingDate" name="expectedDate">
-		  </div>
-		  <div class="form-group" style="width: 400px;position: relative; left: 20px;">
-		    <label for="stage">订单阶段</label>
-		    <select id="stage"  class="form-control" name="stage">
-		    	<option></option>
-				<c:forEach items="${stageList}"  var="s">
-					<option value="${s.value}">${s.text}</option>
-				</c:forEach>
-		    </select>
-		  </div>
-		  <div class="form-group" style="width: 400px;position: relative; left: 20px;">
-		    <label for="activity">货物所属&nbsp;&nbsp;<a href="javascript:void(0);"  id="openSearchModalBtn" style="text-decoration: none;"><span class="glyphicon glyphicon-search"></span></a></label>
-		    <input type="text" class="form-control" id="activityName" placeholder="点击上面搜索" readonly>
-		    <input type="hidden" id="activityId" name="activityId"/>
-		  </div>
-
-		</form>
-		
-	</div>
 	
-	<div id="owner" style="position: relative; left: 40px; height: 35px; top: 50px;">
-		记录的所有者：<br>
+	<div id="owner" style="position: relative; left: 40px; height: 35px; top: 35px;">
+		操作管理员：<br>
 		<b>${param.createBy}</b>
 	</div>
 	<div id="operation" style="position: relative; left: 40px; height: 35px; top: 100px;">

@@ -17,4 +17,6 @@ public interface UserDao {
     int getTotalByCondition(Map<String, Object> map);
 
     List<User> getClueListByCondition(Map<String, Object> map);
+
+    int save(User user);
 }

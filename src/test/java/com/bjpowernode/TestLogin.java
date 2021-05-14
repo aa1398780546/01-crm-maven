@@ -5,6 +5,7 @@ import com.bjpowernode.crm.settings.domain.User;
 import com.bjpowernode.crm.utils.DateTimeUtil;
 import com.bjpowernode.crm.utils.MD5Util;
 import com.bjpowernode.crm.utils.SqlSessionUtil;
+import com.bjpowernode.crm.utils.UUIDUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
@@ -80,5 +81,14 @@ public class TestLogin {
         //加密后的结果：202cb962ac59075b964b07152d234b70
         System.out.println(pwd);
     }
+
+
+    //测试生成八位数的账号信息,测试可行
+    @Test
+    public void TestUUIDUtil(){
+        String userId = UUIDUtil.generateShortUuid();
+        System.out.println(userId);
+    }
+
 
 }

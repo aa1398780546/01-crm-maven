@@ -82,6 +82,7 @@ public class UserServiceImpl implements UserService {
         return userList;
     }
 
+
     @Override
     public PaginationVO<User> pageList(Map<String, Object> map) {
 
@@ -93,5 +94,15 @@ public class UserServiceImpl implements UserService {
         vo.setTotal(total);
 
         return vo;
+    }
+
+    @Override
+    public Integer save(User user) {
+
+        System.out.println("添加用户信息表UserServiceImpl-save");
+
+        int num = userDao.save(user);
+
+        return num;
     }
 }

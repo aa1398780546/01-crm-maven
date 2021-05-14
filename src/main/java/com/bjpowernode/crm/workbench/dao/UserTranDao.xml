@@ -7,35 +7,38 @@
 <mapper namespace="com.bjpowernode.crm.workbench.dao.UserTranDao">
 
     <select id="getActivityListByCondition" resultType="Tran">
+
         select
-            t.id,
-            t.owner,
-            t.money,
-            t.name,
-            t.expectedDate,
-            u.name as customerId,
-            t.stage,
-            t.type,
-            t.source,
-            t.activityId,
-            o.fullname as contactsId,
-            t.createBy,
-            t.createTime,
-            t.editBy,
-            t.editTime,
-            t.description,
-            t.contactSummary,
-            t.nextContactTime
+            id,
+            owner,
+            tranName,
+            money,
+            stage,
+            type,
+            createBy,
+            createTime,
+            clueId,
+            fullname,
+            appellation,
+            email,
+            mphone,
+            address,
+            Rfullname,
+            Rappellation,
+            Rmphone,
+            Raddress,
+            expectedDate,
+            receivedDate,
+            editBy,
+            editTime,
+            description
 
-        from tbl_tran t
-                 join tbl_contacts o
-                      on t.contactsId=o.id
-                 join tbl_customer u
-                      on t.customerId=u.id
 
-        where t.owner=#{id}
+        from tbl_tran
 
-        order by t.createTime desc
+        where id=#{id}
+
+        order by createTime desc
             limit #{skipCount},#{pageSize}
 
     </select>
@@ -46,7 +49,7 @@
 
         from tbl_tran
 
-        where owner=#{id}
+        where id=#{id}
 
     </select>
 

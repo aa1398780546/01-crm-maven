@@ -26,47 +26,6 @@
 
         $(function(){
 
-
-            //为点击市场活动后的-查询-按钮绑定事件，添加查询操作。
-            $("#searchBtb").click(function (){
-                // 点击查询按钮的时候，我们应该将搜索框中的信息保存起来,保存到隐藏域中
-                $("#hidden-name").val($.trim($("#search-name").val()));
-                $("#hidden-owner").val($.trim($("#search-owner").val()));
-                $("#hidden-startDate").val($.trim($("#search-startDate").val()));
-                $("#hidden-endDate").val($.trim($("#search-endDate").val()));
-
-                pageList(1,2);
-            })
-
-            //为全选的复选框绑定事件，触发全选操作
-            $("#qx").click(function () {
-
-                $("input[name=xz]").prop("checked",this.checked);
-
-            })
-
-            //为全选款下面的复选框，如果都选✔，全选框✔
-            $("#activityBody").on("click",$("input[name=xz]"),function () {
-                //如果	总个数=✔个数		全选框✔
-                $("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
-                //以下这种做法是不行的
-                /*$("input[name=xz]").click(function () {
-
-                    alert(123);
-
-                })*/
-
-                //因为动态生成的元素，是不能够以普通绑定事件的形式来进行操作的
-                /*
-
-                    动态生成的元素，我们要以on方法的形式来触发事件
-
-                    语法：
-                        $(需要绑定元素的有效的外层元素).on(绑定事件的方式,需要绑定的元素的jquery对象,回调函数)
-
-                 */
-            })
-
             //页面加载完毕后触发pageList
             pageList(1,3);
 
@@ -102,9 +61,9 @@
                     $.each(data.dataList,function (i,n){
                         html += '<tr class="active">'
                         html += '	<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.do?id='+n.id+'\';">'+n.name+'</a></td>';
-                        html += '	<td>'+n.owner+'</td>';
+                        html += '	<td>'+n.createBy+'</td>';
+                        html += '	<td>'+n.cost+'</td>';
                         html += '	<td>'+n.startDate+'</td>';
-                        html += '	<td>'+n.endDate+'</td>';
                         html += '</tr>';
                     })
 
@@ -158,9 +117,9 @@
                 <thead>
                 <tr style="color: #B3B3B3;">
                     <td>货物名称</td>
-                    <td>所有者</td>
-                    <td>接收货物日期</td>
-                    <td>结束日期</td>
+                    <td>审批管理员</td>
+                    <td>货物金额</td>
+                    <td>货物订单开始日期</td>
                 </tr>
                 </thead>
                 <tbody id="activityBody">

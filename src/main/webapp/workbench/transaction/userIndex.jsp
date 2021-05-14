@@ -50,13 +50,12 @@
                     $.each(data.dataList,function (i,n){
 
                         html += '<tr>';
-                        html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/transaction/detail.do?id='+n.id+'\';">'+n.name+'</a></td>';
-                        html += '<td>'+n.customerId+'</td>';
-                        html += '<td>'+n.stage+'</td>';
+                        html += '<td><a stylwe="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/transaction/userDetail.do?id='+n.id+'\';">'+n.tranName+'</a></td>';
+                        html += '<td>'+n.fullname+'</td>';
+                        html += '<td>'+n.mphone+'</td>';
                         html += '<td>'+n.type+'</td>';
-                        html += '<td>'+n.createBy+'</td>';
-                        html += '<td>'+n.source+'</td>';
-                        html += '<td>'+n.contactsId+'</td>';
+                        html += '<td>'+n.expectedDate+'</td>';
+                        html += '<td>'+n.receivedDate+'</td>';
                         html += '</tr>';
                     })
 
@@ -113,13 +112,12 @@
             <table class="table table-hover">
                 <thead>
                 <tr style="color: #B3B3B3;">
-                    <td>名称</td>
+                    <td>订单名称</td>
                     <td>客户名称</td>
-                    <td>阶段</td>
-                    <td>类型</td>
-                    <td>所有者</td>
-                    <td>来源</td>
-                    <td>联系人名称</td>
+                    <td>客户电话</td>
+                    <td>订单类型</td>
+                    <td>预计发货日期</td>
+                    <td>预计收货日期</td>
                 </tr>
                 </thead>
                 <tbody id="tranBody">

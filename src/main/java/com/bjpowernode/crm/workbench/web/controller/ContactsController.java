@@ -35,6 +35,7 @@ public class ContactsController extends HttpServlet {
 
     }
 
+    //创建普通客户列表
     private void contactList(HttpServletRequest request, HttpServletResponse response) {
 
         System.out.println("进入到查询客户列表的操作（结合条件查询+分页查询）");

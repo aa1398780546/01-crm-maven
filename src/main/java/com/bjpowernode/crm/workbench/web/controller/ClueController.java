@@ -1,12 +1,10 @@
 package com.bjpowernode.crm.workbench.web.controller;
 
+import com.bjpowernode.crm.exception.LoginException;
 import com.bjpowernode.crm.settings.domain.User;
 import com.bjpowernode.crm.settings.service.UserService;
 import com.bjpowernode.crm.settings.service.impl.UserServiceImpl;
-import com.bjpowernode.crm.utils.DateTimeUtil;
-import com.bjpowernode.crm.utils.PrintJson;
-import com.bjpowernode.crm.utils.ServiceFactory;
-import com.bjpowernode.crm.utils.UUIDUtil;
+import com.bjpowernode.crm.utils.*;
 import com.bjpowernode.crm.vo.PaginationVO;
 import com.bjpowernode.crm.workbench.domain.Activity;
 import com.bjpowernode.crm.workbench.domain.ActivityRemark;
@@ -91,10 +89,10 @@ public class ClueController extends HttpServlet {
 
             t.setId(id);
             t.setMoney(money);
-            t.setName(name);
+//            t.setName(name);
             t.setExpectedDate(expectedDate);
             t.setStage(stage);
-            t.setActivityId(activityId);
+//            t.setActivityId(activityId);
             t.setCreateBy(createBy);
             t.setCreateTime(createTime);
 
@@ -139,6 +137,8 @@ public class ClueController extends HttpServlet {
 
         String cid = request.getParameter("cid");
         String aids[] = request.getParameterValues("aid");
+
+        System.out.println("cid=====aid=====" + cid + aids);
 
         ClueService cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
 
@@ -260,49 +260,67 @@ public class ClueController extends HttpServlet {
         System.out.println("正在进入ClueController-save");
 
         //接收参数
+        String eid = UUIDUtil.generateShortUuid();   //生成八位数的UUID
         String id = UUIDUtil.getUUID();
         String fullname = request.getParameter("fullname");
         String appellation = request.getParameter("appellation");
         String owner = request.getParameter("owner");
-//        String company = request.getParameter("company");
-//        String job = request.getParameter("job");
         String email = request.getParameter("email");
-//        String phone = request.getParameter("phone");
-//        String website = request.getParameter("website");
         String mphone = request.getParameter("mphone");
-//        String state = request.getParameter("state");
-//        String source = request.getParameter("source");
-//        String description = request.getParameter("description");
-//        String contactSummary = request.getParameter("contactSummary");
-//        String nextContactTime = request.getParameter("nextContactTime");
+        //phone用来当作客户的初始密码123456
+        String phone = "123456";
         String address = request.getParameter("address");
         //创建时间：当前系统时间
         String createTime = DateTimeUtil.getSysTime();
         //创建人：当前登录用户
         String createBy = ((User)request.getSession().getAttribute("user")).getName();
 
+        System.out.println("==========添加普通客户表Clue信息================");
         Clue c = new Clue();
-        c.setId(id);
+        c.setId(eid);
         c.setFullname(fullname);
         c.setAppellation(appellation);
         c.setOwner(owner);
-//        c.setCompany(company);
-//        c.setJob(job);
         c.setEmail(email);
-//        c.setPhone(phone);
-//        c.setWebsite(website);
+        c.setPhone(phone);
         c.setMphone(mphone);
-//        c.setState(state);
-//        c.setSource(source);
-//        c.setDescription(description);
-//        c.setContactSummary(contactSummary);
-//        c.setNextContactTime(nextContactTime);
         c.setAddress(address);
         c.setCreateTime(createTime);
         c.setCreateBy(createBy);
 
         ClueService clueService = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
         Boolean flag = clueService.save(c);
+        System.out.println("==========添加普通客户表Clue信息结束================");
+
+
+        System.out.println("==============添加用户表User信息==================");
+        System.out.println("进入到添加用户信息表操作");
+        String loginAct = eid;
+        String loginPwd = phone;
+        String name = fullname;
+        String expireTime ="2022-04-18 21:50:05";
+        String lockState ="0";
+        String allowIps ="192.168.1.1,192.168.1.2,127.0.0.1";
+        loginPwd = MD5Util.getMD5(loginPwd);
+
+        User user = new User();
+        user.setId(id);
+        user.setLoginAct(loginAct);
+        user.setName(name);
+        user.setLoginPwd(loginPwd);
+        user.setEmail(email);
+        user.setExpireTime(expireTime);
+        user.setLockState(lockState);
+        user.setAllowIps(allowIps);
+        user.setCreateTime(createTime);
+        user.setCreateBy(createBy);
+
+        UserService us = (UserService) ServiceFactory.getService(new UserServiceImpl());
+        Integer num = us.save(user);
+        System.out.println("num-----"+num);
+        System.out.println("==============添加用户表User信息结束==================");
+
+
 
         PrintJson.printJsonObj(response,flag);
 

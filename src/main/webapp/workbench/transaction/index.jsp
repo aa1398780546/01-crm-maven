@@ -53,13 +53,12 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 					html += '<tr>';
 						html += '<td><input type="checkbox" name="xz" value="'+n.id+'"/></td>';
-						html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/transaction/detail.do?id='+n.id+'\';">'+n.name+'</a></td>';
-						html += '<td>'+n.customerId+'</td>';
-						html += '<td>'+n.stage+'</td>';
+						html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/transaction/detail.do?id='+n.id+'\';">'+n.tranName+'</a></td>';
+						html += '<td>'+n.fullname+'</td>';
+						html += '<td>'+n.mphone+'</td>';
 						html += '<td>'+n.type+'</td>';
-						// html += '<td>'+n.createBy+'</td>';
-						html += '<td>'+n.source+'</td>';
-						// html += '<td>'+n.contactsId+'</td>';
+						html += '<td>'+n.expectedDate+'</td>';
+						html += '<td>'+n.receivedDate+'</td>';
 					html += '</tr>';
 				})
 
@@ -128,11 +127,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 							<td><input type="checkbox" /></td>
 							<td>订单名称</td>
 							<td>客户名称</td>
-							<td>订单阶段</td>
+							<td>客户电话</td>
 							<td>订单类型</td>
-<%--							<td>订单所有者</td>--%>
-							<td>订单来源</td>
-<%--							<td>订单联系人名称</td>--%>
+							<td>预计发货日期</td>
+							<td>预计收货日期</td>
 						</tr>
 					</thead>
 					<tbody id="tranBody">

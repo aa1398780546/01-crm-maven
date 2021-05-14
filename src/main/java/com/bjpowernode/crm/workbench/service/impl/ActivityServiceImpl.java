@@ -37,7 +37,7 @@ public class ActivityServiceImpl implements ActivityService {
            flag = false;
         }
 
-        System.out.println("测试flag：" + flag);
+//        System.out.println("测试flag：" + flag);
 
         return flag;
     }

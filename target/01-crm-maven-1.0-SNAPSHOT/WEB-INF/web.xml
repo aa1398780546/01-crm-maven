@@ -73,7 +73,7 @@
         <url-pattern>/workbench/activity/getUserListById.do</url-pattern>
     </servlet-mapping>
 
-    <!--  潜在客户-->
+    <!--  普通客户-->
     <servlet>
         <servlet-name>ClueController</servlet-name>
         <servlet-class>com.bjpowernode.crm.workbench.web.controller.ClueController</servlet-class>
@@ -118,6 +118,7 @@
     <servlet-mapping>
         <servlet-name>UserTranController</servlet-name>
         <url-pattern>/workbench/transaction/getTranListById.do</url-pattern>
+        <url-pattern>/workbench/transaction/userDetail.do</url-pattern>
     </servlet-mapping>
 
     <!--  客户  -->

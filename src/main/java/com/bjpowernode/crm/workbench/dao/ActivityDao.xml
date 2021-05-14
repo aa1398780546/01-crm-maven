@@ -5,6 +5,7 @@
 
 <!--namespace 写定义的接口名称-->
 <mapper namespace="com.bjpowernode.crm.workbench.dao.ActivityDao">
+
     <insert id="save">
             insert into tbl_activity(
                 id,
@@ -232,4 +233,11 @@
         where a.name like '%' #{aname} '%'
 
     </select>
+    <update id="insertClueIdByActivityId">
+
+        update tbl_activity set clueId=#{clueId}
+        where id=#{id}
+
+    </update>
+
 </mapper>

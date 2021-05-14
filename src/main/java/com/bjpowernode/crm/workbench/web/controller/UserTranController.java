@@ -1,10 +1,13 @@
 package com.bjpowernode.crm.workbench.web.controller;
 
+import com.bjpowernode.crm.settings.domain.User;
+import com.bjpowernode.crm.settings.service.impl.UserServiceImpl;
 import com.bjpowernode.crm.utils.PrintJson;
 import com.bjpowernode.crm.utils.ServiceFactory;
 import com.bjpowernode.crm.vo.PaginationVO;
 import com.bjpowernode.crm.workbench.domain.Activity;
 import com.bjpowernode.crm.workbench.domain.Tran;
+import com.bjpowernode.crm.workbench.domain.TranHistory;
 import com.bjpowernode.crm.workbench.service.TranService;
 import com.bjpowernode.crm.workbench.service.UserActivityService;
 import com.bjpowernode.crm.workbench.service.UserTranService;
@@ -18,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,7 +36,30 @@ public class UserTranController extends HttpServlet {
 
         if("/workbench/transaction/getTranListById.do".equals(path)){
             getUserListById(request,response);
+        }else if ("userDetail".equals(path)){
+            userDetail(request,response);
         }
+
+    }
+
+    private void userDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String id = request.getParameter("id");
+
+        TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
+        Tran tran = ts.detail(id);
+
+        String stage = tran.getStage();
+        //获得在监听器中放入application的Map
+        Map<String,String> pMap = (Map<String,String>)this.getServletContext().getAttribute("pMap");
+        //获得可能性
+        String possibility = pMap.get(stage);
+
+        //直接在实体类中加多一个
+        tran.setPossibility(possibility);
+
+        request.setAttribute("t",tran);
+        request.getRequestDispatcher("/workbench/transaction/userDetail.jsp").forward(request,response);
 
     }
 

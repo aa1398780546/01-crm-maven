@@ -18,4 +18,6 @@ public interface UserService {
 
     PaginationVO<User> pageList(Map<String, Object> map);
 
+    Integer save(User user);
+
 }

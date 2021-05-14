@@ -60,10 +60,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					html += '<tr>';
 						html += '<td><input type="checkbox" /></td>';
 						html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/transaction/xx.do?id='+n.id+'\';">'+n.fullname+'</a></td>';
-						html += '<td>'+n.customerId+'</td>';
-						html += '<td>'+n.createBy+'</td>';
-						html += '<td>'+n.source+'</td>';
-						html += '<td>'+n.birth+'</td>';
+						html += '<td>'+n.appellation+'</td>';
+						html += '<td>'+n.mphone+'</td>';
+						html += '<td>'+n.email+'</td>';
+						html += '<td>'+n.address+'</td>';
 					html += '</tr>';
 
 				})
@@ -375,14 +375,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		</div>
 	</div>
 	
-	
-	
-	
-	
 	<div>
 		<div style="position: relative; left: 10px; top: -10px;">
 			<div class="page-header">
-				<h3>联系人列表</h3>
+				<h3>VIP客户列表</h3>
 			</div>
 		</div>
 	</div>
@@ -404,11 +400,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<thead>
 						<tr style="color: #B3B3B3;">
 							<td><input type="checkbox" /></td>
-							<td>姓名</td>
-							<td>客户名称</td>
-							<td>所有者</td>
-							<td>来源</td>
-							<td>生日</td>
+							<td>VIP客户姓名</td>
+							<td>VIP客户性别</td>
+							<td>VIP客户电话</td>
+							<td>VIP客户邮箱</td>
+							<td>VIP客户详细地址</td>
 						</tr>
 					</thead>
 					<tbody id="contactsBody">

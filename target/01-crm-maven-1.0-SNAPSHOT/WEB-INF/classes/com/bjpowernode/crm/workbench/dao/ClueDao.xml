@@ -19,6 +19,7 @@
             owner,
             email,
             mphone,
+            phone,
             createBy,
             createTime,
             address
@@ -30,6 +31,7 @@
                     #{owner},
                     #{email},
                     #{mphone},
+                    #{phone},
                     #{createBy},
                     #{createTime},
                     #{address}
